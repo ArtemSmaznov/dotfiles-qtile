@@ -10,13 +10,12 @@ from widgets import widget_defaults, extension_defaults
 from screens import screens
 
 
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
+#  dgroups_key_binder = None
 main = None  # WARNING: this is deprecated and will be removed soon
 follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
-
+dgroups_app_rules = []  # type: List
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
