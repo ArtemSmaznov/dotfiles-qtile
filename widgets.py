@@ -1,4 +1,4 @@
-from libqtile import bar, hook, widget
+from libqtile import widget
 import socket
 import os
 

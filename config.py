@@ -1,30 +1,14 @@
 import os
 import subprocess
 from typing import List
-from libqtile import bar, hook
-from libqtile.config import Screen
+from libqtile import hook
 
 from bindings import mouse
 from groups import groups, keys
 from layouts import floating_layout, layouts
 from widgets import widget_defaults, extension_defaults
-from bar import init_panel_widgets
+from screens import screens
 
-colors = [["#282c34", "#282c34"],  # panel background
-          ["#434758", "#434758"],  # background for current screen tab
-          ["#ffffff", "#ffffff"],  # font color for group names
-          ["#ff5555", "#ff5555"],  # border line color for current tab
-          ["#8d62a9", "#8d62a9"],  # border line color for other tab and odd widgets
-          ["#668bd7", "#668bd7"],  # color for the even widgets
-          ["#e1acff", "#e1acff"]]  # window name
-
-
-screens = [
-    Screen(
-        top=bar.Bar(init_panel_widgets(), 24, background=colors[0]),
-    ),
-    Screen(top=bar.Bar(init_panel_widgets(), 24, background=colors[0])),
-]
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List

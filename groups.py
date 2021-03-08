@@ -1,6 +1,8 @@
+import subprocess
 from libqtile.config import Group, Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile.widget import volume
 
 #  Key modifiers
 mod = "mod4"
@@ -117,6 +119,11 @@ keys = [
     Key([ctrl, alt], "g", lazy.spawn(graphics_editor),
         desc="Launch graphics editor"),
     Key([ctrl, alt], "s", lazy.spawn(game), desc="Launch Steam"),
+
+    # Media keys
+    Key([], "XF86AudioRaiseVolume", lazy.spawn('amixer -q sset Master on 5%+')),
+    Key([], "XF86AudioLowerVolume", lazy.spawn('amixer -q sset Master on 5%-')),
+    Key([], "XF86AudioMute", lazy.spawn('amixer -q sset Master toggle')),
 
 
 ]

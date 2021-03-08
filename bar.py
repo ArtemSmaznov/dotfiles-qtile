@@ -1,4 +1,4 @@
-from libqtile import bar, hook, widget
+from libqtile import bar, widget
 from widgets import start_widget, separator, clock, group_box, prompt_widget, window_name, power_arrow, date, sys_tray
 
 colors = [["#282c34", "#282c34"],  # panel background
@@ -89,3 +89,7 @@ def init_panel_widgets():
         sys_tray,
     ]
     return panel_widgets
+
+
+def init_bar():
+    return bar.Bar(init_panel_widgets(), 24, background=colors[0])
