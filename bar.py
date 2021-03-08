@@ -1,26 +1,19 @@
 from libqtile import bar, widget
-from widgets import start_widget, separator, clock, group_box, prompt_widget, window_name, power_arrow, date, sys_tray
-
-colors = [["#282c34", "#282c34"],  # panel background
-          ["#434758", "#434758"],  # background for current screen tab
-          ["#ffffff", "#ffffff"],  # font color for group names
-          ["#ff5555", "#ff5555"],  # border line color for current tab
-          ["#8d62a9", "#8d62a9"],  # border line color for other tab and odd widgets
-          ["#668bd7", "#668bd7"],  # color for the even widgets
-          ["#e1acff", "#e1acff"]]  # window name
+import widgets as my_widget
+from theme.color_scheme import colors
 
 
 def init_panel_widgets():
     panel_widgets = [
-        separator(),
-        start_widget,
-        clock,
-        group_box,
-        prompt_widget,
-        separator(40),
-        window_name,
+        my_widget.separator(),
+        my_widget.start_widget,
+        my_widget.clock,
+        my_widget.group_box,
+        my_widget.prompt_widget,
+        my_widget.separator(40),
+        my_widget.window_name,
 
-        power_arrow(colors[4], colors[0]),
+        my_widget.power_arrow(colors[4], colors[0]),
         widget.TextBox(
             text=" 🌡",
             padding=2,
@@ -34,7 +27,7 @@ def init_panel_widgets():
             threshold=90,
             padding=5
         ),
-        power_arrow(colors[5], colors[4]),
+        my_widget.power_arrow(colors[5], colors[4]),
         widget.TextBox(
             text=" 🖬",
             foreground=colors[2],
@@ -47,7 +40,7 @@ def init_panel_widgets():
             background=colors[5],
             padding=5
         ),
-        power_arrow(colors[4], colors[5]),
+        my_widget.power_arrow(colors[4], colors[5]),
         widget.Net(
             interface="eno1",
             format='{down} ↓↑ {up}',
@@ -55,7 +48,7 @@ def init_panel_widgets():
             background=colors[4],
             padding=5
         ),
-        power_arrow(colors[5], colors[4]),
+        my_widget.power_arrow(colors[5], colors[4]),
         widget.TextBox(
             text=" Vol:",
             foreground=colors[2],
@@ -67,26 +60,26 @@ def init_panel_widgets():
             background=colors[5],
             padding=5
         ),
-        power_arrow(colors[4], colors[5]),
+        my_widget.power_arrow(colors[4], colors[5]),
         widget.CurrentLayout(
             foreground=colors[2],
             background=colors[4],
             padding=5
         ),
-        power_arrow(colors[5], colors[4]),
-        date,
+        my_widget.power_arrow(colors[5], colors[4]),
+        my_widget.date,
         widget.Sep(
             linewidth=0,
             padding=10,
             foreground=colors[0],
             background=colors[5]
         ),
-        power_arrow(colors[4], colors[5]),
+        my_widget.power_arrow(colors[4], colors[5]),
         widget.QuickExit(
             foreground=colors[2],
             background=colors[4]
         ),
-        sys_tray,
+        my_widget.sys_tray,
     ]
     return panel_widgets
 

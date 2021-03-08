@@ -3,8 +3,8 @@ import subprocess
 from typing import List
 from libqtile import hook
 
-from bindings import mouse
-from groups import groups, keys
+from bindings import keys, mouse
+from groups import groups
 from layouts import floating_layout, layouts
 from widgets import widget_defaults, extension_defaults
 from screens import screens

@@ -1,0 +1,26 @@
+from libqtile.utils import guess_terminal
+
+terminal = guess_terminal()
+text_editor = 'xed'
+web_browser = 'chromium'
+tor_browser = 'torbrowser-launcher'
+incognito_browser = 'chromium --incognito'
+file_manager = 'nemo'
+music_player = 'youtubemusic-nativefier'
+video_player = 'celluloid'
+game = '/usr/bin/steam-runtime %U'
+ide = 'code'
+graphics_editor = 'gimp'
+vector_editor = 'inkscape'
+video_editor = 'kdenlive'
+photos_library = 'digikam'
+torrent_client = 'transmission-qt'
+vpn = '/opt/piavpn/bin/pia-client --quiet'
+vm = 'virtualbox'
+
+network_manager = 'nm-connection-editor'
+bluetooth_manager = 'blueman-manager'
+power_manager = 'xfce4-power-manager-settings'
+audio_manager = 'cinnamon-settings sound'
+package_manager = 'pamac-manager'
+lock = 'cinnamon-screensaver-command -l'
