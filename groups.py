@@ -9,6 +9,7 @@ from bindings import keys
 group_names = [
     ("Web", {
         'layout': 'columns',
+        'label': 'Web',
         'matches': [
             Match(wm_class=[
                 "firefox",

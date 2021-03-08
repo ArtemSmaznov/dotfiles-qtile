@@ -1,7 +1,7 @@
+import theme.default as theme
 from libqtile import widget
 import socket
 import os
-from theme.color_scheme import colors
 
 
 start_widget = widget.Image(
@@ -14,8 +14,8 @@ def separator(size=6):
     return widget.Sep(
         linewidth=0,
         padding=size,
-        foreground=colors[2],
-        background=colors[0]
+        foreground=theme.foreground,
+        background=theme.background
     )
 
 
@@ -30,17 +30,16 @@ def power_arrow(fg_color, bg_color):
 
 
 clock = widget.Clock(
-    foreground=colors[2],
-    background=colors[0],
+    foreground=theme.foreground,
+    background=theme.background,
     format='%l:%M %p'
 )
 
 date = widget.Clock(
-    foreground=colors[2],
-    background=colors[5],
+    foreground=theme.foreground,
+    background=theme.widget_bg_2,
     format='%a %d %b %Y'
 )
-
 group_box = widget.GroupBox(
     font="Ubuntu Bold",
     fontsize=11,
@@ -49,17 +48,18 @@ group_box = widget.GroupBox(
     padding_y=5,
     padding_x=3,
     borderwidth=3,
-    active=colors[2],
-    inactive=colors[2],
-    rounded=False,
-    highlight_color=colors[1],
     highlight_method="line",
-    this_current_screen_border=colors[3],
-    this_screen_border=colors[3],
-    other_current_screen_border=colors[1],
-    other_screen_border=colors[1],
-    foreground=colors[2],
-    background=colors[0]
+    disable_drag=True,
+
+    active=theme.foreground,
+    inactive=theme.inactive,
+    highlight_color=theme.selection_bg,
+
+    this_current_screen_border=theme.selection_accent,
+    this_screen_border=theme.selection_accent,
+
+    other_current_screen_border=theme.other_selection_accent,
+    other_screen_border=theme.other_selection_bg,
 )
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
@@ -67,18 +67,18 @@ prompt_widget = widget.Prompt(
     prompt=prompt,
     font="Ubuntu Mono",
     padding=10,
-    foreground=colors[3],
-    background=colors[1]
+    foreground=theme.background,
+    background=theme.inactive
 )
 
 window_name = widget.WindowName(
-    foreground=colors[6],
-    background=colors[0],
+    foreground=theme.widget_bg_1,
+    background=theme.background,
     padding=0
 )
 
 sys_tray = widget.Systray(
-    background=colors[0],
+    background=theme.background,
     padding=5
 )
 
