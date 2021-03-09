@@ -1,6 +1,7 @@
 from libqtile import bar
-import widgets as my_widget
+
 import theme.default as theme
+import widgets as my_widget
 
 
 def init_panel_widgets(s='main'):
@@ -8,10 +9,10 @@ def init_panel_widgets(s='main'):
         return [
             my_widget.separator(),
             my_widget.start_widget(),
+            my_widget.prompt_widget(),
             my_widget.time(),
             my_widget.layout_icon(),
             my_widget.group_box(),
-            my_widget.prompt_widget(),
             my_widget.separator(40),
             my_widget.window_name(),
 

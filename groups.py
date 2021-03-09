@@ -1,9 +1,9 @@
 from libqtile.config import Group, Key
-from libqtile.lazy import lazy
 from libqtile.dgroups import Match
+from libqtile.lazy import lazy
 
+from keys.bindings import keys
 from keys.mods import mod, shift
-from bindings import keys
 
 
 group_names = [

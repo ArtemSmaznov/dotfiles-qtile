@@ -1,7 +1,9 @@
-import theme.default as theme
-from libqtile import widget
-import socket
 import os
+import socket
+
+from libqtile import widget
+
+import theme.default as theme
 
 
 def start_widget():

@@ -1,5 +1,6 @@
 from libqtile import layout
 from libqtile.config import Match
+
 import theme.default as theme
 
 layout_theme = {"border_width": 3,
