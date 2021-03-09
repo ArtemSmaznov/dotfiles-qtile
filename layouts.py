@@ -1,15 +1,16 @@
 from libqtile import layout
 from libqtile.config import Match
+import theme.default as theme
 
 layout_theme = {"border_width": 3,
-                "margin": 4,
+                "margin": theme.app_gap,
                 "border_focus_stack": '#d75f5f'
                 }
 
 layouts = [
     layout.Columns(**layout_theme),
     layout.MonadTall(**layout_theme),
-    layout.Max(),
+    layout.Max(**layout_theme),
     #  layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),

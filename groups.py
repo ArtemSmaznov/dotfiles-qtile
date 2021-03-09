@@ -20,7 +20,7 @@ group_names = [
         ],
     }),
     ("Game", {
-        'layout': 'columns',
+        'layout': 'max',
         'matches': [
             Match(wm_class=[
                 "Wine",
