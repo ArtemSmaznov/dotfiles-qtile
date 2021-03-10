@@ -34,6 +34,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='notofication'),
     Match(wm_class='splash'),
     Match(wm_class='toolbar'),
+    Match(wm_class='Nitrogen'),
     Match(wm_class='confirmreset'),  # gitk
     Match(wm_class='makebranch'),  # gitk
     Match(wm_class='maketag'),  # gitk
