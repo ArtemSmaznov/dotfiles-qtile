@@ -1,7 +1,7 @@
 from libqtile import widget
 
 import theme.default as theme
-import widgets as my_widget
+import lib.widgets as my_widget
 
 
 def power_line(position, w):

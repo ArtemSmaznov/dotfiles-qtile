@@ -1,17 +1,17 @@
 from libqtile.config import Click, Drag, Key
 from libqtile.lazy import lazy
 
-import apps
+import settings.apps as apps
 from keys.mods import alt, ctrl, mod, shift
 
 
 keys = [
     # System Control
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "r", lazy.spawncmd(),
+    Key([mod, shift], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
-    Key([mod, shift], "r", lazy.spawn(
-        "rofi -show drun -config ~/.config/rofi/themes/dt-dmenu.rasi -display-drun \"Run: \" -drun-display-format \"{name}\""), desc="Open DMenu"),
+    Key([mod], "r", lazy.spawn(
+        "rofi -show drun"), desc="Open DMenu"),
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 

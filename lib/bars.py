@@ -1,7 +1,7 @@
 from libqtile import bar
 
 import theme.default as theme
-import widgets as my_widget
+import lib.widgets as my_widget
 from utils import power_line
 
 
@@ -15,13 +15,14 @@ def init_panel_widgets(s='main'):
             my_widget.group_box(),
             my_widget.separator(40),
             my_widget.window_name(),
+            my_widget.sys_tray(),
+            my_widget.separator(5),
 
-            *power_line(1, my_widget.network),
-            *power_line(2, my_widget.memory),
+            *power_line(1, my_widget.network_graph),
+            *power_line(2, my_widget.memory_graph),
             *power_line(3, my_widget.thermals),
             *power_line(4, my_widget.volume),
             *power_line(5, my_widget.date),
-            my_widget.sys_tray(),
         ]
     else:
         return [
@@ -33,7 +34,7 @@ def init_panel_widgets(s='main'):
             my_widget.window_name(),
 
             *power_line(1, my_widget.network),
-            *power_line(2, my_widget.memory),
+            *power_line(2, my_widget.memory_graph),
             *power_line(3, my_widget.thermals),
             *power_line(4, my_widget.date),
         ]

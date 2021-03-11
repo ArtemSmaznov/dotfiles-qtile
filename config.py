@@ -4,11 +4,11 @@ from typing import List
 
 from libqtile import hook
 
-from groups import groups
 from keys.bindings import keys, mouse
-from layouts import floating_layout, layouts
-from screens import screens
-from widgets import extension_defaults, widget_defaults
+from lib.widgets import extension_defaults, widget_defaults
+from settings.groups import groups
+from settings.layouts import floating_layout, layouts
+from settings.screens import screens
 
 
 #  dgroups_key_binder = None
@@ -22,9 +22,9 @@ focus_on_window_activation = "smart"
 
 
 @ hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
+def autostart():
+    home = os.path.expanduser('~/.config/qtile/settings/autostart.sh')
+    subprocess.call([home])
 
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this

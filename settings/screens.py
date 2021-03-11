@@ -1,12 +1,12 @@
 from libqtile.config import Screen
 
-import bars
+import lib.bars as bar
 
 screens = [
     Screen(
-        top=bars.init_bar(),
+        top=bar.init_bar(),
     ),
     Screen(
-        top=bars.init_bar('side'),
+        top=bar.init_bar('side'),
     ),
 ]

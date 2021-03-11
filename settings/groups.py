@@ -7,9 +7,9 @@ from keys.mods import mod, shift
 
 
 group_names = [
-    ("Web", {
-        'layout': 'columns',
+    ("internet", {
         'label': 'Web',
+        'layout': 'columns',
         'matches': [
             Match(wm_class=[
                 "firefox",
@@ -19,7 +19,8 @@ group_names = [
             ]),
         ],
     }),
-    ("Game", {
+    ("gaming", {
+        'label': 'Game',
         'layout': 'max',
         'matches': [
             Match(wm_class=[
@@ -28,10 +29,12 @@ group_names = [
                 "Lutris",
                 "Citra",
                 "SuperTuxKart",
+                "Steam",
             ]),
         ],
     }),
-    ("Dev", {
+    ("coding", {
+        'label': 'Dev',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -54,7 +57,8 @@ group_names = [
             ]),
         ],
     }),
-    ("PC", {
+    ("computer", {
+        'label': 'PC',
         'layout': 'monadtall',
         'matches': [
             Match(wm_class=[
@@ -68,36 +72,8 @@ group_names = [
             ]),
         ],
     }),
-    ("Mus", {
-        'layout': 'columns',
-        'matches': [
-            Match(wm_class=[
-                "Spotify",
-                "youtubemusic",
-            ]),
-        ],
-    }),
-    ("Vid", {
-        'layout': 'columns',
-        'matches': [
-            Match(wm_class=[
-                "vlc",
-                "Celluloid",
-            ]),
-        ],
-    }),
-    ("Misc", {
-        'layout': 'columns',
-        'matches': [
-            Match(wm_class=[
-                "whatsapp",
-                "Slack",
-                "discord",
-                "obs",
-            ]),
-        ],
-    }),
-    ("Gfx", {
+    ("graphics", {
+        'label': 'Gfx',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -109,7 +85,40 @@ group_names = [
             ]),
         ],
     }),
-    ("Vbox", {
+    ("video", {
+        'label': 'Vid',
+        'layout': 'columns',
+        'matches': [
+            Match(wm_class=[
+                "vlc",
+                "Celluloid",
+            ]),
+        ],
+    }),
+    ("music", {
+        'label': 'Mus',
+        'layout': 'columns',
+        'matches': [
+            Match(wm_class=[
+                "Spotify",
+                "youtubemusic",
+            ]),
+        ],
+    }),
+    ("misc", {
+        'label': 'Misc',
+        'layout': 'columns',
+        'matches': [
+            Match(wm_class=[
+                "whatsapp",
+                "Slack",
+                "discord",
+                "obs",
+            ]),
+        ],
+    }),
+    ("sandbox", {
+        'label': 'VM',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[

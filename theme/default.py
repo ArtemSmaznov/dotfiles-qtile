@@ -16,6 +16,7 @@ foreground = scheme.foreground
 background = scheme.background
 inactive = material.grey_800
 #  inactive = scheme.color8
+alert = material.red_A200
 
 selection_accent = scheme.color1
 selection_bg = scheme.color9

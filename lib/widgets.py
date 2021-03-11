@@ -43,6 +43,7 @@ def group_box():
         highlight_method="line",
         disable_drag=True,
         hide_unused=False,
+        urgent_border=theme.foreground,
 
         active=theme.foreground,
         inactive=theme.inactive,
@@ -64,8 +65,8 @@ def prompt_widget(bg_color=theme.background):
         prompt=prompt,
         font=theme.font_bold,
         padding=10,
-        foreground=theme.foreground,
-        background=bg_color,
+        foreground=bg_color,
+        background=theme.selection_bg,
     )
 
 
@@ -97,8 +98,21 @@ def thermals(bg_color=theme.background):
         widget.ThermalSensor(
             font=theme.font_bold,
             foreground=theme.foreground,
+            foreground_alert=theme.alert,
             background=bg_color,
             threshold=90,
+        ),
+    ]
+
+
+def network(bg_color=theme.background):
+    return [
+        widget.Net(
+            font=theme.font_bold,
+            interface="eno1",
+            format='{down} ↓↑ {up}',
+            foreground=theme.foreground,
+            background=bg_color,
             padding=5
         ),
     ]
@@ -113,7 +127,26 @@ def memory(bg_color=theme.background):
             padding=0,
             fontsize=14
         ),
-        widget.MemoryGraph(
+        widget.Memory(
+            font=theme.font_bold,
+            foreground=theme.foreground,
+            background=bg_color,
+            measure_mem='G',
+        ),
+    ]
+
+
+def network_graph(bg_color=theme.background):
+    return [
+        widget.TextBox(
+            text=" ↓↑",
+            foreground=theme.foreground,
+            background=bg_color,
+            padding=0,
+            fontsize=14
+        ),
+        widget.NetGraph(
+            interface="eno1",
             foreground=theme.foreground,
             background=bg_color,
             graph_color=theme.foreground,
@@ -122,15 +155,20 @@ def memory(bg_color=theme.background):
     ]
 
 
-def network(bg_color=theme.background):
+def memory_graph(bg_color=theme.background):
     return [
-        widget.Net(
-            font=theme.font_bold,
-            interface="eno1",
-            format='{down} ↓↑ {up}',
+        widget.TextBox(
+            text=" 🖬",
             foreground=theme.foreground,
             background=bg_color,
-            padding=5
+            padding=0,
+            fontsize=14
+        ),
+        widget.MemoryGraph(
+            foreground=theme.foreground,
+            background=bg_color,
+            graph_color=theme.foreground,
+            border_width=0,
         ),
     ]
 
