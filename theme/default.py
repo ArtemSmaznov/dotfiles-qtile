@@ -24,12 +24,6 @@ selection_bg = scheme.color9
 other_selection_accent = scheme.color2
 other_selection_bg = scheme.color10
 
-widget_bg_0 = background
-widget_bg_1 = scheme.color14
-widget_bg_2 = scheme.color13
-widget_bg_3 = scheme.color12
-widget_bg_4 = scheme.color11
-
 power_line_colors = [
     background,
     scheme.color9,

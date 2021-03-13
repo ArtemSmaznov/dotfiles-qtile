@@ -1,7 +1,10 @@
 from libqtile import widget
 
-import theme.default as theme
 import lib.widgets as my_widget
+import settings.preferences as user
+import theme.default as theme
+
+kbr_index = 0
 
 
 def power_line(position, w):
@@ -18,3 +21,13 @@ def power_line(position, w):
         *w(current_color),
         my_widget.separator(3, current_color),
     ]
+
+
+def switch_keyboard_layout(qtile):
+    global kbr_index
+
+    if kbr_index+1 < len(user.languages):
+        kbr_index = kbr_index + 1
+    else:
+        kbr_index = 0
+    qtile.cmd_spawn('setxkbmap ' + user.languages[kbr_index])

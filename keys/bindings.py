@@ -1,8 +1,9 @@
 from libqtile.config import Click, Drag, Key
 from libqtile.lazy import lazy
 
-import settings.apps as apps
 from keys.mods import alt, ctrl, mod, shift
+import settings.apps as apps
+import utils
 
 
 keys = [
@@ -14,6 +15,9 @@ keys = [
         "rofi -show drun"), desc="Open DMenu"),
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+
+    # Swith Keyboard Layouts
+    Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
@@ -64,13 +68,16 @@ keys = [
     Key([mod], "Return", lazy.spawn(apps.terminal), desc="Launch terminal"),
 
     # Toggle windows states
-    Key([mod], "m",
-        lazy.layout.maximize(),
-        desc='toggle maximize'),
-    Key([mod], "w",
+    Key([mod], "f",
         lazy.window.toggle_floating(),
         desc='toggle floating'),
-    Key([mod], "f",
+    Key([mod], "m",
+        lazy.window.toggle_maximize(),
+        desc='toggle maximize'),
+    Key([mod], "d",
+        lazy.window.toggle_minimize(),
+        desc='toggle minimize'),
+    Key([mod], "F11",
         lazy.window.toggle_fullscreen(),
         desc='toggle fullscreen'),
 

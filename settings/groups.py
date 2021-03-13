@@ -101,7 +101,7 @@ group_names = [
         'matches': [
             Match(wm_class=[
                 "Spotify",
-                "youtubemusic",
+                "youtubemusic-nativefier-040164",
             ]),
         ],
     }),

@@ -6,11 +6,22 @@ from libqtile import widget
 import theme.default as theme
 
 
+def open_app(qtile):
+    qtile.cmd_spawn('xterm')
+
+
 def separator(size=6, backround=theme.background):
     return widget.Sep(
         linewidth=0,
         padding=size,
         background=backround
+    )
+
+
+def start_widget(bg_color=theme.background):
+    return widget.Image(
+        filename='~/.local/share/icons/Papirus-Dark/64x64/apps/distributor-logo-archlinux.svg',
+        mouse_callbacks={"Button1": open_app, },
     )
 
 
@@ -76,6 +87,25 @@ def window_name(bg_color=theme.background):
         foreground=theme.foreground,
         background=bg_color,
         padding=0
+    )
+
+
+def task_list(bg_color=theme.background):
+    return widget.TaskList(
+        font=theme.font_bold,
+        highlight_method='block',
+        border=theme.other_selection_bg,
+        foreground=theme.foreground,
+        background=bg_color,
+        max_title_width=150,
+        padding_x=10,
+    )
+
+
+def keyboard_layout(bg_color=theme.background):
+    return widget.KeyboardLayout(
+        background=bg_color,
+        #  layout_groups=['us', 'ru'],
     )
 
 
