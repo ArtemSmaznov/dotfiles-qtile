@@ -17,6 +17,7 @@ photos_library = 'digikam'
 torrent_client = 'transmission-qt'
 vpn = '/opt/piavpn/bin/pia-client --quiet'
 vm = 'virtualbox'
+launcher = 'rofi -show drun'
 
 network_manager = 'nm-connection-editor'
 bluetooth_manager = 'blueman-manager'

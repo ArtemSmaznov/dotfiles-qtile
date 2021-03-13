@@ -1,14 +1,15 @@
-from libqtile.config import Group, Key
+from libqtile.config import DropDown, Group, Key, ScratchPad
 from libqtile.dgroups import Match
 from libqtile.lazy import lazy
 
 from keys.bindings import keys
 from keys.mods import mod, shift
+import settings.apps as apps
 
 
 group_names = [
     ("internet", {
-        'label': 'Web',
+        'label': '1 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -20,7 +21,7 @@ group_names = [
         ],
     }),
     ("gaming", {
-        'label': 'Game',
+        'label': '2 ',
         'layout': 'max',
         'matches': [
             Match(wm_class=[
@@ -34,7 +35,7 @@ group_names = [
         ],
     }),
     ("coding", {
-        'label': 'Dev',
+        'label': '3 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -58,7 +59,7 @@ group_names = [
         ],
     }),
     ("computer", {
-        'label': 'PC',
+        'label': '4 ',
         'layout': 'monadtall',
         'matches': [
             Match(wm_class=[
@@ -73,7 +74,7 @@ group_names = [
         ],
     }),
     ("graphics", {
-        'label': 'Gfx',
+        'label': '5 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -86,7 +87,7 @@ group_names = [
         ],
     }),
     ("video", {
-        'label': 'Vid',
+        'label': '6 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -96,7 +97,7 @@ group_names = [
         ],
     }),
     ("music", {
-        'label': 'Mus',
+        'label': '7 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -106,7 +107,7 @@ group_names = [
         ],
     }),
     ("misc", {
-        'label': 'Misc',
+        'label': '8 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -118,7 +119,7 @@ group_names = [
         ],
     }),
     ("sandbox", {
-        'label': 'VM',
+        'label': '9 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -129,7 +130,12 @@ group_names = [
     })
 ]
 
-groups = [Group(name, **kwargs) for name, kwargs in group_names]
+groups = [
+    *[Group(name, **kwargs) for name, kwargs in group_names],
+    ScratchPad("scratchpad", [
+        DropDown("term", apps.terminal, height=0.6, warp_pointer=False),
+    ]),
+]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
     # Switch to another group with SUPER + #

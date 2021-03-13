@@ -3,6 +3,7 @@ import subprocess
 from typing import List
 
 from libqtile import hook
+from libqtile.lazy import lazy
 
 from keys.bindings import keys, mouse
 from lib.widgets import extension_defaults, widget_defaults

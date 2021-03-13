@@ -1,8 +1,9 @@
 import os
 import socket
 
-from libqtile import widget
+from libqtile import qtile, widget
 
+import settings.apps as apps
 import theme.default as theme
 
 
@@ -21,7 +22,8 @@ def separator(size=6, backround=theme.background):
 def start_widget(bg_color=theme.background):
     return widget.Image(
         filename='~/.local/share/icons/Papirus-Dark/64x64/apps/distributor-logo-archlinux.svg',
-        mouse_callbacks={"Button1": open_app, },
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(apps.launcher), },
     )
 
 
@@ -44,8 +46,8 @@ def layout_icon(bg_color=theme.background):
 
 def group_box():
     return widget.GroupBox(
-        font="Ubuntu Bold",
-        fontsize=11,
+        font="Font Awesome 5",
+        fontsize=15,
         margin_y=3,
         margin_x=0,
         padding_y=5,
@@ -105,7 +107,10 @@ def task_list(bg_color=theme.background):
 def keyboard_layout(bg_color=theme.background):
     return widget.KeyboardLayout(
         background=bg_color,
-        #  layout_groups=['us', 'ru'],
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn('setxkbmap us'),
+            "Button3": lambda: qtile.cmd_spawn('setxkbmap ru'),
+        },
     )
 
 
@@ -116,14 +121,58 @@ def sys_tray(bg_color=theme.background):
     )
 
 
-def thermals(bg_color=theme.background):
+def updater(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" 🌡",
+            text=" ",
             padding=2,
             foreground=theme.foreground,
             background=bg_color,
-            fontsize=11
+            fontsize=16
+        ),
+        widget.CheckUpdates(
+            distro='Arch',
+            display_format='{updates}',
+            no_update_string='n/a',
+            update_interval='1800',
+            font=theme.font_bold,
+            colour_have_updates=theme.foreground,
+            colour_no_updates=theme.foreground,
+            background=bg_color,
+        ),
+        widget.CheckUpdates(
+            distro='Arch',
+            display_format='|',
+            custom_command='pacman -Qu | grep -e nvidia -e linux',
+            update_interval='1800',
+            font=theme.font_bold,
+            colour_have_updates=theme.foreground,
+            colour_no_updates=theme.foreground,
+            background=bg_color,
+        ),
+        widget.CheckUpdates(
+            distro='Arch',
+            display_format='{updates}',
+            custom_command='pacman -Qu | grep -e nvidia -e linux',
+            #  no_update_string='n/a',
+            update_interval='1800',
+            font=theme.font_bold,
+            colour_have_updates=theme.alert,
+            colour_no_updates=theme.foreground,
+            background=bg_color,
+            #  padding=0,
+        ),
+    ]
+
+
+def thermals(bg_color=theme.background):
+    return [
+        widget.TextBox(
+            text=" ",
+            padding=2,
+            foreground=theme.foreground,
+            background=bg_color,
+            fontsize=16
         ),
         widget.ThermalSensor(
             font=theme.font_bold,
@@ -137,10 +186,17 @@ def thermals(bg_color=theme.background):
 
 def network(bg_color=theme.background):
     return [
+        widget.TextBox(
+            text=" ",
+            foreground=theme.foreground,
+            background=bg_color,
+            padding=0,
+            fontsize=20
+        ),
         widget.Net(
             font=theme.font_bold,
             interface="eno1",
-            format='{down} ↓↑ {up}',
+            format='{down} | {up}',
             foreground=theme.foreground,
             background=bg_color,
             padding=5
@@ -151,11 +207,11 @@ def network(bg_color=theme.background):
 def memory(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" 🖬",
+            text=" ",
             foreground=theme.foreground,
             background=bg_color,
             padding=0,
-            fontsize=14
+            fontsize=20
         ),
         widget.Memory(
             font=theme.font_bold,
@@ -169,11 +225,11 @@ def memory(bg_color=theme.background):
 def network_graph(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ↓↑",
+            text=" ",
             foreground=theme.foreground,
             background=bg_color,
             padding=0,
-            fontsize=14
+            fontsize=20
         ),
         widget.NetGraph(
             interface="eno1",
@@ -188,11 +244,11 @@ def network_graph(bg_color=theme.background):
 def memory_graph(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" 🖬",
+            text=" ",
             foreground=theme.foreground,
             background=bg_color,
             padding=0,
-            fontsize=14
+            fontsize=20
         ),
         widget.MemoryGraph(
             foreground=theme.foreground,
@@ -206,7 +262,8 @@ def memory_graph(bg_color=theme.background):
 def volume(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" Vol:",
+            text=" ",
+            fontsize=22,
             foreground=theme.foreground,
             background=bg_color,
             padding=0

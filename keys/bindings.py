@@ -5,19 +5,22 @@ from keys.mods import alt, ctrl, mod, shift
 import settings.apps as apps
 import utils
 
-
 keys = [
     # System Control
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, shift], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
     Key([mod], "r", lazy.spawn(
-        "rofi -show drun"), desc="Open DMenu"),
+        apps.launcher), desc="Open DMenu"),
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
     # Swith Keyboard Layouts
     Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
+
+    # ScratchPad
+    Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle('term')),
+    Key([mod], "F12", lazy.group["coding"].toscreen(1)),
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
