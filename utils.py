@@ -57,28 +57,22 @@ def volume_mute(qtile):
 
 
 def screenshot(type='full'):
-    path = os.path.expanduser(user.screenshot_location)
-
-    def full(qtile):
+    def action(qtile):
+        path = os.path.expanduser(user.screenshot_location)
         format = str(time.now().strftime(user.screenshot_filename)) + '.png'
-        qtile.cmd_spawn('maim -u -m 1 ' + path +
-                        format)
 
-    def area(qtile):
-        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
-        qtile.cmd_spawn('maim -u -B -s -n -m 1 ' + path +
-                        format)
+        if type == 'full':
+            command = 'maim -u -m 1 '
+        elif type == 'area':
+            command = 'maim -u -B -s -n -m 1 '
+        elif type == 'window':
+            command = 'maim -u -B -i $(xdotool getactivewindow) -m 1 '
+        else:
+            command = 'maim -u -m 1 '
 
-    def window(qtile):
-        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
-        qtile.cmd_spawn('maim -u -B -i $(xdotool getactivewindow) -m 1 ' + path +
-                        format, shell=True)
+        qtile.cmd_spawn(command + path + format, shell=True)
+        # copying to clipboard does work for me even directly from the terminal
+        # qtile.cmd_spawn(
+        #     'xclip -selection clipboard -t image/png -i ' + path + format)
 
-    if type == 'full':
-        return full
-    elif type == 'area':
-        return area
-    elif type == 'window':
-        return window
-    else:
-        pass
+    return action
