@@ -8,123 +8,123 @@ import settings.apps as apps
 
 
 group_names = [
-    ("internet", {
+    ('internet', {
         'label': '1 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "firefox",
-                "Tor Browser",
-                "Chromium",
-                "Google-chrome",
+                'firefox',
+                'Tor Browser',
+                'Chromium',
+                'Google-chrome',
             ]),
         ],
     }),
-    ("gaming", {
+    ('gaming', {
         'label': '2 ',
         'layout': 'max',
         'matches': [
             Match(wm_class=[
-                "Wine",
-                "dolphin-emu",
-                "Lutris",
-                "Citra",
-                "SuperTuxKart",
-                "Steam",
+                'Wine',
+                'dolphin-emu',
+                'Lutris',
+                'Citra',
+                'SuperTuxKart',
+                'Steam',
             ]),
         ],
     }),
-    ("coding", {
+    ('coding', {
         'label': '3 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "Alacritty",
-                "Terminator",
-                "URxvt",
-                "UXTerm",
-                "kitty",
-                "K3rmit",
-                "XTerm",
-                "Geany",
-                "Atom",
-                "Subl3",
-                "code-oss",
-                "Cypress",
-                "Oomox",
-                "Unity",
-                "UnityHub",
-                "jetbrains-studio",
+                'Alacritty',
+                'Terminator',
+                'URxvt',
+                'UXTerm',
+                'kitty',
+                'K3rmit',
+                'XTerm',
+                'Geany',
+                'Atom',
+                'Subl3',
+                'code-oss',
+                'Cypress',
+                'Oomox',
+                'Unity',
+                'UnityHub',
+                'jetbrains-studio',
             ]),
         ],
     }),
-    ("computer", {
+    ('computer', {
         'label': '4 ',
         'layout': 'monadtall',
         'matches': [
             Match(wm_class=[
-                "dolphin",
-                "ark",
-                "Nemo",
-                "File-roller",
-                "googledocs",
-                "keep",
-                "calendar",
+                'dolphin',
+                'ark',
+                'Nemo',
+                'File-roller',
+                'googledocs',
+                'keep',
+                'calendar',
             ]),
         ],
     }),
-    ("graphics", {
+    ('graphics', {
         'label': '5 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "Gimp-2.10",
-                "Gimp",
-                "Inkscape",
-                "Flowblade",
-                "digikam",
+                'Gimp-2.10',
+                'Gimp',
+                'Inkscape',
+                'Flowblade',
+                'digikam',
             ]),
         ],
     }),
-    ("video", {
+    ('video', {
         'label': '6 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "vlc",
-                "Celluloid",
+                'vlc',
+                'Celluloid',
             ]),
         ],
     }),
-    ("music", {
+    ('music', {
         'label': '7 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "Spotify",
-                "youtubemusic-nativefier-040164",
+                'Spotify',
+                'youtubemusic-nativefier-040164',
             ]),
         ],
     }),
-    ("misc", {
+    ('misc', {
         'label': '8 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "whatsapp",
-                "Slack",
-                "discord",
-                "obs",
+                'whatsapp',
+                'Slack',
+                'discord',
+                'obs',
             ]),
         ],
     }),
-    ("sandbox", {
+    ('sandbox', {
         'label': '9 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                "VirtualBox Manage",
-                "VirtualBox Machine",
+                'VirtualBox Manage',
+                'VirtualBox Machine',
             ]),
         ],
     })
@@ -132,8 +132,8 @@ group_names = [
 
 groups = [
     *[Group(name, **kwargs) for name, kwargs in group_names],
-    ScratchPad("scratchpad", [
-        DropDown("term", apps.terminal, height=0.6, warp_pointer=False),
+    ScratchPad('scratchpad', [
+        DropDown('term', apps.terminal, height=0.6, warp_pointer=False),
     ]),
 ]
 

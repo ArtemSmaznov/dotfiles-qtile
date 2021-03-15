@@ -4,6 +4,7 @@ import socket
 from libqtile import qtile, widget
 
 import settings.apps as apps
+import settings.preferences as user
 import theme.default as theme
 
 
@@ -47,7 +48,7 @@ def layout_icon(bg_color=theme.background):
 def group_box():
     return widget.GroupBox(
         font="Font Awesome 5",
-        fontsize=15,
+        fontsize=14,
         margin_y=3,
         margin_x=0,
         padding_y=5,
@@ -128,7 +129,11 @@ def updater(bg_color=theme.background):
             padding=2,
             foreground=theme.foreground,
             background=bg_color,
-            fontsize=16
+            fontsize=16,
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn(apps.terminal + ' -e sudo pacman -Syu'),
+                "Button3": lambda: qtile.cmd_spawn(apps.package_manager),
+            },
         ),
         widget.CheckUpdates(
             distro='Arch',
@@ -154,13 +159,11 @@ def updater(bg_color=theme.background):
             distro='Arch',
             display_format='{updates}',
             custom_command='pacman -Qu | grep -e nvidia -e linux',
-            #  no_update_string='n/a',
             update_interval='1800',
             font=theme.font_bold,
             colour_have_updates=theme.alert,
             colour_no_updates=theme.foreground,
             background=bg_color,
-            #  padding=0,
         ),
     ]
 
@@ -272,7 +275,10 @@ def volume(bg_color=theme.background):
             font=theme.font_bold,
             foreground=theme.foreground,
             background=bg_color,
-            padding=5
+            padding=5,
+            step=user.volume_step,
+            mouse_callbacks={
+                "Button3": lambda: qtile.cmd_spawn(apps.audio_manager), },
         ),
     ]
 
@@ -303,6 +309,8 @@ widget_defaults = dict(
     font=theme.font_regular,
     fontsize=11,
     padding=3,
+
+
 )
 
 extension_defaults = widget_defaults.copy()

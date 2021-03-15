@@ -3,6 +3,7 @@ from libqtile.lazy import lazy
 
 from keys.mods import alt, ctrl, mod, shift
 import settings.apps as apps
+import settings.preferences as user
 import utils
 
 keys = [
@@ -18,6 +19,17 @@ keys = [
     # Swith Keyboard Layouts
     Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
 
+    # Screenshots
+    Key([], "Print", lazy.function(utils.screenshot('full')),
+        desc="Fullscreen Screenshot"),
+    Key([mod, shift], "Print", lazy.function(utils.screenshot('area')),
+        desc="Selection Area Screenshot"),
+    Key([alt], "Print", lazy.function(utils.screenshot('window')),
+        desc="Current Window Screenshot"),
+
+
+    # Groups
+    Key([mod], 'Tab', lazy.screen.toggle_group()),
     # ScratchPad
     Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle('term')),
     Key([mod], "F12", lazy.group["coding"].toscreen(1)),
@@ -27,7 +39,7 @@ keys = [
     Key([mod, shift], "space", lazy.prev_layout(),
         desc="Toggle between layouts"),
 
-    #  Switch focus between monitors
+    # Switch focus between monitors
     Key([mod], "period", lazy.next_screen(),
         desc='Move focus to next monitor'),
     Key([mod], "comma", lazy.prev_screen(),
@@ -107,9 +119,9 @@ keys = [
     Key([ctrl, alt], "s", lazy.spawn(apps.game), desc="Launch Steam"),
 
     # Media keys
-    Key([], "XF86AudioRaiseVolume", lazy.spawn('amixer -q sset Master on 5%+')),
-    Key([], "XF86AudioLowerVolume", lazy.spawn('amixer -q sset Master on 5%-')),
-    Key([], "XF86AudioMute", lazy.spawn('amixer -q sset Master toggle')),
+    Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
+    Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
+    Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
 
 
 ]
