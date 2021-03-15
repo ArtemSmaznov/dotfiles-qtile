@@ -57,20 +57,20 @@ def volume_mute(qtile):
 
 
 def screenshot(type='full'):
-    path = os.path.expanduser('~/Pictures/Screenshots/')
+    path = os.path.expanduser(user.screenshot_location)
 
     def full(qtile):
-        format = str(time.now().strftime('%Y-%m-%d_%T')) + '.png'
+        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
         qtile.cmd_spawn('maim -u -m 1 ' + path +
                         format)
 
     def area(qtile):
-        format = str(time.now().strftime('%Y-%m-%d_%T')) + '.png'
+        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
         qtile.cmd_spawn('maim -u -B -s -n -m 1 ' + path +
                         format)
 
     def window(qtile):
-        format = str(time.now().strftime('%Y-%m-%d_%T')) + '.png'
+        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
         qtile.cmd_spawn('maim -u -B -i $(xdotool getactivewindow) -m 1 ' + path +
                         format, shell=True)
 
