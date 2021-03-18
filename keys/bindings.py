@@ -16,6 +16,13 @@ keys = [
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
+
+    # Power Menu
+    Key([alt], "F4",
+        lazy.spawn("./dmscripts/dmlogout"),
+        desc='A logout menu'
+        ),
+
     # Swith Keyboard Layouts
     Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
 

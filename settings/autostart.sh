@@ -8,5 +8,5 @@ solaar -w hide &
 nm-applet &
 
 alacritty &
-chromium &
+vivaldi-stable &
 /usr/bin/steam-runtime %U &

@@ -6,7 +6,7 @@ from keys.bindings import keys
 from keys.mods import mod, shift
 import settings.apps as apps
 
-
+# Most icons taken from https://fontawesome.com/
 group_names = [
     ('internet', {
         'label': '1 ',
@@ -17,6 +17,8 @@ group_names = [
                 'Tor Browser',
                 'Chromium',
                 'Google-chrome',
+                'Brave-browser',
+                'vivaldi-stable',
             ]),
         ],
     }),

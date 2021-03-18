@@ -27,6 +27,7 @@ def init_panel_widgets(s='main'):
             *power_line(4, my_widget.updater),
             *power_line(5, my_widget.volume),
             *power_line(6, my_widget.date),
+            my_widget.profile(),
         ]
     else:
         return [
@@ -40,7 +41,8 @@ def init_panel_widgets(s='main'):
             *power_line(1, my_widget.network),
             *power_line(2, my_widget.memory_graph),
             *power_line(3, my_widget.thermals),
-            *power_line(4, my_widget.date),
+            *power_line(4, my_widget.volume),
+            *power_line(5, my_widget.date),
         ]
 
 

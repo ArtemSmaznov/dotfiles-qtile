@@ -2,9 +2,9 @@ from libqtile.utils import guess_terminal
 
 terminal = guess_terminal()
 text_editor = 'xed'
-web_browser = 'chromium'
+web_browser = 'vivaldi-stable'
+incognito_browser = web_browser + ' --incognito'
 tor_browser = 'torbrowser-launcher'
-incognito_browser = 'chromium --incognito'
 file_manager = 'nemo'
 music_player = 'youtubemusic-nativefier'
 video_player = 'celluloid'

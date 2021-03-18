@@ -38,7 +38,7 @@ floating_layout = layout.Floating(float_rules=[
 
     #  Steam
     Match(title='Friends List'),
-    #  Match(title='News'),
+    Match(wm_class='Steam', title='News'),
 
     #  Other
     Match(wm_class='Nitrogen'),
