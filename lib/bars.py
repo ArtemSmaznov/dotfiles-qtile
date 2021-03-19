@@ -18,6 +18,7 @@ def init_panel_widgets(s='main'):
 
             my_widget.separator(20),
             my_widget.task_list(),
+            my_widget.notify(),
             my_widget.keyboard_layout(),
             my_widget.sys_tray(),
             my_widget.separator(5),

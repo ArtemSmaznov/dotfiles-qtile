@@ -18,6 +18,8 @@ inactive = material.grey_800
 #  inactive = scheme.color8
 alert = material.red_A200
 
+white = material.grey_50
+
 selection_accent = scheme.color1
 selection_bg = scheme.color9
 

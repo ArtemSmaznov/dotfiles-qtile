@@ -7,9 +7,12 @@ import settings.apps as apps
 import settings.preferences as user
 import theme.default as theme
 
+prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
-def open_app(qtile):
-    qtile.cmd_spawn('xterm')
+############################################################################
+# Widgets
+############################################################################
+# Most icons taken from https://fontawesome.com/
 
 
 def separator(size=6, backround=theme.background):
@@ -20,7 +23,7 @@ def separator(size=6, backround=theme.background):
     )
 
 
-def start_widget(bg_color=theme.background):
+def start_widget():
     return widget.Image(
         filename='~/.local/share/icons/Papirus-Dark/64x64/apps/distributor-logo-archlinux.svg',
         mouse_callbacks={
@@ -28,7 +31,7 @@ def start_widget(bg_color=theme.background):
     )
 
 
-def profile(bg_color=theme.background):
+def profile():
     return widget.Image(
         filename='~/.face',
         mouse_callbacks={
@@ -36,18 +39,34 @@ def profile(bg_color=theme.background):
     )
 
 
+def prompt_widget(bg_color=theme.background):
+    return widget.Prompt(
+        prompt=prompt,
+        font=theme.font_bold,
+        padding=10,
+        foreground=bg_color,
+        background=theme.selection_bg,
+    )
+
+
 def time(bg_color=theme.background):
     return widget.Clock(
         font=theme.font_bold,
-        foreground=theme.foreground,
         background=bg_color,
         format='%l:%M %p'
     )
 
 
+def layout():
+    return [
+        widget.CurrentLayout(
+            font=theme.font_bold,
+        ),
+    ]
+
+
 def layout_icon(bg_color=theme.background):
     return widget.CurrentLayoutIcon(
-        foreground=theme.foreground,
         background=bg_color,
         scale=0.6,
     )
@@ -79,23 +98,9 @@ def group_box():
     )
 
 
-prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-
-
-def prompt_widget(bg_color=theme.background):
-    return widget.Prompt(
-        prompt=prompt,
-        font=theme.font_bold,
-        padding=10,
-        foreground=bg_color,
-        background=theme.selection_bg,
-    )
-
-
 def window_name(bg_color=theme.background):
     return widget.WindowName(
         font=theme.font_bold,
-        foreground=theme.foreground,
         background=bg_color,
         padding=0
     )
@@ -106,15 +111,23 @@ def task_list(bg_color=theme.background):
         font=theme.font_bold,
         highlight_method='block',
         border=theme.other_selection_bg,
-        foreground=theme.foreground,
         background=bg_color,
         max_title_width=150,
         padding_x=10,
     )
 
 
+def notify():
+    return widget.Notify(
+        foreground=theme.selection_accent,
+        foreground_urgent=theme.alert,
+        foreground_low=theme.foreground,
+    )
+
+
 def keyboard_layout(bg_color=theme.background):
     return widget.KeyboardLayout(
+        foreground=theme.white,
         background=bg_color,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn('setxkbmap us'),
@@ -129,13 +142,16 @@ def sys_tray(bg_color=theme.background):
         padding=5
     )
 
+############################################################################
+# PowerLine Widgets
+############################################################################
+
 
 def updater(bg_color=theme.background):
     return [
         widget.TextBox(
             text=" ",
             padding=2,
-            foreground=theme.foreground,
             background=bg_color,
             fontsize=16,
             mouse_callbacks={
@@ -144,7 +160,7 @@ def updater(bg_color=theme.background):
             },
         ),
         widget.CheckUpdates(
-            distro='Arch',
+            distro='Arch_checkupdates',
             display_format='{updates}',
             no_update_string='n/a',
             update_interval='1800',
@@ -181,9 +197,8 @@ def thermals(bg_color=theme.background):
         widget.TextBox(
             text=" ",
             padding=2,
-            foreground=theme.foreground,
             background=bg_color,
-            fontsize=16
+            fontsize=15
         ),
         widget.ThermalSensor(
             font=theme.font_bold,
@@ -199,7 +214,6 @@ def network(bg_color=theme.background):
     return [
         widget.TextBox(
             text=" ",
-            foreground=theme.foreground,
             background=bg_color,
             padding=0,
             fontsize=20
@@ -208,7 +222,6 @@ def network(bg_color=theme.background):
             font=theme.font_bold,
             interface="eno1",
             format='{down} | {up}',
-            foreground=theme.foreground,
             background=bg_color,
             padding=5
         ),
@@ -219,14 +232,12 @@ def memory(bg_color=theme.background):
     return [
         widget.TextBox(
             text=" ",
-            foreground=theme.foreground,
             background=bg_color,
             padding=0,
             fontsize=20
         ),
         widget.Memory(
             font=theme.font_bold,
-            foreground=theme.foreground,
             background=bg_color,
             measure_mem='G',
         ),
@@ -237,17 +248,18 @@ def network_graph(bg_color=theme.background):
     return [
         widget.TextBox(
             text=" ",
-            foreground=theme.foreground,
             background=bg_color,
             padding=0,
             fontsize=20
         ),
         widget.NetGraph(
             interface="eno1",
-            foreground=theme.foreground,
-            background=bg_color,
-            graph_color=theme.foreground,
             border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=theme.foreground,
+            fill_color='{}.5'.format(theme.foreground),
+            background=bg_color,
         ),
     ]
 
@@ -256,16 +268,17 @@ def memory_graph(bg_color=theme.background):
     return [
         widget.TextBox(
             text=" ",
-            foreground=theme.foreground,
             background=bg_color,
             padding=0,
             fontsize=20
         ),
         widget.MemoryGraph(
-            foreground=theme.foreground,
-            background=bg_color,
-            graph_color=theme.foreground,
             border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=theme.foreground,
+            fill_color='{}.5'.format(theme.foreground),
+            background=bg_color,
         ),
     ]
 
@@ -275,13 +288,11 @@ def volume(bg_color=theme.background):
         widget.TextBox(
             text=" ",
             fontsize=22,
-            foreground=theme.foreground,
             background=bg_color,
             padding=0
         ),
         widget.Volume(
             font=theme.font_bold,
-            foreground=theme.foreground,
             background=bg_color,
             padding=5,
             step=user.volume_step,
@@ -291,21 +302,16 @@ def volume(bg_color=theme.background):
     ]
 
 
-def layout(bg_color=theme.background):
-    return [
-        widget.CurrentLayout(
-            font=theme.font_bold,
-            foreground=theme.foreground,
-            background=bg_color,
-        ),
-    ]
-
-
 def date(bg_color=theme.background):
     return [
+        widget.TextBox(
+            text=" ",
+            fontsize=12,
+            background=bg_color,
+            padding=0
+        ),
         widget.Clock(
             font=theme.font_bold,
-            foreground=theme.foreground,
             background=bg_color,
             format='%a, %d %b %Y'
         ),
@@ -317,8 +323,7 @@ widget_defaults = dict(
     font=theme.font_regular,
     fontsize=11,
     padding=3,
-
-
+    foreground=theme.foreground,
 )
 
 extension_defaults = widget_defaults.copy()
