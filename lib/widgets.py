@@ -32,7 +32,7 @@ def profile(bg_color=theme.background):
     return widget.Image(
         filename='~/.face',
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn("./dmscripts/dmlogout"), },
+            "Button1": lambda: qtile.cmd_spawn("./.bin/dmscripts/dmlogout"), },
     )
 
 

@@ -50,29 +50,3 @@ def volume_decrease(qtile):
 
 def volume_mute(qtile):
     qtile.cmd_spawn('amixer -q sset Master toggle')
-
-############################################################################
-# Screenshots
-############################################################################
-
-
-def screenshot(type='full'):
-    def action(qtile):
-        path = os.path.expanduser(user.screenshot_location)
-        format = str(time.now().strftime(user.screenshot_filename)) + '.png'
-
-        if type == 'full':
-            command = 'maim -u -m 1 '
-        elif type == 'area':
-            command = 'maim -u -B -s -n -m 1 '
-        elif type == 'window':
-            command = 'maim -u -B -i $(xdotool getactivewindow) -m 1 '
-        else:
-            command = 'maim -u -m 1 '
-
-        qtile.cmd_spawn(command + path + format, shell=True)
-        # copying to clipboard does work for me even directly from the terminal
-        # qtile.cmd_spawn(
-        #     'xclip -selection clipboard -t image/png -i ' + path + format)
-
-    return action
