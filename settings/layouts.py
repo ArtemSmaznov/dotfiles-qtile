@@ -10,8 +10,8 @@ layout_theme = {"border_width": 3,
 
 layouts = [
     layout.Columns(**layout_theme),
-    layout.MonadTall(**layout_theme),
     layout.Max(**layout_theme),
+    layout.MonadTall(**layout_theme),
     #  layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),

@@ -24,7 +24,7 @@ group_names = [
     }),
     ('gaming', {
         'label': '2 ',
-        'layout': 'max',
+        'layout': 'columns',
         'matches': [
             Match(wm_class=[
                 'Wine',
@@ -62,7 +62,7 @@ group_names = [
     }),
     ('computer', {
         'label': '4 ',
-        'layout': 'monadtall',
+        'layout': 'columns',
         'matches': [
             Match(wm_class=[
                 'dolphin',

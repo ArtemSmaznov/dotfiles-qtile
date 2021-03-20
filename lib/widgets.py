@@ -156,7 +156,6 @@ def updater(bg_color=theme.background):
             fontsize=16,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(apps.terminal + ' -e sudo pacman -Syu'),
-                "Button3": lambda: qtile.cmd_spawn(apps.package_manager),
             },
         ),
         widget.CheckUpdates(
