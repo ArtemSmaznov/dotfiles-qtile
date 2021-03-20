@@ -1,5 +1,4 @@
 from datetime import datetime as time
-import os
 
 from libqtile import widget
 
