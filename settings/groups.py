@@ -1,7 +1,9 @@
+import re
+
 from libqtile.config import DropDown, Group, Key, ScratchPad
 from libqtile.dgroups import Match
 from libqtile.lazy import lazy
-import re
+
 from keys.bindings import keys
 from keys.mods import mod, shift
 import settings.apps as apps
@@ -61,7 +63,7 @@ group_names = [
         ],
     }),
     ('computer', {
-        'label': '4 ',
+        'label': '4 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -88,18 +90,8 @@ group_names = [
             ]),
         ],
     }),
-    ('video', {
-        'label': '6 ',
-        'layout': 'columns',
-        'matches': [
-            Match(wm_class=[
-                'vlc',
-                'Celluloid',
-            ]),
-        ],
-    }),
     ('music', {
-        'label': '7 ',
+        'label': '6 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -108,15 +100,25 @@ group_names = [
             ]),
         ],
     }),
-    ('misc', {
-        'label': '8 ',
+    ('video', {
+        'label': '7 ',
+        'layout': 'columns',
+        'matches': [
+            Match(wm_class=[
+                'vlc',
+                'Celluloid',
+                'obs',
+            ]),
+        ],
+    }),
+    ('chat', {
+        'label': '8 ',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
                 'whatsapp-nativefier-d52542',
                 'Slack',
                 'discord',
-                'obs',
             ]),
         ],
     }),
