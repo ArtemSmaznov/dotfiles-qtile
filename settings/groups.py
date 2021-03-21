@@ -1,7 +1,7 @@
 from libqtile.config import DropDown, Group, Key, ScratchPad
 from libqtile.dgroups import Match
 from libqtile.lazy import lazy
-
+import re
 from keys.bindings import keys
 from keys.mods import mod, shift
 import settings.apps as apps
@@ -113,7 +113,7 @@ group_names = [
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                'whatsapp',
+                'whatsapp-nativefier-d52542',
                 'Slack',
                 'discord',
                 'obs',
