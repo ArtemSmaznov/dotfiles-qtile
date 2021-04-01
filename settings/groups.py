@@ -11,7 +11,7 @@ import settings.apps as apps
 # Most icons taken from https://fontawesome.com/
 group_names = [
     ('internet', {
-        'label': '1 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -25,7 +25,7 @@ group_names = [
         ],
     }),
     ('gaming', {
-        'label': '2 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -39,7 +39,7 @@ group_names = [
         ],
     }),
     ('coding', {
-        'label': '3 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -63,7 +63,7 @@ group_names = [
         ],
     }),
     ('computer', {
-        'label': '4 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -77,8 +77,18 @@ group_names = [
             ]),
         ],
     }),
+    ('music', {
+        'label': '',
+        'layout': 'columns',
+        'matches': [
+            Match(wm_class=[
+                'Spotify',
+                'youtubemusic-nativefier-040164',
+            ]),
+        ],
+    }),
     ('graphics', {
-        'label': '5 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -90,18 +100,8 @@ group_names = [
             ]),
         ],
     }),
-    ('music', {
-        'label': '6 ',
-        'layout': 'columns',
-        'matches': [
-            Match(wm_class=[
-                'Spotify',
-                'youtubemusic-nativefier-040164',
-            ]),
-        ],
-    }),
     ('video', {
-        'label': '7 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -112,7 +112,7 @@ group_names = [
         ],
     }),
     ('chat', {
-        'label': '8 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -123,7 +123,7 @@ group_names = [
         ],
     }),
     ('sandbox', {
-        'label': '9 ',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[

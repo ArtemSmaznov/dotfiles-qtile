@@ -75,7 +75,7 @@ def layout_icon(bg_color=theme.background):
 def group_box():
     return widget.GroupBox(
         font="Font Awesome 5",
-        fontsize=14,
+        fontsize=16,
         margin_y=3,
         margin_x=0,
         padding_y=5,
@@ -141,6 +141,7 @@ def sys_tray(bg_color=theme.background):
         background=bg_color,
         padding=5
     )
+
 
 ############################################################################
 # PowerLine Widgets

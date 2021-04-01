@@ -6,6 +6,7 @@ nitrogen --restore &
 redshift-gtk &
 solaar -w hide &
 nm-applet &
+xscreensaver -no-splash &
 
 alacritty &
 vivaldi-stable &

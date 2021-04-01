@@ -1,4 +1,4 @@
-from libqtile.config import Click, Drag, Key
+from libqtile.config import Click, Drag, Key, KeyChord
 from libqtile.lazy import lazy
 
 from keys.mods import alt, ctrl, mod, shift
@@ -15,6 +15,10 @@ keys = [
         apps.launcher), desc='Open DMenu'),
     Key([mod, ctrl], 'r', lazy.restart(), desc='Restart Qtile'),
     Key([mod, ctrl], 'q', lazy.shutdown(), desc='Shutdown Qtile'),
+
+    KeyChord([mod], 'z', [
+        Key([], 'l', lazy.spawn(apps.lock), desc='Lock Screen'),
+    ]),
 
 
     # Power Menu
