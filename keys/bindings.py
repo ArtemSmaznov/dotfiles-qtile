@@ -7,7 +7,11 @@ import settings.preferences as user
 import utils
 
 keys = [
-    # System Control
+
+    # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█
+    # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█
+    # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀
+
     Key([mod], 'q', lazy.window.kill(), desc='Kill focused window'),
     Key([mod, shift], 'r', lazy.spawncmd(),
         desc='Spawn a command using a prompt widget'),
@@ -16,21 +20,28 @@ keys = [
     Key([mod, ctrl], 'r', lazy.restart(), desc='Restart Qtile'),
     Key([mod, ctrl], 'q', lazy.shutdown(), desc='Shutdown Qtile'),
 
+    # Swith Keyboard Layouts
+    Key([alt], 'Shift_L', lazy.function(utils.switch_keyboard_layout)),
+
+    # Media keys
+    Key([], 'XF86AudioRaiseVolume', lazy.function(utils.volume_increase)),
+    Key([], 'XF86AudioLowerVolume', lazy.function(utils.volume_decrease)),
+    Key([], 'XF86AudioMute', lazy.function(utils.volume_mute)),
+
+    # Power Control
+    Key([alt], 'F4',
+        lazy.spawn('./.bin/dmscripts/dmlogout'),
+        desc='A logout menu'
+        ),
     KeyChord([mod], 'z', [
         Key([], 'l', lazy.spawn(apps.lock), desc='Lock Screen'),
     ]),
 
 
-    # Power Menu
-    Key([alt], 'F4',
-        lazy.spawn('./.bin/dmscripts/dmlogout'),
-        desc='A logout menu'
-        ),
+    # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
+    # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
+    # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
 
-    # Swith Keyboard Layouts
-    Key([alt], 'Shift_L', lazy.function(utils.switch_keyboard_layout)),
-
-    # Screenshots
     Key([ctrl], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh full'),
         desc='Full Desktop Screenshot'),
     Key([], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh screen'),
@@ -41,7 +52,10 @@ keys = [
         desc='Current Window Screenshot'),
 
 
-    # Groups
+    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
+    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
+    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
+
     Key([mod], 'Tab', lazy.screen.toggle_group()),
     # ScratchPad
     Key([mod], 'quoteleft', lazy.group['scratchpad'].dropdown_toggle('term')),
@@ -109,6 +123,11 @@ keys = [
         lazy.window.toggle_fullscreen(),
         desc='toggle fullscreen'),
 
+
+    # ░█▀█░█▀█░█▀█░█▀▀
+    # ░█▀█░█▀▀░█▀▀░▀▀█
+    # ░▀░▀░▀░░░▀░░░▀▀▀
+
     # Main Applications launched with SUPER + KEY
     Key([mod], 'e', lazy.spawn(apps.file_manager), desc='Launch file manager'),
     Key([mod], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
@@ -117,7 +136,6 @@ keys = [
     #  desc='Launch web browser in incognito mode'),
     Key([mod], 't', lazy.spawn(apps.tor_browser), desc='Launch tor browser'),
     Key([mod], 'c', lazy.spawn(apps.ide), desc='Launch IDE'),
-
 
     # Secondary Applications launched with CTRL + ALT + KEY
     Key([ctrl, alt], 't', lazy.spawn(apps.terminal), desc='Launch terminal'),
@@ -131,13 +149,12 @@ keys = [
         desc='Launch graphics editor'),
     Key([ctrl, alt], 's', lazy.spawn(apps.game), desc='Launch Steam'),
 
-    # Media keys
-    Key([], 'XF86AudioRaiseVolume', lazy.function(utils.volume_increase)),
-    Key([], 'XF86AudioLowerVolume', lazy.function(utils.volume_decrease)),
-    Key([], 'XF86AudioMute', lazy.function(utils.volume_mute)),
-
-
 ]
+
+
+# ░█▄█░█▀█░█░█░█▀▀░█▀▀
+# ░█░█░█░█░█░█░▀▀█░█▀▀
+# ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 
 # Drag floating layouts.
 mouse = [

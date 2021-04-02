@@ -34,10 +34,10 @@ def switch_keyboard_layout(qtile):
         kbr_index = 0
     qtile.cmd_spawn('setxkbmap ' + user.languages[kbr_index])
 
-############################################################################
-# Volume
-############################################################################
 
+# ░█░█░█▀█░█░░░█░█░█▄█░█▀▀
+# ░▀▄▀░█░█░█░░░█░█░█░█░█▀▀
+# ░░▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
 def volume_increase(qtile):
     qtile.cmd_spawn('amixer -q sset Master on ' + str(user.volume_step) + '%+')

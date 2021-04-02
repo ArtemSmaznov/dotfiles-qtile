@@ -9,11 +9,11 @@ import theme.default as theme
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
-############################################################################
-# Widgets
-############################################################################
-# Most icons taken from https://fontawesome.com/
 
+# ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
+# ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
+# ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+# Most icons taken from https://fontawesome.com/
 
 def separator(size=6, backround=theme.background):
     return widget.Sep(
@@ -143,10 +143,9 @@ def sys_tray(bg_color=theme.background):
     )
 
 
-############################################################################
-# PowerLine Widgets
-############################################################################
-
+# ░█▀█░█▀█░█░█░█▀▀░█▀▄░█░░░▀█▀░█▀█░█▀▀
+# ░█▀▀░█░█░█▄█░█▀▀░█▀▄░█░░░░█░░█░█░█▀▀
+# ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
 def updater(bg_color=theme.background):
     return [

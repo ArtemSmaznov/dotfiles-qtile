@@ -1,4 +1,6 @@
-#  https://terminal.sexy/#Hx8fwLGLSjY30XtJe4dIr4ZaU1xcd1dZbXFewLGLQC4urF0vZHA1j2hAREtLYURFWFxJl4ll
+# https://terminal.sexy/#Hx8fwLGLSjY30XtJe4dIr4ZaU1xcd1dZbXFewLGLQC4urF0vZHA1j2hAREtLYURFWFxJl4ll
+# Termite export format is very easy to convert
+
 # special
 foreground = "#c0b18b"
 foreground_bold = "#c0b18b"
