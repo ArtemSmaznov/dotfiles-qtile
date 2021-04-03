@@ -67,10 +67,16 @@ keys = [
         desc='Toggle between layouts'),
 
     # Switch focus between monitors
+    Key([mod], 'F1', lazy.to_screen(0),
+        desc='Move focus to first monitor'),
+    Key([mod], 'F2', lazy.to_screen(1),
+        desc='Move focus to second monitor'),
+
     Key([mod], 'period', lazy.next_screen(),
         desc='Move focus to next monitor'),
     Key([mod], 'comma', lazy.prev_screen(),
         desc='Move focus to prev monitor'),
+
 
     # Switch between windows
     Key([mod], 'h', lazy.layout.left(), desc='Move focus to left'),
