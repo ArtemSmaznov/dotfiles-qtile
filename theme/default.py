@@ -36,7 +36,6 @@ other_selection_accent = scheme.color2
 other_selection_bg = scheme.color10
 
 power_line_colors = [
-    background,
     scheme.color9,
     scheme.color10,
     scheme.color11,
