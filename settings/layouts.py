@@ -1,7 +1,7 @@
 from libqtile import layout
 from libqtile.config import Match
 
-from theme.default import global_layout
+from theme.default import global_layout, float_layout
 
 layouts = [
     layout.Columns(**global_layout),
@@ -40,5 +40,5 @@ floating_layout = layout.Floating(
         #  Other
         Match(wm_class='Nitrogen'),
     ],
-    **global_layout
+    **float_layout
 )

@@ -36,7 +36,7 @@ other_selection_accent = scheme.color2
 other_selection_bg = scheme.color10
 
 power_line_colors = [
-    scheme.color9,
+    # scheme.color9,
     scheme.color10,
     scheme.color11,
     scheme.color12,
@@ -52,7 +52,14 @@ power_line_colors = [
 global_layout = {
     "margin": 6,
     "border_width": 3,
-    "border_focus": '#881111',
-    "border_normal": '#220000',
-    "border_focus_stack": '#d75f5f',
+    "border_focus": scheme.color9,
+    "border_normal": scheme.color8,
+    "border_focus_stack": scheme.color2,
+    "border_normal_stack": scheme.color14,
+}
+
+float_layout = {
+    "border_width": 2,
+    "border_focus": scheme.color6,
+    "border_normal": scheme.color8,
 }
