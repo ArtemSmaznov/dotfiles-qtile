@@ -9,5 +9,5 @@ nm-applet &
 xscreensaver -no-splash &
 
 alacritty &
-vivaldi-stable &
+brave &
 /usr/bin/steam-runtime %U &

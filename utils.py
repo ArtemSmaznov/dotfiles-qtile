@@ -1,10 +1,4 @@
-from datetime import datetime as time
-
-from libqtile import widget
-
-import lib.widgets as my_widget
 import settings.preferences as user
-import theme.default as theme
 
 kbr_index = 0
 
