@@ -1,15 +1,32 @@
 from libqtile import widget
 
+import settings.preferences as user
 import theme.default as theme
 
 
 def powerline(
     widgets=[],
     colors=theme.power_line_colors,
-    separator='',
-    separator_size=48,
-    separator_padding=-10,
+    separator_font=user.powerline_font
 ):
+
+    separator = {
+        'powerline': '',
+        'nerd': '',
+        'unicode': '◀',
+    }
+
+    separator_size = {
+        'powerline': 23,
+        'nerd': 64,
+        'unicode': 28,
+    }
+
+    separator_padding = {
+        'powerline': 0,
+        'nerd': -14,
+        'unicode': -4,
+    }
 
     power_line = []
     is_first_color_iteration = True
@@ -36,11 +53,11 @@ def powerline(
         # Create a segment
         power_line.extend([
             widget.TextBox(
-                text=separator,
+                text=separator[separator_font],
                 foreground=current_color,
                 background=previous_color,
-                fontsize=separator_size,
-                padding=separator_padding,
+                fontsize=separator_size[separator_font],
+                padding=separator_padding[separator_font],
             ),
             *widgets[iw](current_color)
         ])
