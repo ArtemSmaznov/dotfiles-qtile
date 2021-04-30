@@ -30,7 +30,7 @@ keys = [
 
     # Power Control
     Key([alt], 'F4',
-        lazy.spawn('./.bin/dmscripts/dmlogout'),
+        lazy.spawn('./.local/bin/dmscripts/dmpower'),
         desc='A logout menu'
         ),
     KeyChord([mod], 'z', [
@@ -42,13 +42,13 @@ keys = [
     # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
     # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
 
-    Key([ctrl], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh full'),
+    Key([ctrl], 'Print', lazy.spawn('/home/artem/.local/bin/dmscripts/dmscreenshot full'),
         desc='Full Desktop Screenshot'),
-    Key([], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh screen'),
+    Key([], 'Print', lazy.spawn('/home/artem/.local/bin/dmscripts/dmscreenshot screen'),
         desc='Fullscreen Screenshot'),
-    Key([mod, shift], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh area'),
+    Key([mod, shift], 'Print', lazy.spawn('/home/artem/.local/bin/dmscripts/dmscreenshot area'),
         desc='Selection Area Screenshot'),
-    Key([alt], 'Print', lazy.spawn('/home/artem/.bin/screenshot.sh window'),
+    Key([alt], 'Print', lazy.spawn('/home/artem/.local/bin/dmscripts/dmscreenshot window'),
         desc='Current Window Screenshot'),
 
 

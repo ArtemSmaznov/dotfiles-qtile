@@ -45,7 +45,7 @@ def init_panel_widgets(s='main'):
             widget.task_list(),
             *powerline(
                 widgets=[
-                    widget.network,
+                    widget.network_graph,
                     widget.memory_graph,
                     widget.thermals,
                     widget.volume,

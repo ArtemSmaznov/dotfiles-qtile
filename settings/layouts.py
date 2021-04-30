@@ -28,13 +28,14 @@ floating_layout = layout.Floating(
         Match(wm_class='ssh-askpass'),  # ssh-askpass
         Match(wm_class='confirmreset'),  # gitk
         Match(wm_class='makebranch'),  # gitk
-        Match(wm_class='maketag'),  # gitk
         Match(title='branchdialog'),  # gitk
+        Match(wm_class='maketag'),  # gitk
         Match(title='pinentry'),  # GPG key password entry
 
         #  Steam
         Match(title='Friends List'),
         Match(wm_class='Steam', title='News'),
+        Match(wm_class='Steam', title='Steam Guard'),
         # Match(wm_class='Steam', title='Self Updater'),
 
         #  Other

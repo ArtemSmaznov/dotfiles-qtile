@@ -35,7 +35,7 @@ def profile():
     return widget.Image(
         filename='~/.face',
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn("./.bin/dmscripts/dmlogout"), },
+            "Button1": lambda: qtile.cmd_spawn("./.local/bin/dmscripts/dmpower"), },
     )
 
 
@@ -110,10 +110,14 @@ def task_list(bg_color=theme.background):
     return widget.TaskList(
         font=theme.font_bold,
         highlight_method='block',
-        border=theme.other_selection_bg,
+        border=theme.selection_bg,
         background=bg_color,
+        rounded=False,
+        icon_size=12,
         max_title_width=150,
-        padding_x=10,
+        padding_x=5,
+        padding_y=5,
+        margin=0,
     )
 
 

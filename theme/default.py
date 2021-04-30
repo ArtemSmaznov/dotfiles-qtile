@@ -30,7 +30,7 @@ alert = material.red_A200
 white = material.grey_50
 
 selection_accent = scheme.color1
-selection_bg = scheme.color9
+selection_bg = scheme.color11
 
 other_selection_accent = scheme.color2
 other_selection_bg = scheme.color10

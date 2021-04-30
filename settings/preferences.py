@@ -6,6 +6,7 @@ volume_step = 2
 
 # Languages
 languages = ['us', 'ru']
+# languages = ['us', 'ru', 'jp']
 
 # Screenshots
 screenshot_filename = '%Y-%m-%d_%T'
