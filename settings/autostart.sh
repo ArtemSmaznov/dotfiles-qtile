@@ -9,6 +9,6 @@ solaar -w hide &
 nm-applet &
 xscreensaver -no-splash &
 
-alacritty &
+# alacritty &
 brave &
 /usr/bin/steam-runtime %U &

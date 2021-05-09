@@ -12,7 +12,7 @@ layouts = [
     # layout.Matrix(),
     # layout.MonadWide(),
     # layout.RatioTile(),
-    # layout.Tile(**global_theme),
+    # layout.Tile(**global_layout),
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
@@ -36,6 +36,7 @@ floating_layout = layout.Floating(
         Match(title='Friends List'),
         Match(wm_class='Steam', title='News'),
         Match(wm_class='Steam', title='Steam Guard'),
+        Match(wm_class='Steam', title='Screenshot Uploader'),
         # Match(wm_class='Steam', title='Self Updater'),
 
         #  Other

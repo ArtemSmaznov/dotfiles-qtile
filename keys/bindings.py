@@ -35,6 +35,9 @@ keys = [
         ),
     KeyChord([mod], 'z', [
         Key([], 'l', lazy.spawn(apps.lock), desc='Lock Screen'),
+        Key([], 's', lazy.spawn('systemctl suspend'), desc='Suspend System'),
+        Key([], 'p', lazy.spawn('systemctl poweroff'), desc='Shutdown System'),
+        Key([], 'r', lazy.spawn('systemctl reboot'), desc='Restart'),
     ]),
 
 
@@ -134,26 +137,40 @@ keys = [
     # ░█▀█░█▀▀░█▀▀░▀▀█
     # ░▀░▀░▀░░░▀░░░▀▀▀
 
+    KeyChord([mod], 'o', [
+        Key([], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
+        Key([], 'i', lazy.spawn(apps.incognito_browser),
+            desc='Launch browser in incognito'),
+        Key([], 't', lazy.spawn(apps.tor_browser), desc='Launch tor browser'),
+        Key([], 'm', lazy.spawn(
+            apps.music_player), desc='Launch music player'),
+        Key([], 'v', lazy.spawn(
+            apps.video_player), desc='Launch video player'),
+        Key([], 's', lazy.spawn(apps.game), desc='Launch Steam'),
+    ]),
+
+    KeyChord([ctrl, alt], 'o', [
+        Key([], 'c', lazy.spawn(apps.ide), desc='Launch IDE'),
+        Key([], 't', lazy.spawn(apps.text_editor),
+            desc='Launch text editor'),
+        Key([], 'r', lazy.spawn(apps.vector_editor),
+            desc='Launch vector editor'),
+        Key([], 'p', lazy.spawn(apps.photos_library),
+            desc='Launch photos library'),
+        Key([], 'g', lazy.spawn(apps.graphics_editor),
+            desc='Launch graphics editor'),
+        Key([], 'v', lazy.spawn(apps.video_editor),
+            desc='Launch video editor'),
+    ]),
+
     # Main Applications launched with SUPER + KEY
     Key([mod], 'e', lazy.spawn(apps.file_manager), desc='Launch file manager'),
     Key([mod], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
     Key([mod], 'i', lazy.spawn(apps.incognito_browser),
-        desc='Launch incognito browser'),
-    #  desc='Launch web browser in incognito mode'),
-    Key([mod], 't', lazy.spawn(apps.tor_browser), desc='Launch tor browser'),
-    Key([mod], 'c', lazy.spawn(apps.ide), desc='Launch IDE'),
+        desc='Launch browser in incognito'),
 
     # Secondary Applications launched with CTRL + ALT + KEY
     Key([ctrl, alt], 't', lazy.spawn(apps.terminal), desc='Launch terminal'),
-    Key([ctrl, alt], 'm', lazy.spawn(
-        apps.music_player), desc='Launch music player'),
-    Key([ctrl, alt], 'p', lazy.spawn(apps.photos_library),
-        desc='Launch photos library'),
-    Key([ctrl, alt], 'v', lazy.spawn(
-        apps.video_player), desc='Launch video player'),
-    Key([ctrl, alt], 'g', lazy.spawn(apps.graphics_editor),
-        desc='Launch graphics editor'),
-    Key([ctrl, alt], 's', lazy.spawn(apps.game), desc='Launch Steam'),
 
 ]
 
