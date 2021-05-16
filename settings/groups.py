@@ -13,6 +13,7 @@ group_names = [
     ('internet', {
         'label': '',
         'layout': 'columns',
+        # 'spawn': apps.web_browser,
         'matches': [
             Match(wm_class=[
                 'firefox',
@@ -27,6 +28,7 @@ group_names = [
     ('gaming', {
         'label': '',
         'layout': 'columns',
+        # 'spawn': apps.game,
         'matches': [
             Match(wm_class=[
                 'Wine',
@@ -42,6 +44,7 @@ group_names = [
     ('coding', {
         'label': '',
         'layout': 'columns',
+        'spawn': apps.terminal,
         'matches': [
             Match(wm_class=[
                 # 'Alacritty',
@@ -81,6 +84,7 @@ group_names = [
     ('music', {
         'label': '',
         'layout': 'columns',
+        'spawn': apps.cli_music_player,
         'matches': [
             Match(wm_class=[
                 'Spotify',

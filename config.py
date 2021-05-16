@@ -3,6 +3,7 @@ import subprocess
 from typing import List
 
 from libqtile import hook
+from libqtile.lazy import lazy
 
 from keys.bindings import keys, mouse
 from lib.widgets import extension_defaults, widget_defaults
@@ -23,8 +24,10 @@ focus_on_window_activation = "smart"
 
 @ hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/settings/autostart.sh')
-    subprocess.call([home])
+    autostart_script = os.path.expanduser(
+        '~/.config/autostart-scripts/autostart.sh'
+    )
+    subprocess.call([autostart_script])
 
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this

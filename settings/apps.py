@@ -2,11 +2,13 @@ from libqtile.utils import guess_terminal
 
 terminal = guess_terminal()
 text_editor = 'xed'
-web_browser = 'brave'
+# web_browser = 'brave'
+web_browser = 'brave --disable-features=SendMouseLeaveEvents'
 incognito_browser = web_browser + ' --incognito'
 tor_browser = 'torbrowser-launcher'
 file_manager = 'nemo'
 music_player = 'youtubemusic-nativefier'
+cli_music_player = terminal + ' -e tmux attach -t music'
 video_player = 'celluloid'
 game = '/usr/bin/steam-runtime %U'
 ide = terminal + ' -e vim'

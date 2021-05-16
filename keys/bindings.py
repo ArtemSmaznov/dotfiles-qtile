@@ -12,13 +12,17 @@ keys = [
     # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█
     # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀
 
-    Key([mod], 'q', lazy.window.kill(), desc='Kill focused window'),
-    Key([mod, shift], 'r', lazy.spawncmd(),
-        desc='Spawn a command using a prompt widget'),
-    Key([mod], 'r', lazy.spawn(
-        apps.launcher), desc='Open DMenu'),
     Key([mod, ctrl], 'r', lazy.restart(), desc='Restart Qtile'),
     Key([mod, ctrl], 'q', lazy.shutdown(), desc='Shutdown Qtile'),
+    Key([mod, ctrl], 'd',
+        lazy.to_screen(1),
+        desc='Debugging hotkey'),
+
+    Key([mod], 'q', lazy.window.kill(), desc='Kill focused window'),
+    Key([mod], 'r', lazy.spawn(
+        apps.launcher), desc='Open DMenu'),
+    Key([mod, shift], 'r', lazy.spawncmd(),
+        desc='Spawn a command using a prompt widget'),
 
     # Swith Keyboard Layouts
     Key([alt], 'Shift_L', lazy.function(utils.switch_keyboard_layout)),
@@ -55,31 +59,55 @@ keys = [
         desc='Current Window Screenshot'),
 
 
-    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
-    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
-
-    Key([mod], 'Tab', lazy.screen.toggle_group()),
-    # ScratchPad
-    Key([mod], 'quoteleft', lazy.group['scratchpad'].dropdown_toggle('term')),
-    Key([mod], 'F12', lazy.group['coding'].toscreen(1)),
-
-    # Toggle between different layouts as defined below
-    Key([mod], 'space', lazy.next_layout(), desc='Toggle between layouts'),
-    Key([mod, shift], 'space', lazy.prev_layout(),
-        desc='Toggle between layouts'),
+    # ░█▄█░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀▄░█▀▀
+    # ░█░█░█░█░█░█░░█░░░█░░█░█░█▀▄░▀▀█
+    # ░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀
 
     # Switch focus between monitors
+    Key([mod, alt], 'h', lazy.prev_screen(),
+        desc='Move focus to prev monitor'),
+    Key([mod, alt], 'l', lazy.next_screen(),
+        desc='Move focus to next monitor'),
+
     Key([mod], 'F1', lazy.to_screen(0),
         desc='Move focus to first monitor'),
     Key([mod], 'F2', lazy.to_screen(1),
         desc='Move focus to second monitor'),
 
-    Key([mod], 'period', lazy.next_screen(),
-        desc='Move focus to next monitor'),
-    Key([mod], 'comma', lazy.prev_screen(),
-        desc='Move focus to prev monitor'),
 
+    # ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
+    # ░█░█░█▀▄░█░█░█░█░█▀▀░▀▀█
+    # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
+
+    Key([mod], 'Tab', lazy.screen.toggle_group()),
+
+    # ScratchPad
+    Key([mod], 'quoteleft', lazy.group['scratchpad'].dropdown_toggle('term')),
+    Key([mod], 'F12', lazy.group['coding'].toscreen(1)),
+
+
+    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
+    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
+    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+
+    # Toggle between different layouts
+    Key([mod], 'space', lazy.next_layout(), desc='Toggle between layouts'),
+    Key([mod, shift], 'space', lazy.prev_layout(),
+        desc='Toggle between layouts'),
+
+    # Toggle windows states
+    Key([mod], 'f',
+        lazy.window.toggle_floating(),
+        desc='Toggle floating'),
+    Key([mod], 'm',
+        lazy.window.toggle_maximize(),
+        desc='Toggle maximize'),
+    Key([mod], 'F11',
+        lazy.window.toggle_fullscreen(),
+        desc='Toggle fullscreen'),
+    Key([mod], 'd',
+        lazy.window.toggle_minimize(),
+        desc='Toggle minimize'),
 
     # Switch between windows
     Key([mod], 'h', lazy.layout.left(), desc='Move focus to left'),
@@ -87,6 +115,8 @@ keys = [
     Key([mod], 'j', lazy.layout.down(), desc='Move focus down'),
     Key([mod], 'k', lazy.layout.up(), desc='Move focus up'),
     Key([alt], 'Tab', lazy.layout.next(),
+        desc='Move window focus to other window'),
+    Key([alt, shift], 'Tab', lazy.layout.previous(),
         desc='Move window focus to other window'),
 
     # Move windows between left/right columns or move up/down in current stack.
@@ -108,7 +138,7 @@ keys = [
     Key([mod, ctrl], 'j', lazy.layout.grow_down(),
         desc='Grow window down'),
     Key([mod, ctrl], 'k', lazy.layout.grow_up(), desc='Grow window up'),
-    Key([mod], 'n', lazy.layout.normalize(), desc='Reset all window sizes'),
+    Key([mod], 'equal', lazy.layout.normalize(), desc='Reset all window sizes'),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -116,26 +146,23 @@ keys = [
     # multiple stack panes
     Key([mod, shift], 'Return', lazy.layout.toggle_split(),
         desc='Toggle between split and unsplit sides of stack'),
-    Key([mod], 'Return', lazy.spawn(apps.terminal), desc='Launch terminal'),
 
-    # Toggle windows states
-    Key([mod], 'f',
-        lazy.window.toggle_floating(),
-        desc='toggle floating'),
-    Key([mod], 'm',
-        lazy.window.toggle_maximize(),
-        desc='toggle maximize'),
-    Key([mod], 'd',
-        lazy.window.toggle_minimize(),
-        desc='toggle minimize'),
-    Key([mod], 'F11',
-        lazy.window.toggle_fullscreen(),
-        desc='toggle fullscreen'),
 
 
     # ░█▀█░█▀█░█▀█░█▀▀
     # ░█▀█░█▀▀░█▀▀░▀▀█
     # ░▀░▀░▀░░░▀░░░▀▀▀
+
+    Key([mod], 'Return', lazy.spawn(apps.terminal), desc='Launch terminal'),
+
+    # Main Applications launched with SUPER + KEY
+    Key([mod], 'e', lazy.spawn(apps.file_manager), desc='Launch file manager'),
+    Key([mod], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
+    Key([mod], 'i', lazy.spawn(apps.incognito_browser),
+        desc='Launch browser in incognito'),
+
+    # Secondary Applications launched with CTRL + ALT + KEY
+    Key([ctrl, alt], 't', lazy.spawn(apps.terminal), desc='Launch terminal'),
 
     KeyChord([mod], 'o', [
         Key([], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
@@ -162,15 +189,6 @@ keys = [
         Key([], 'v', lazy.spawn(apps.video_editor),
             desc='Launch video editor'),
     ]),
-
-    # Main Applications launched with SUPER + KEY
-    Key([mod], 'e', lazy.spawn(apps.file_manager), desc='Launch file manager'),
-    Key([mod], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
-    Key([mod], 'i', lazy.spawn(apps.incognito_browser),
-        desc='Launch browser in incognito'),
-
-    # Secondary Applications launched with CTRL + ALT + KEY
-    Key([ctrl, alt], 't', lazy.spawn(apps.terminal), desc='Launch terminal'),
 
 ]
 
