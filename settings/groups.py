@@ -42,7 +42,7 @@ group_names = [
         ],
     }),
     ('coding', {
-        'label': '',
+        'label': '',
         'layout': 'columns',
         'spawn': apps.terminal,
         'matches': [
@@ -67,7 +67,7 @@ group_names = [
         ],
     }),
     ('computer', {
-        'label': '',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
@@ -93,7 +93,7 @@ group_names = [
         ],
     }),
     ('graphics', {
-        'label': '',
+        'label': '',
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
