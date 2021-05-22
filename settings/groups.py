@@ -125,6 +125,7 @@ group_names = [
                 'whatsapp-nativefier-d52542',
                 'Slack',
                 'discord',
+                'signal',
             ]),
         ],
     }),
