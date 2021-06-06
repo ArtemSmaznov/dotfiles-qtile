@@ -3,7 +3,6 @@ import socket
 
 from libqtile import qtile, widget
 
-import lib.sensors as sensor
 import settings.apps as apps
 import settings.preferences as user
 import theme.default as theme
@@ -240,14 +239,3 @@ def chord():
     return widget.Chord(
         background=theme.alert
     )
-
-
-# Default widget settings
-widget_defaults = dict(
-    font=theme.font_regular,
-    fontsize=11,
-    padding=3,
-    foreground=theme.foreground,
-)
-
-extension_defaults = widget_defaults.copy()

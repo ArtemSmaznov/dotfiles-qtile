@@ -6,7 +6,7 @@ from libqtile import hook
 from libqtile.lazy import lazy
 
 from keys.bindings import keys, mouse
-from lib.widgets import extension_defaults, widget_defaults
+from lib.widgets import widget_defaults, extension_defaults
 from settings.groups import groups
 from settings.layouts import floating_layout, layouts
 from settings.screens import screens
