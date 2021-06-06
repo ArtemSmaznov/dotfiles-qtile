@@ -6,3 +6,7 @@
 | Font Awesome ||
 | Powerline font ||
 | NERDFont ||
+
+# Screenshots
+
+![Desktop](https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.webp)

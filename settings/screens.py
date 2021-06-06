@@ -32,7 +32,7 @@ num_monitors = get_num_monitors()
 
 screens = [
     Screen(
-        top=bar.init_bar(),
+        top=bar.init_bar('primary'),
     )
 ]
 
@@ -40,6 +40,6 @@ if num_monitors > 1:
     for m in range(num_monitors - 1):
         screens.append(
             Screen(
-                top=bar.init_bar('side'),
+                top=bar.init_bar('secondary'),
             )
         )

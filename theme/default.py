@@ -6,6 +6,7 @@ import theme.colors.sweetlove as scheme
 # ░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 
 bar_size = 24
+bar_opacity = 1
 
 
 # ░█▀▀░█▀█░█▀█░▀█▀░█▀▀
