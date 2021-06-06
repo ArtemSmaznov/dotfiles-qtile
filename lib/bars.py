@@ -27,8 +27,8 @@ def init_panel_widgets(s='main'):
                     widget.network_graph,
                     widget.memory_graph,
                     widget.thermals,
-                    widget.updater,
                     widget.volume,
+                    widget.updater,
                     widget.date,
                 ],
             ),
@@ -47,6 +47,7 @@ def init_panel_widgets(s='main'):
                 widgets=[
                     widget.network_graph,
                     widget.memory_graph,
+                    widget.cpu_graph,
                     widget.thermals,
                     widget.volume,
                     widget.date,

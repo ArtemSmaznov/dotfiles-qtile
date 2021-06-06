@@ -86,14 +86,9 @@ keys = [
     Key([mod], 'F12', lazy.group['coding'].toscreen(1)),
 
 
-    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
-    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
-    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-
-    # Toggle between different layouts
-    Key([mod], 'space', lazy.next_layout(), desc='Toggle between layouts'),
-    Key([mod, shift], 'space', lazy.prev_layout(),
-        desc='Toggle between layouts'),
+    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
+    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
+    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
 
     # Toggle windows states
     Key([mod], 'f',
@@ -108,6 +103,16 @@ keys = [
     Key([mod], 'd',
         lazy.window.toggle_minimize(),
         desc='Toggle minimize'),
+
+
+    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
+    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
+    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+
+    # Toggle between different layouts
+    Key([mod], 'space', lazy.next_layout(), desc='Toggle between layouts'),
+    Key([mod, shift], 'space', lazy.prev_layout(),
+        desc='Toggle between layouts'),
 
     # Switch between windows
     Key([mod], 'h', lazy.layout.left(), desc='Move focus to left'),

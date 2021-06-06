@@ -15,17 +15,20 @@ bar_size = 24
 font_regular = 'SF Pro Text Regular'
 font_bold = 'SF Pro Text Bold'
 
+font_awesome = 'Font Awesome 5 Free Regular'
+icon_size = 14
+group_icon_size = 16
+
 
 # ░█▀▀░█▀█░█░░░█▀█░█▀▄░█▀▀
 # ░█░░░█░█░█░░░█░█░█▀▄░▀▀█
 # ░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
-#  foreground = material.amber_100
 foreground = scheme.foreground
 background = scheme.background
 inactive = material.grey_800
-#  inactive = scheme.color8
 alert = material.red_A200
+warning = material.yellow_300
 
 white = material.grey_50
 
@@ -37,8 +40,8 @@ other_selection_bg = scheme.color10
 
 power_line_colors = [
     # scheme.color9,
-    scheme.color10,
-    scheme.color11,
+    # scheme.color10,
+    # scheme.color11,
     scheme.color12,
     scheme.color13,
     scheme.color14,
@@ -56,6 +59,7 @@ global_layout = {
     "border_normal": scheme.color8,
     "border_focus_stack": scheme.color2,
     "border_normal_stack": scheme.color14,
+    "single_border_width": False,
 }
 
 float_layout = {

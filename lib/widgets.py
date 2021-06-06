@@ -74,8 +74,8 @@ def layout_icon(bg_color=theme.background):
 
 def group_box():
     return widget.GroupBox(
-        font="Font Awesome 5",
-        fontsize=16,
+        font=theme.font_awesome,
+        fontsize=theme.group_icon_size,
         margin_y=3,
         margin_x=0,
         padding_y=5,
@@ -146,7 +146,6 @@ def keyboard_layout(bg_color=theme.background):
 def sys_tray(bg_color=theme.background):
     return widget.Systray(
         background=bg_color,
-        padding=5
     )
 
 
@@ -157,10 +156,11 @@ def sys_tray(bg_color=theme.background):
 def updater(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            padding=2,
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size-3,
+            padding_x=2,
             background=bg_color,
-            fontsize=16,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(apps.terminal + ' -e sudo pacman -Syu'),
             },
@@ -177,19 +177,20 @@ def updater(bg_color=theme.background):
         ),
         widget.CheckUpdates(
             distro='Arch',
-            display_format='|',
             custom_command='pacman -Qu | grep -e nvidia -e linux',
             update_interval='1800',
-            font=theme.font_bold,
-            colour_have_updates=theme.foreground,
-            colour_no_updates=theme.foreground,
+            display_format='',
+            font=theme.font_awesome,
+            fontsize=theme.icon_size-3,
+            colour_have_updates=theme.alert,
+            # colour_no_updates=theme.foreground,
             background=bg_color,
         ),
         widget.CheckUpdates(
             distro='Arch',
-            display_format='{updates}',
             custom_command='pacman -Qu | grep -e nvidia -e linux',
             update_interval='1800',
+            display_format='{updates}',
             font=theme.font_bold,
             colour_have_updates=theme.alert,
             colour_no_updates=theme.foreground,
@@ -201,10 +202,11 @@ def updater(bg_color=theme.background):
 def thermals(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            padding=2,
-            background=bg_color,
-            fontsize=15
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.ThermalSensor(
             font=theme.font_bold,
@@ -219,10 +221,11 @@ def thermals(bg_color=theme.background):
 def network(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            background=bg_color,
-            padding=0,
-            fontsize=20
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.Net(
             font=theme.font_bold,
@@ -237,10 +240,11 @@ def network(bg_color=theme.background):
 def memory(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            background=bg_color,
-            padding=0,
-            fontsize=20
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.Memory(
             font=theme.font_bold,
@@ -253,10 +257,11 @@ def memory(bg_color=theme.background):
 def network_graph(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            background=bg_color,
-            padding=0,
-            fontsize=20
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.NetGraph(
             interface="eno1",
@@ -270,13 +275,34 @@ def network_graph(bg_color=theme.background):
     ]
 
 
+def cpu_graph(bg_color=theme.background):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
+        ),
+        widget.CPUGraph(
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=theme.foreground,
+            fill_color='{}.5'.format(theme.foreground),
+            background=bg_color,
+        ),
+    ]
+
+
 def memory_graph(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            background=bg_color,
-            padding=0,
-            fontsize=20
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.MemoryGraph(
             border_width=0,
@@ -292,15 +318,15 @@ def memory_graph(bg_color=theme.background):
 def volume(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            fontsize=22,
-            background=bg_color,
-            padding=0
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.Volume(
             font=theme.font_bold,
             background=bg_color,
-            padding=5,
             step=user.volume_step,
             mouse_callbacks={
                 "Button3": lambda: qtile.cmd_spawn(apps.audio_manager), },
@@ -311,10 +337,11 @@ def volume(bg_color=theme.background):
 def date(bg_color=theme.background):
     return [
         widget.TextBox(
-            text=" ",
-            fontsize=12,
-            background=bg_color,
-            padding=0
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color
         ),
         widget.Clock(
             font=theme.font_bold,
@@ -322,6 +349,12 @@ def date(bg_color=theme.background):
             format='%a, %d %b %Y'
         ),
     ]
+
+
+def chord():
+    return widget.Chord(
+        background=theme.alert
+    )
 
 
 # Default widget settings

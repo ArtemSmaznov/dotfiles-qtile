@@ -5,17 +5,17 @@ from theme.default import global_layout, float_layout
 
 layouts = [
     layout.Columns(**global_layout),
-    layout.Max(**global_layout),
     # layout.MonadTall(**global_layout),
+    layout.MonadWide(**global_layout),
+    layout.Bsp(**global_layout),
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(**global_layout),
     # layout.TreeTab(),
-    # layout.VerticalTile(),
+    # layout.VerticalTile(**global_layout),
     # layout.Zoomy(),
+    layout.Max(**global_layout),
 ]
 
 # Run the utility of `xprop` to see the wm class and name of an X client.
