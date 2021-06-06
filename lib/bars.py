@@ -24,9 +24,10 @@ def init_panel_widgets(s='main'):
             widget.separator(5),
             *powerline(
                 widgets=[
-                    widget.network_graph,
-                    widget.memory_graph,
-                    widget.thermals,
+                    widget.sensor.network_graph,
+                    widget.sensor.network_graph,
+                    widget.sensor.memory_graph,
+                    widget.sensor.thermals,
                     widget.volume,
                     widget.updater,
                     widget.date,
@@ -45,10 +46,10 @@ def init_panel_widgets(s='main'):
             widget.task_list(),
             *powerline(
                 widgets=[
-                    widget.network_graph,
-                    widget.memory_graph,
-                    widget.cpu_graph,
-                    widget.thermals,
+                    widget.sensor.network_graph,
+                    widget.sensor.memory_graph,
+                    widget.sensor.cpu_graph,
+                    widget.sensor.thermals,
                     widget.volume,
                     widget.date,
                 ],
