@@ -122,7 +122,7 @@ group_names = [
         'layout': 'columns',
         'matches': [
             Match(wm_class=[
-                'whatsapp-nativefier-d52542',
+                'whatsapp-for-linux',
                 'Slack',
                 'discord',
                 'signal',
