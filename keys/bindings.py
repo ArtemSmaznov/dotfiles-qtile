@@ -165,6 +165,7 @@ keys = [
     Key([mod], 'b', lazy.spawn(apps.web_browser), desc='Launch web browser'),
     Key([mod], 'i', lazy.spawn(apps.incognito_browser),
         desc='Launch browser in incognito'),
+    Key([mod], 'c', lazy.spawn(apps.ide), desc='Launch IDE'),
 
     # Secondary Applications launched with CTRL + ALT + KEY
     Key([ctrl, alt], 't', lazy.spawn(apps.terminal), desc='Launch terminal'),
@@ -182,7 +183,6 @@ keys = [
     ]),
 
     KeyChord([ctrl, alt], 'o', [
-        Key([], 'c', lazy.spawn(apps.ide), desc='Launch IDE'),
         Key([], 't', lazy.spawn(apps.text_editor),
             desc='Launch text editor'),
         Key([], 'r', lazy.spawn(apps.vector_editor),

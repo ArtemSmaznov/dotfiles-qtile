@@ -1,7 +1,7 @@
 from libqtile.utils import guess_terminal
 
 terminal = guess_terminal()
-text_editor = 'xed'
+text_editor = terminal + ' -e vim'
 # web_browser = 'brave'
 web_browser = 'brave --disable-features=SendMouseLeaveEvents'
 incognito_browser = web_browser + ' --incognito'
@@ -11,7 +11,7 @@ music_player = 'youtubemusic-nativefier'
 cli_music_player = terminal + ' -e tmux attach -t music'
 video_player = 'celluloid'
 game = '/usr/bin/steam-runtime %U'
-ide = terminal + ' -e vim'
+ide = 'emacs'
 graphics_editor = 'gimp'
 vector_editor = 'inkscape'
 video_editor = 'kdenlive'
