@@ -1,0 +1,13 @@
+* Dependencies
+
+| Name            | Description                                     |
+|-----------------+-------------------------------------------------|
+| [[ https://fontawesome.com/ ][Font Awesome]]    | Font for displaying panel icons                 |
+| [[ https://www.nerdfonts.com/ ][NERDFont]]        | Font for displaying panel icons                 |
+| [[ https://archlinux.org/packages/community/x86_64/powerline-fonts/ ][Powerline Fonts]] | Font for rendeting the powerline                |
+| [[ https://archlinux.org/packages/community/any/python-xlib/ ][python-xlib]]     | Required to get the number of available screens |
+| [[ https://archlinux.org/packages/community/x86_64/python-psutil/ ][python-psutil]]   | Required for the NetGraph widget                |
+
+* Screenshots
+
+![Desktop](https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.webp)
