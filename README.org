@@ -10,4 +10,4 @@
 
 * Screenshots
 
-[https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.png]
+[[https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.png]]
