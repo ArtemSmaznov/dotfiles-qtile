@@ -3,7 +3,6 @@ from libqtile.lazy import lazy
 
 from keys.mods import alt, ctrl, mod, shift
 import settings.apps as apps
-import settings.preferences as user
 import utils
 
 keys = [
@@ -148,7 +147,13 @@ keys = [
         desc="Launch browser in incognito",
     ),
     Key([mod], "c", lazy.spawn(apps.ide), desc="Launch IDE"),
-    # Secondary Applications launched with CTRL + ALT + KEY
+    # Secondary Applications
+    Key(
+        [mod, shift],
+        "p",
+        lazy.spawn(apps.password_manager),
+        desc="Launch password manager",
+    ),
     Key([ctrl, alt], "t", lazy.spawn(apps.terminal), desc="Launch terminal"),
     KeyChord(
         [mod],
