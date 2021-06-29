@@ -117,6 +117,7 @@ def task_list(bg_color=theme.background):
     )
 
 
+# Do not use if notifications are managed by another notificaton server such as Dunst
 def notify():
     return widget.Notify(
         foreground=theme.selection_accent,

@@ -38,6 +38,22 @@ keys = [
             Key([], "r", lazy.spawn("systemctl reboot"), desc="Restart"),
         ],
     ),
+    # Notifications
+    Key(
+        [mod],
+        "backslash",
+        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify close"),
+    ),
+    Key(
+        [mod, shift],
+        "backslash",
+        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify clear"),
+    ),
+    Key(
+        [alt],
+        "backslash",
+        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify recents"),
+    ),
     # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
     # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
     # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░

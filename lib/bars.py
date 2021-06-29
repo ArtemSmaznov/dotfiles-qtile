@@ -14,10 +14,9 @@ def primary_bar():
         widget.general.time(),
         widget.general.layout_icon(),
         widget.general.group_box(),
-
         widget.general.separator(20),
         widget.general.task_list(),
-        widget.general.notify(),
+        # widget.general.notify(),
         widget.general.keyboard_layout(),
         widget.general.sys_tray(),
         widget.general.separator(5),
@@ -41,7 +40,6 @@ def secondary_bar():
         widget.general.time(),
         widget.general.layout_icon(),
         widget.general.group_box(),
-
         widget.general.separator(40),
         widget.general.task_list(),
         *powerline(
@@ -57,17 +55,14 @@ def secondary_bar():
     ]
 
 
-def init_bar(s='secondary'):
-    if s == 'primary':
+def init_bar(s="secondary"):
+    if s == "primary":
         my_bar = primary_bar()
-    elif s == 'secondary':
+    elif s == "secondary":
         my_bar = secondary_bar()
     else:
         my_bar = secondary_bar()
 
     return bar.Bar(
-        my_bar,
-        theme.bar_size,
-        background=theme.background,
-        opacity=theme.bar_opacity
+        my_bar, theme.bar_size, background=theme.background, opacity=theme.bar_opacity
     )
