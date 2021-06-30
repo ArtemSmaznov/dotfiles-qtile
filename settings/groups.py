@@ -71,6 +71,7 @@ group_names = [
                         "Atom",
                         "Subl3",
                         "code-oss",
+                        "Emacs",
                         "Cypress",
                         "Oomox",
                         "Unity",
