@@ -8,14 +8,17 @@ from keys.bindings import keys
 from keys.mods import mod, shift
 import settings.apps as apps
 
+# Optional group parameters
+# "label": "",
+# "layout": "columns",
+# 'spawn': apps.web_browser,
+
 # Most icons taken from https://fontawesome.com/
 group_names = [
     (
         "internet",
         {
             "label": "",
-            "layout": "columns",
-            # 'spawn': apps.web_browser,
             "matches": [
                 Match(
                     wm_class=[
@@ -34,8 +37,6 @@ group_names = [
         "gaming",
         {
             "label": "",
-            "layout": "columns",
-            # 'spawn': apps.game,
             "matches": [
                 Match(
                     wm_class=[
@@ -55,7 +56,6 @@ group_names = [
         "coding",
         {
             "label": "",
-            "layout": "BSP",
             "spawn": apps.terminal,
             "matches": [
                 Match(
@@ -86,7 +86,6 @@ group_names = [
         "computer",
         {
             "label": "",
-            "layout": "columns",
             "matches": [
                 Match(
                     wm_class=[
@@ -106,7 +105,6 @@ group_names = [
         "music",
         {
             "label": "",
-            "layout": "columns",
             "spawn": apps.cli_music_player,
             "matches": [
                 Match(
@@ -122,7 +120,6 @@ group_names = [
         "graphics",
         {
             "label": "",
-            "layout": "columns",
             "matches": [
                 Match(
                     wm_class=[
@@ -140,7 +137,6 @@ group_names = [
         "video",
         {
             "label": "",
-            "layout": "columns",
             "matches": [
                 Match(
                     wm_class=[
@@ -157,7 +153,6 @@ group_names = [
         "chat",
         {
             "label": "",
-            "layout": "columns",
             "matches": [
                 Match(
                     wm_class=[
@@ -174,7 +169,6 @@ group_names = [
         "sandbox",
         {
             "label": "",
-            "layout": "columns",
             "matches": [
                 Match(
                     wm_class=[

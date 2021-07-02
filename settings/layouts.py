@@ -4,10 +4,10 @@ from libqtile.config import Match
 from theme.default import global_layout, float_layout
 
 layouts = [
-    layout.Columns(**global_layout),
+    layout.MonadTall(**global_layout),
     layout.Bsp(**global_layout),
+    layout.Columns(**global_layout),
     layout.MonadWide(**global_layout),
-    # layout.MonadTall(**global_layout),
     # layout.Stack(num_stacks=2),
     # layout.Matrix(),
     # layout.RatioTile(),
