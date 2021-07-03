@@ -37,6 +37,7 @@ keys = [
             Key([], "p", lazy.spawn("systemctl poweroff"), desc="Shutdown System"),
             Key([], "r", lazy.spawn("systemctl reboot"), desc="Restart"),
         ],
+        mode="Power",
     ),
     # Notifications
     Key(
@@ -187,6 +188,7 @@ keys = [
             Key([], "v", lazy.spawn(apps.video_player), desc="Launch video player"),
             Key([], "s", lazy.spawn(apps.game), desc="Launch Steam"),
         ],
+        mode="Open Primary",
     ),
     KeyChord(
         [ctrl, alt],
@@ -200,6 +202,7 @@ keys = [
             ),
             Key([], "v", lazy.spawn(apps.video_editor), desc="Launch video editor"),
         ],
+        mode="Open Secondary",
     ),
 ]
 

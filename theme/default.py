@@ -40,6 +40,9 @@ selection_bg = scheme.color11  # yellow darker
 other_selection_accent = scheme.color2  # green
 other_selection_bg = scheme.color10  # green darker
 
+prompt = scheme.color3
+chord = material.yellow_300
+
 power_line_colors = [
     # scheme.color9, # red darker
     # scheme.color10, # green darker

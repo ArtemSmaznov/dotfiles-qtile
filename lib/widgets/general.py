@@ -44,7 +44,7 @@ def prompt_widget(bg_color=theme.background):
         font=theme.font_bold,
         padding=10,
         foreground=bg_color,
-        background=theme.selection_bg,
+        background=theme.prompt,
     )
 
 
@@ -230,4 +230,9 @@ def date(bg_color=theme.background):
 
 
 def chord():
-    return widget.Chord(background=theme.alert)
+    return widget.Chord(
+        font=theme.font_bold,
+        padding=10,
+        foreground=theme.background,
+        background=theme.chord,
+    )

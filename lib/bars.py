@@ -9,8 +9,10 @@ def primary_bar():
     return [
         widget.general.separator(4),
         widget.general.start_widget(),
-        widget.general.separator(3),
+        widget.general.separator(2),
         widget.general.prompt_widget(),
+        widget.general.chord(),
+        widget.general.separator(4),
         widget.general.time(),
         widget.general.layout_icon(),
         widget.general.group_box(),
