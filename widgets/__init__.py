@@ -1,5 +1,5 @@
-import lib.widgets.general as general
-import lib.widgets.sensors as sensor
+import widgets.general as general
+import widgets.sensors as sensor
 import theme.default as theme
 
 

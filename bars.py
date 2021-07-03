@@ -1,7 +1,7 @@
 from libqtile import bar
 
-from lib.powerline import powerline
-import lib.widgets as widget
+from utils.powerline import powerline
+import widgets as widget
 import theme.default as theme
 
 

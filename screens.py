@@ -1,7 +1,7 @@
 from Xlib import display as xdisplay
 from libqtile.config import Screen
 
-import lib.bars as bar
+import bars as bar
 
 
 def get_num_monitors():
@@ -12,8 +12,7 @@ def get_num_monitors():
         resources = screen.root.xrandr_get_screen_resources()
 
         for output in resources.outputs:
-            monitor = display.xrandr_get_output_info(
-                output, resources.config_timestamp)
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
             preferred = False
             if hasattr(monitor, "preferred"):
                 preferred = monitor.preferred
@@ -32,7 +31,7 @@ num_monitors = get_num_monitors()
 
 screens = [
     Screen(
-        top=bar.init_bar('primary'),
+        top=bar.init_bar("primary"),
     )
 ]
 
@@ -40,6 +39,6 @@ if num_monitors > 1:
     for m in range(num_monitors - 1):
         screens.append(
             Screen(
-                top=bar.init_bar('secondary'),
+                top=bar.init_bar("secondary"),
             )
         )

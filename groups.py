@@ -6,7 +6,7 @@ from libqtile.lazy import lazy
 
 from keys.bindings import keys
 from keys.mods import mod, shift, ctrl
-import settings.apps as apps
+import apps as apps
 
 # Most icons taken from https://fontawesome.com/
 

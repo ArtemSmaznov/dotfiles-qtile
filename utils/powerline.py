@@ -1,31 +1,29 @@
 from libqtile import widget
 
-import settings.preferences as user
+import preferences as user
 import theme.default as theme
 
 
 def powerline(
-    widgets=[],
-    colors=theme.power_line_colors,
-    separator_font=user.powerline_font
+    widgets=[], colors=theme.power_line_colors, separator_font=user.powerline_font
 ):
 
     separator = {
-        'powerline': '',
-        'nerd': '',
-        'unicode': '◀',
+        "powerline": "",
+        "nerd": "",
+        "unicode": "◀",
     }
 
     separator_size = {
-        'powerline': 23,
-        'nerd': 64,
-        'unicode': 28,
+        "powerline": 23,
+        "nerd": 64,
+        "unicode": 28,
     }
 
     separator_padding = {
-        'powerline': 0,
-        'nerd': -14,
-        'unicode': -4,
+        "powerline": 0,
+        "nerd": -14,
+        "unicode": -4,
     }
 
     power_line = []
@@ -51,20 +49,18 @@ def powerline(
                 previous_color = colors[len(colors) - 1]
 
         # Create a segment
-        power_line.extend([
-            widget.TextBox(
-                text=separator[separator_font],
-                foreground=current_color,
-                background=previous_color,
-                fontsize=separator_size[separator_font],
-                padding=separator_padding[separator_font],
-            ),
-            *widgets[iw](current_color),
-            widget.Sep(
-                linewidth=0,
-                padding=4,
-                background=current_color
-            )
-        ])
+        power_line.extend(
+            [
+                widget.TextBox(
+                    text=separator[separator_font],
+                    foreground=current_color,
+                    background=previous_color,
+                    fontsize=separator_size[separator_font],
+                    padding=separator_padding[separator_font],
+                ),
+                *widgets[iw](current_color),
+                widget.Sep(linewidth=0, padding=4, background=current_color),
+            ]
+        )
 
     return power_line

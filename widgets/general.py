@@ -3,8 +3,8 @@ import socket
 
 from libqtile import qtile, widget
 
-import settings.apps as apps
-import settings.preferences as user
+import apps as apps
+import preferences as user
 import theme.default as theme
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())

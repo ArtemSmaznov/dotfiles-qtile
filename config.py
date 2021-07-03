@@ -6,10 +6,10 @@ from libqtile import hook
 from libqtile.lazy import lazy
 
 from keys.bindings import keys, mouse
-from lib.widgets import widget_defaults, extension_defaults
-from settings.groups import groups
-from settings.layouts import floating_layout, layouts
-from settings.screens import screens
+from widgets import widget_defaults, extension_defaults
+from groups import groups
+from layouts import floating_layout, layouts
+from screens import screens
 
 
 auto_fullscreen = True

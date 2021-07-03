@@ -2,7 +2,7 @@ from libqtile.config import Click, Drag, Key, KeyChord
 from libqtile.lazy import lazy
 
 from keys.mods import alt, ctrl, mod, shift
-import settings.apps as apps
+import apps as apps
 import utils
 
 keys = [
