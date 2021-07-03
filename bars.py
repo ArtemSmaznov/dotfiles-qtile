@@ -2,7 +2,7 @@ from libqtile import bar
 
 from utils.powerline import powerline
 import widgets as widget
-import theme.default as theme
+import themes.default as theme
 
 
 def primary_bar():

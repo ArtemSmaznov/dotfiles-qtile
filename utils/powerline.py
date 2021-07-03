@@ -1,7 +1,7 @@
 from libqtile import widget
 
 import preferences as user
-import theme.default as theme
+import themes.default as theme
 
 
 def powerline(
