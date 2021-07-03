@@ -5,7 +5,7 @@ from libqtile.dgroups import Match, simple_key_binder
 from libqtile.lazy import lazy
 
 from keys.bindings import keys
-from keys.mods import mod, shift
+from keys.mods import mod, shift, ctrl
 import settings.apps as apps
 
 # Most icons taken from https://fontawesome.com/
@@ -15,6 +15,7 @@ import settings.apps as apps
 # layout="columns",
 # spawn=apps.web_browser,
 
+# Define Groups
 groups = [
     Group(
         "internet",
@@ -162,14 +163,26 @@ groups = [
             ),
         ],
     ),
+]
+
+# Add a ScratchPad Group
+groups.append(
     ScratchPad(
         "scratchpad",
         [
             DropDown("term", apps.terminal, height=0.6, warp_pointer=False),
         ],
     ),
-]
+)
 
-# Switch to another group with SUPER + #
-# Send current window to another group SUPER + SHIFT + #
-dgroups_key_binder = simple_key_binder(mod)
+# Switch to another Group with SUPER + #
+# Send current window to another Group SUPER + SHIFT + #
+for i in range(10):
+    name = groups[i].name
+
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod], key, lazy.group[name].toscreen()))
+    keys.append(Key([mod, shift], key, lazy.window.togroup(name)))
