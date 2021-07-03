@@ -19,7 +19,8 @@ keys = [
         [mod, shift], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"
     ),
     # Swith Keyboard Layouts
-    Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
+    # Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
+    Key([shift], "Alt_L", lazy.function(utils.switch_keyboard_layout)),
     # Media keys
     Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
     Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
