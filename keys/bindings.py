@@ -17,7 +17,7 @@ keys = [
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Debugging
-    Key([mod, ctrl], "d", lazy.group.next_window(), desc="Debugging hotkey"),
+    Key([mod, ctrl], "d", lazy.delgroup("1"), desc="Debugging hotkey"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "r", lazy.spawn(apps.launcher), desc="Open DMenu"),
     Key(
@@ -107,6 +107,12 @@ keys = [
             ),
             Key(
                 [], "l", lazy.screen.next_group(), desc="Move to the group on the right"
+            ),
+            Key(
+                [],
+                "d",
+                lazy.function(utils.clear_default_groups),
+                desc="Delete system 1-9 groups after a bad config",
             ),
         ],
         mode="Groups",
