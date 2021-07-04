@@ -1,9 +1,14 @@
+import os
+
+import apps as apps
+import utils
 from libqtile.config import Click, Drag, Key, KeyChord
 from libqtile.lazy import lazy
 
 from keys.mods import alt, ctrl, mod, shift
-import apps as apps
-import utils
+from preferences import dmscripts
+
+dm = os.path.expanduser(dmscripts)
 
 keys = [
     # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█
@@ -26,9 +31,7 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
     Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
     # Power Control
-    Key(
-        [alt], "F4", lazy.spawn("./.local/bin/dmscripts/dmpower"), desc="A logout menu"
-    ),
+    Key([alt], "F4", lazy.spawn(dm + "dmpower"), desc="A logout menu"),
     KeyChord(
         [mod],
         "z",
@@ -41,20 +44,17 @@ keys = [
         mode="Power",
     ),
     # Notifications
-    Key(
+    KeyChord(
         [mod],
         "backslash",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify close"),
-    ),
-    Key(
-        [mod, shift],
-        "backslash",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify clear"),
-    ),
-    Key(
-        [alt],
-        "backslash",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmnotify recents"),
+        [
+            Key([], "backslash", lazy.spawn(dm + "dmnotify recents")),
+            Key([], "r", lazy.spawn(dm + "dmnotify recents")),
+            Key([], "a", lazy.spawn(dm + "dmnotify context")),
+            Key([], "c", lazy.spawn(dm + "dmnotify close")),
+            Key([shift], "c", lazy.spawn(dm + "dmnotify clear")),
+        ],
+        mode="Notifications",
     ),
     # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
     # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
@@ -62,25 +62,25 @@ keys = [
     Key(
         [ctrl],
         "Print",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmscreenshot full"),
+        lazy.spawn(dm + "dmscreenshot full"),
         desc="Full Desktop Screenshot",
     ),
     Key(
         [],
         "Print",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmscreenshot screen"),
+        lazy.spawn(dm + "dmscreenshot screen"),
         desc="Fullscreen Screenshot",
     ),
     Key(
         [mod, shift],
         "Print",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmscreenshot area"),
+        lazy.spawn(dm + "dmscreenshot area"),
         desc="Selection Area Screenshot",
     ),
     Key(
         [alt],
         "Print",
-        lazy.spawn("/home/artem/.local/bin/dmscripts/dmscreenshot window"),
+        lazy.spawn(dm + "dmscreenshot window"),
         desc="Current Window Screenshot",
     ),
     # ░█▄█░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀▄░█▀▀

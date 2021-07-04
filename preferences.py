@@ -8,6 +8,5 @@ volume_step = 3
 languages = ["us", "ru"]
 # languages = ['us', 'ru', 'jp']
 
-# Screenshots
-screenshot_filename = "%Y-%m-%d_%T"
-screenshot_location = "~/Pictures/Screenshots/"
+# Paths
+dmscripts = "~/.local/bin/dmscripts/"
