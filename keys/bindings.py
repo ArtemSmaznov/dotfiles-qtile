@@ -98,6 +98,19 @@ keys = [
     # ScratchPad
     Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle("term")),
     Key([mod], "F12", lazy.group["coding"].toscreen(1)),
+    KeyChord(
+        [mod],
+        "g",
+        [
+            Key(
+                [], "h", lazy.screen.prev_group(), desc="Move to the group on the left"
+            ),
+            Key(
+                [], "l", lazy.screen.next_group(), desc="Move to the group on the right"
+            ),
+        ],
+        mode="Groups",
+    ),
     # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
     # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
     # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
