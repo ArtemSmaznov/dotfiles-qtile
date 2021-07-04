@@ -1,57 +1,57 @@
 from libqtile import bar
 
-from utils.powerline import powerline
-import widgets as widget
 import themes.default as theme
+import widgets
+from utils.powerline import powerline
 
 
 def primary_bar():
     return [
-        widget.general.separator(4),
-        widget.general.start_widget(),
-        widget.general.separator(2),
-        widget.general.prompt_widget(),
-        widget.general.chord(),
-        widget.general.separator(4),
-        widget.general.time(),
-        widget.general.layout_icon(),
-        widget.general.group_box(),
-        widget.general.separator(20),
-        widget.general.task_list(),
+        widgets.general.separator(4),
+        widgets.general.start_widget(),
+        widgets.general.separator(2),
+        widgets.general.prompt_widget(),
+        widgets.general.chord(),
+        widgets.general.separator(4),
+        widgets.general.time(),
+        widgets.general.layout_icon(),
+        widgets.general.group_box(),
+        widgets.general.separator(20),
+        widgets.general.task_list(),
         # widget.general.notify(),
-        widget.general.keyboard_layout(),
-        widget.general.sys_tray(),
-        widget.general.separator(5),
+        widgets.general.keyboard_layout(),
+        widgets.general.sys_tray(),
+        widgets.general.separator(5),
         *powerline(
             widgets=[
-                widget.sensor.thermals,
-                widget.sensor.network_graph,
-                widget.sensor.memory_graph,
-                widget.general.volume,
-                widget.general.updater,
-                widget.general.date,
+                widgets.sensor.thermals,
+                widgets.sensor.network_graph,
+                widgets.sensor.memory_graph,
+                widgets.general.volume,
+                widgets.general.updater,
+                widgets.general.date,
             ],
         ),
-        widget.general.profile(),
+        widgets.general.profile(),
     ]
 
 
 def secondary_bar():
     return [
-        widget.general.separator(),
-        widget.general.time(),
-        widget.general.layout_icon(),
-        widget.general.group_box(),
-        widget.general.separator(40),
-        widget.general.task_list(),
+        widgets.general.separator(),
+        widgets.general.time(),
+        widgets.general.layout_icon(),
+        widgets.general.group_box(),
+        widgets.general.separator(40),
+        widgets.general.task_list(),
         *powerline(
             widgets=[
-                widget.sensor.thermals,
-                widget.sensor.network_graph,
-                widget.sensor.memory_graph,
-                widget.sensor.cpu_graph,
-                widget.general.volume,
-                widget.general.date,
+                widgets.sensor.thermals,
+                widgets.sensor.network_graph,
+                widgets.sensor.memory_graph,
+                widgets.sensor.cpu_graph,
+                widgets.general.volume,
+                widgets.general.date,
             ],
         ),
     ]

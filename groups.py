@@ -1,12 +1,10 @@
-import re
-
 from libqtile.config import DropDown, Group, Key, ScratchPad
-from libqtile.dgroups import Match, simple_key_binder
+from libqtile.dgroups import Match
 from libqtile.lazy import lazy
 
+import apps
 from keys.bindings import keys
-from keys.mods import mod, shift, ctrl
-import apps as apps
+from keys.mods import *
 
 # Most icons taken from https://fontawesome.com/
 

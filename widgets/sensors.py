@@ -1,7 +1,5 @@
-from libqtile import widget
-
 import themes.default as theme
-
+from libqtile import widget
 
 # ░█▀▀░█▀▄░█▀█░█▀█░█░█
 # ░█░█░█▀▄░█▀█░█▀▀░█▀█

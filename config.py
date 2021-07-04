@@ -3,14 +3,12 @@ import subprocess
 from typing import List
 
 from libqtile import hook
-from libqtile.lazy import lazy
 
-from keys.bindings import keys, mouse
-from widgets import widget_defaults, extension_defaults
 from groups import groups
-from layouts import floating_layout, layouts
+from keys.bindings import *
+from layouts import *
 from screens import screens
-
+from widgets import *
 
 auto_fullscreen = True
 bring_front_click = "floating_only"

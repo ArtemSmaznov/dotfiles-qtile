@@ -4,9 +4,9 @@ import apps as apps
 import utils
 from libqtile.config import Click, Drag, Key, KeyChord
 from libqtile.lazy import lazy
-
-from keys.mods import alt, ctrl, mod, shift
 from preferences import dmscripts
+
+from keys.mods import *
 
 dm = os.path.expanduser(dmscripts)
 

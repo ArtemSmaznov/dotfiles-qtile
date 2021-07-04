@@ -1,7 +1,7 @@
-from Xlib import display as xdisplay
 from libqtile.config import Screen
+from Xlib import display as xdisplay
 
-import bars as bar
+import bars
 
 
 def get_num_monitors():
@@ -31,7 +31,7 @@ num_monitors = get_num_monitors()
 
 screens = [
     Screen(
-        top=bar.init_bar("primary"),
+        top=bars.init_bar("primary"),
     )
 ]
 
@@ -39,6 +39,6 @@ if num_monitors > 1:
     for m in range(num_monitors - 1):
         screens.append(
             Screen(
-                top=bar.init_bar("secondary"),
+                top=bars.init_bar("secondary"),
             )
         )

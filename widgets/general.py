@@ -1,11 +1,10 @@
 import os
 import socket
 
-from libqtile import qtile, widget
-
-import apps as apps
+import apps
 import preferences as user
 import themes.default as theme
+from libqtile import qtile, widget
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
