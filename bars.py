@@ -18,7 +18,6 @@ def primary_bar():
         widgets.general.group_box(),
         widgets.general.separator(20),
         widgets.general.task_list(),
-        # widget.general.notify(),
         widgets.general.keyboard_layout(),
         widgets.general.sys_tray(),
         widgets.general.separator(5),

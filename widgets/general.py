@@ -71,16 +71,10 @@ def date(bg_color=theme.background):
     ]
 
 
-def layout():
-    return [
-        widget.CurrentLayout(
-            font=theme.font_bold,
-        ),
-    ]
-
-
 def layout_icon(bg_color=theme.background):
     return widget.CurrentLayoutIcon(
+        # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
+        foreground=theme.foreground,
         background=bg_color,
         scale=0.6,
     )
@@ -149,6 +143,7 @@ def keyboard_layout(bg_color=theme.background):
     return widget.KeyboardLayout(
         foreground=theme.foreground,
         background=bg_color,
+        font=theme.font_bold,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn("setxkbmap us"),
             "Button3": lambda: qtile.cmd_spawn("setxkbmap ru"),

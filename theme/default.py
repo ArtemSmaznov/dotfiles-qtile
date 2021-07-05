@@ -54,8 +54,6 @@ tasklist_icon_size = 12
 # ░█░░░█░█░█░░░█░█░█▀▄░▀▀█
 # ░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
-foreground = color.foreground
-background = color.background
 inactive = material.grey_800
 alert = material.red_A200
 warning = material.yellow_300
