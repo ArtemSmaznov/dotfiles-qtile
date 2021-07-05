@@ -5,13 +5,16 @@ import apps
 import preferences as user
 import theme
 from libqtile import qtile, widget
+from preferences import dmscripts
 
+dm = os.path.expanduser(dmscripts)
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 
 # ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
 # ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
 # ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+#
 # Most icons taken from https://fontawesome.com/
 
 
@@ -21,7 +24,7 @@ def separator(size=6, backround=theme.background):
 
 def start_widget():
     return widget.Image(
-        filename="~/.local/share/icons/Papirus-Dark/64x64/apps/distributor-logo-archlinux.svg",
+        filename=theme.distributor_logo,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn(apps.launcher),
         },
@@ -30,9 +33,9 @@ def start_widget():
 
 def profile():
     return widget.Image(
-        filename="~/.face",
+        filename=theme.user_icon,
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn("./.local/bin/dmscripts/dmpower"),
+            "Button1": lambda: qtile.cmd_spawn(dm + "dmpower"),
         },
     )
 
@@ -48,7 +51,24 @@ def prompt_widget(bg_color=theme.background):
 
 
 def time(bg_color=theme.background):
-    return widget.Clock(font=theme.font_bold, background=bg_color, format="%l:%M %p")
+    return widget.Clock(
+        font=theme.font_bold, background=bg_color, format=user.time_format
+    )
+
+
+def date(bg_color=theme.background):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color,
+        ),
+        widget.Clock(
+            font=theme.font_bold, background=bg_color, format=user.date_format
+        ),
+    ]
 
 
 def layout():
@@ -75,7 +95,7 @@ def group_box():
         padding_y=5,
         padding_x=3,
         borderwidth=3,
-        highlight_method="line",
+        highlight_method=theme.group_highlight_method,
         disable_drag=True,
         hide_unused=False,
         # Icon colors
@@ -101,14 +121,14 @@ def window_name(bg_color=theme.background):
 def task_list(bg_color=theme.background):
     return widget.TaskList(
         font=theme.font_bold,
-        highlight_method="block",
+        highlight_method=theme.tasklist_highlight_method,
         border=theme.selection_bg,
         background=bg_color,
-        rounded=False,
+        rounded=theme.rounded_hightlights,
         txt_floating=" ",
         txt_maximized=" ",
         txt_minimized=" ",
-        icon_size=12,
+        icon_size=theme.tasklist_icon_size,
         max_title_width=150,
         padding_x=5,
         padding_y=5,
@@ -127,7 +147,7 @@ def notify():
 
 def keyboard_layout(bg_color=theme.background):
     return widget.KeyboardLayout(
-        foreground=theme.white,
+        foreground=theme.foreground,
         background=bg_color,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn("setxkbmap us"),
@@ -212,19 +232,6 @@ def volume(bg_color=theme.background):
                 "Button3": lambda: qtile.cmd_spawn(apps.audio_manager),
             },
         ),
-    ]
-
-
-def date(bg_color=theme.background):
-    return [
-        widget.TextBox(
-            text="",
-            font=theme.font_awesome,
-            fontsize=theme.icon_size,
-            padding_x=2,
-            background=bg_color,
-        ),
-        widget.Clock(font=theme.font_bold, background=bg_color, format="%a, %d %b %Y"),
     ]
 
 

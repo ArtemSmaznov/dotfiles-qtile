@@ -18,7 +18,36 @@ font_bold = "SF Pro Text Bold"
 
 font_awesome = "Font Awesome 5 Free Regular"
 icon_size = 14
+
+
+# ░▀█▀░█▀▀░█▀█░█▀█░█▀▀
+# ░░█░░█░░░█░█░█░█░▀▀█
+# ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
+
+icons = "~/.local/share/icons/Papirus-Dark/"
+distributor_logo = icons + "64x64/apps/distributor-logo-archlinux.svg"
+user_icon = "~/.face"
+
+
+# ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
+# ░█░█░█▀▄░█░█░█░█░█▀▀░▀▀█
+# ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
+
+# border, block, text, or line
+group_highlight_method = "line"
+
 group_icon_size = 16
+
+
+# ░▀█▀░█▀█░█▀▀░█░█░█░░░▀█▀░█▀▀░▀█▀
+# ░░█░░█▀█░▀▀█░█▀▄░█░░░░█░░▀▀█░░█░
+# ░░▀░░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░░▀░
+
+# border or block
+tasklist_highlight_method = "block"
+
+rounded_hightlights = True
+tasklist_icon_size = 12
 
 
 # ░█▀▀░█▀█░█░░░█▀█░█▀▄░█▀▀
@@ -31,25 +60,14 @@ inactive = material.grey_800
 alert = material.red_A200
 warning = material.yellow_300
 
-white = material.grey_50
-
-selection_accent = color.red_1
 selection_bg = color.yellow_dark_11
+selection_accent = color.red_1
 
-other_selection_accent = color.green_2
 other_selection_bg = color.green_dark_10
+other_selection_accent = color.green_2
 
 prompt = color.yellow_3
 chord = material.yellow_300
-
-power_line_colors = [
-    # color.red_dark_9,
-    # color.green_dark_10,
-    # color.yellow_dark_11,
-    color.blue_dark_12,
-    color.magenta_dark_13,
-    color.cyan_dark_14,
-]
 
 
 # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀

@@ -1,5 +1,13 @@
+import theme.colors.material as material
+
 # https://terminal.sexy/#Hx8fwLGLSjY30XtJe4dIr4ZaU1xcd1dZbXFewLGLQC4urF0vZHA1j2hAREtLYURFWFxJl4ll
-# Termite export format is very easy to convert
+# Termite export format is very easy to convert: %s/\(\#\w{6}\)/"\1"/g
+
+# special
+foreground = "#c0b18b"
+foreground_bold = "#c0b18b"
+cursorColor = "#c0b18b"
+background = "#1f1f1f"
 
 # black
 color0 = "#4a3637"
@@ -35,11 +43,6 @@ color15 = "#978965"
 
 # --- End of import section ---
 
-# Additional colors
-foreground = color7
-background = "#1f1f1f"
-
-
 # Rassigning variable names
 black_0 = color0
 black_dark_8 = color8
@@ -57,3 +60,10 @@ cyan_6 = color6
 cyan_dark_14 = color14
 white_7 = color7
 white_dark_15 = color15
+
+
+power_line_colors = [
+    blue_dark_12,
+    magenta_dark_13,
+    cyan_dark_14,
+]
