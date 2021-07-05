@@ -1,4 +1,4 @@
-import themes.default as theme
+import theme
 from libqtile import widget
 
 # ░█▀▀░█▀▄░█▀█░█▀█░█░█

@@ -1,5 +1,5 @@
-import themes.colors.material as material
-import themes.colors.sweetlove as scheme
+import theme.colors.material as material
+import theme.colors.sweetlove as scheme
 
 # ░█▀▀░▀█▀░▀▀█░█▀▀░█▀▀
 # ░▀▀█░░█░░▄▀░░█▀▀░▀▀█

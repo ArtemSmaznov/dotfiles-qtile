@@ -1,6 +1,6 @@
 import widgets.general as general
 import widgets.sensors as sensor
-import themes.default as theme
+import theme
 
 
 # Default widget settings
