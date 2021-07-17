@@ -3,8 +3,10 @@ from libqtile.utils import guess_terminal
 terminal = guess_terminal()
 text_editor = terminal + " -e vim"
 # web_browser = 'brave'
-web_browser = "brave --disable-features=SendMouseLeaveEvents"
+# web_browser = "brave --disable-features=SendMouseLeaveEvents"
+web_browser = "qutebrowser"
 incognito_browser = web_browser + " --incognito"
+incognito_browser = "qutebrowser --target private-window"
 tor_browser = "torbrowser-launcher"
 file_manager = "nemo"
 music_player = "youtubemusic-nativefier"
@@ -26,4 +28,3 @@ network_manager = "nm-connection-editor"
 bluetooth_manager = "blueman-manager"
 power_manager = "xfce4-power-manager-settings"
 audio_manager = terminal + " -e alsamixer"
-lock = "xscreensaver-command -lock"

@@ -27,6 +27,8 @@ groups = [
                     "Google-chrome",
                     "Brave-browser",
                     "vivaldi-stable",
+                    "qutebrowser",
+                    "nyxt",
                 ]
             ),
         ],
@@ -51,7 +53,7 @@ groups = [
     Group(
         "coding",
         label="",
-        spawn=apps.terminal,
+        # spawn=apps.terminal,
         matches=[
             Match(
                 wm_class=[

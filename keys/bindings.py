@@ -17,7 +17,7 @@ keys = [
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Debugging
-    Key([mod, ctrl], "d", lazy.delgroup("1"), desc="Debugging hotkey"),
+    # Key([mod, ctrl], "d", lazy.spawn(dm + "test"), desc="Debugging hotkey"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "r", lazy.spawn(apps.launcher), desc="Open DMenu"),
     Key(
@@ -36,12 +36,13 @@ keys = [
         [mod],
         "z",
         [
-            Key([], "l", lazy.spawn(apps.lock), desc="Lock Screen"),
-            Key([], "s", lazy.spawn("systemctl suspend"), desc="Suspend System"),
-            Key([], "p", lazy.spawn("systemctl poweroff"), desc="Shutdown System"),
-            Key([], "r", lazy.spawn("systemctl reboot"), desc="Restart"),
+            Key([], "l", lazy.spawn(dm + "dmpower lock"), desc="Lock Screen"),
+            Key([], "s", lazy.spawn(dm + "dmpower suspend"), desc="Suspend System"),
+            Key([], "p", lazy.spawn(dm + "dmpower poweroff"), desc="Shutdown System"),
+            Key([], "r", lazy.spawn(dm + "dmpower reboot"), desc="Reboot"),
+            Key([], "w", lazy.spawn(dm + "dmpower windows"), desc="Reboot to Windows"),
         ],
-        mode="Power",
+        mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows",
     ),
     # Notifications
     KeyChord(
@@ -186,7 +187,7 @@ keys = [
     Key([mod], "c", lazy.spawn(apps.ide), desc="Launch IDE"),
     # Secondary Applications
     Key(
-        [mod, shift],
+        [mod],
         "p",
         lazy.spawn(apps.password_manager),
         desc="Launch password manager",
