@@ -23,11 +23,10 @@ def primary_bar():
         widgets.general.separator(5),
         *powerline(
             widgets=[
+                widgets.general.updater,
                 widgets.sensor.thermals,
                 widgets.sensor.network_graph,
-                widgets.sensor.memory_graph,
                 widgets.general.volume,
-                widgets.general.updater,
                 widgets.general.date,
             ],
         ),
@@ -46,9 +45,9 @@ def secondary_bar():
         *powerline(
             widgets=[
                 widgets.sensor.thermals,
-                widgets.sensor.network_graph,
-                widgets.sensor.memory_graph,
                 widgets.sensor.cpu_graph,
+                widgets.sensor.memory_graph,
+                widgets.sensor.network_graph,
                 widgets.general.volume,
                 widgets.general.date,
             ],
