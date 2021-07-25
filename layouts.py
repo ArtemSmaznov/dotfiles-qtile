@@ -5,16 +5,16 @@ from theme import global_layout, float_layout
 
 layouts = [
     layout.MonadTall(**global_layout),
-    layout.Bsp(**global_layout),
     layout.Columns(**global_layout),
-    layout.MonadWide(**global_layout),
+    layout.Tile(**global_layout),
+    # layout.MonadWide(**global_layout),
     # layout.Stack(num_stacks=2),
     # layout.Matrix(),
     # layout.RatioTile(),
-    # layout.Tile(**global_layout),
     # layout.TreeTab(),
     # layout.VerticalTile(**global_layout),
     # layout.Zoomy(),
+    layout.Bsp(**global_layout),
     layout.Max(**global_layout),
 ]
 

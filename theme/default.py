@@ -73,7 +73,7 @@ chord = material.yellow_300
 # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
 
 global_layout = {
-    "margin": 6,
+    "margin": 10,
     "border_width": 3,
     "border_focus": color.red_dark_9,
     "border_normal": color.black_dark_8,
