@@ -128,12 +128,16 @@ groups = [
         label="",
         matches=[
             Match(
+                title=[
+                    "Celluloid",
+                ],
+            ),
+            Match(
                 wm_class=[
                     "vlc",
-                    "Celluloid",
                     "obs",
                     "kdenlive",
-                ]
+                ],
             ),
         ],
     ),
