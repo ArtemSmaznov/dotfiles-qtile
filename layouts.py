@@ -32,9 +32,9 @@ floating_layout = layout.Floating(
         Match(wm_class="maketag"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         #  Steam
-        Match(title="Friends List"),
+        Match(wm_class="Steam", title="Friends List"),
         Match(wm_class="Steam", title="News"),
-        Match(wm_class="Steam", title="Steam Guard"),
+        Match(wm_class="Steam", title="Guard"),
         Match(wm_class="Steam", title="Screenshot Uploader"),
         # Match(wm_class='Steam', title='Self Updater'),
         #  Other
