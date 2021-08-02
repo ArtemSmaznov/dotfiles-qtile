@@ -161,7 +161,8 @@ groups = [
         matches=[
             Match(
                 wm_class=[
-                    "VirtualBox Manage",
+                    "virt-manager",
+                    "VirtualBox Manager",
                     "VirtualBox Machine",
                 ]
             ),
