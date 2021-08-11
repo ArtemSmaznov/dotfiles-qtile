@@ -44,7 +44,7 @@ def secondary_bar():
         widgets.general.task_list(),
         *powerline(
             widgets=[
-                widgets.sensor.thermals,
+                widgets.sensor.nvidia_sensors,
                 widgets.sensor.cpu_graph,
                 widgets.sensor.memory_graph,
                 widgets.sensor.network_graph,
