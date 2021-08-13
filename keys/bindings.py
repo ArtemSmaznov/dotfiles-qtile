@@ -17,15 +17,30 @@ keys = [
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Debugging
-    # Key([mod, ctrl], "d", lazy.spawn(dm + "test"), desc="Debugging hotkey"),
+    Key(
+        [mod, ctrl],
+        "d",
+        lazy.widget["keyboardlayout"].next_keyboard(),
+        desc="Debugging hotkey",
+    ),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "r", lazy.spawn(apps.launcher), desc="Open DMenu"),
     Key(
         [mod, shift], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"
     ),
     # Swith Keyboard Layouts
-    # Key([alt], "Shift_L", lazy.function(utils.switch_keyboard_layout)),
-    Key([shift], "Alt_L", lazy.function(utils.switch_keyboard_layout)),
+    # Key(
+    #     [alt],
+    #     "Shift_L",
+    #     lazy.widget["keyboardlayout"].next_keyboard(),
+    #     desc="Next keyboard layout"
+    # ),
+    Key(
+        [shift],
+        "Alt_L",
+        lazy.widget["keyboardlayout"].next_keyboard(),
+        desc="Next keyboard layout",
+    ),
     # Media keys
     Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
     Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),

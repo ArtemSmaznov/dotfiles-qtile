@@ -1,21 +1,9 @@
 import preferences as user
 
-kbr_index = 0
-
 
 def clear_default_groups(qtile):
     for i in range(10):
         qtile.cmd_delgroup(str(i + 1))
-
-
-def switch_keyboard_layout(qtile):
-    global kbr_index
-
-    if kbr_index + 1 < len(user.languages):
-        kbr_index = kbr_index + 1
-    else:
-        kbr_index = 0
-    qtile.cmd_spawn("setxkbmap " + user.languages[kbr_index])
 
 
 # ░█░█░█▀█░█░░░█░█░█▄█░█▀▀

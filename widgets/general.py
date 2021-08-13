@@ -4,7 +4,7 @@ import socket
 import apps
 import preferences as user
 import theme
-from libqtile import qtile, widget
+from libqtile import lazy, qtile, widget
 from preferences import dmscripts
 
 dm = os.path.expanduser(dmscripts)
@@ -143,8 +143,11 @@ def keyboard_layout(bg_color=theme.background):
     return widget.KeyboardLayout(
         foreground=theme.foreground,
         background=bg_color,
+        configured_keyboards=user.languages,
         font=theme.font_bold,
         mouse_callbacks={
+            # This doesn't work
+            # "Button1": lambda: lazy.widget["keyboardlayout"].next_keyboard(),
             "Button1": lambda: qtile.cmd_spawn("setxkbmap us"),
             "Button3": lambda: qtile.cmd_spawn("setxkbmap ru"),
         },
