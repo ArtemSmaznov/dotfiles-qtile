@@ -76,7 +76,7 @@ keys = [
     # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
     # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
     Key(
-        [ctrl],
+        [mod],
         "Print",
         lazy.spawn(dm + "dmscreenshot full"),
         desc="Full Desktop Screenshot",

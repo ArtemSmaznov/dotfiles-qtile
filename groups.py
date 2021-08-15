@@ -87,6 +87,7 @@ groups = [
                     "dolphin",
                     "ark",
                     "Nemo",
+                    "pcmanfm",
                     "File-roller",
                     "googledocs",
                     "keep",
