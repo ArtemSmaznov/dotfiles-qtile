@@ -30,6 +30,20 @@ def network_graph(bg_color=theme.background):
 def cpu_graph(bg_color=theme.background):
     return [
         widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            background=bg_color,
+        ),
+        widget.ThermalSensor(
+            font=theme.font_bold,
+            foreground=theme.foreground,
+            foreground_alert=theme.alert,
+            background=bg_color,
+            threshold=80,
+        ),
+        widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
@@ -43,13 +57,6 @@ def cpu_graph(bg_color=theme.background):
             graph_color=theme.foreground,
             fill_color="{}.5".format(theme.foreground),
             background=bg_color,
-        ),
-        widget.ThermalSensor(
-            font=theme.font_bold,
-            foreground=theme.foreground,
-            foreground_alert=theme.alert,
-            background=bg_color,
-            threshold=80,
         ),
     ]
 
@@ -137,7 +144,7 @@ def memory(bg_color=theme.background):
 def nvidia_sensors(bg_color=theme.background):
     return [
         widget.TextBox(
-            text="",
+            text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
@@ -147,6 +154,13 @@ def nvidia_sensors(bg_color=theme.background):
             font=theme.font_bold,
             foreground=theme.foreground,
             foreground_alert=theme.alert,
+            background=bg_color,
+        ),
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
             background=bg_color,
         ),
     ]

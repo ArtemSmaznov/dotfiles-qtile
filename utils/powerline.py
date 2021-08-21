@@ -7,25 +7,21 @@ import theme
 def powerline(
     widgets=[], colors=theme.power_line_colors, separator_font=user.powerline_font
 ):
-
     separator = {
         "powerline": "",
         "nerd": "",
         "unicode": "◀",
     }
-
     separator_size = {
         "powerline": 23,
         "nerd": 64,
         "unicode": 28,
     }
-
     separator_padding = {
         "powerline": 0,
         "nerd": -14,
         "unicode": -4,
     }
-
     power_line = []
     is_first_color_iteration = True
 
