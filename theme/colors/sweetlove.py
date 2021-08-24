@@ -3,16 +3,6 @@ import theme.colors.material as material
 # https://terminal.sexy/#Hx8fwLGLSjY30XtJe4dIr4ZaU1xcd1dZbXFewLGLQC4urF0vZHA1j2hAREtLYURFWFxJl4ll
 # Termite export format is very easy to convert: %s/\(\#\w{6}\)/"\1"/g
 
-# special
-foreground = "#c0b18b"
-foreground_bold = "#c0b18b"
-cursorColor = "#c0b18b"
-background = "#1f1f1f"
-
-# black
-color0 = "#4a3637"
-color8 = "#402e2e"
-
 # red
 color1 = "#d17b49"
 color9 = "#ac5d2f"
@@ -37,33 +27,53 @@ color13 = "#614445"
 color6 = "#6d715e"
 color14 = "#585c49"
 
-# white
+# gray
 color7 = "#c0b18b"
+color8 = "#402e2e"
+
+# special
+color0 = "#4a3637"
 color15 = "#978965"
 
 # --- End of import section ---
 
-# Rassigning variable names
-black_0 = color0
-black_dark_8 = color8
-red_1 = color1
-red_dark_9 = color9
-green_2 = color2
-green_dark_10 = color10
-yellow_3 = color3
-yellow_dark_11 = color11
-blue_4 = color4
-blue_dark_12 = color12
-magenta_5 = color5
-magenta_dark_13 = color13
-cyan_6 = color6
-cyan_dark_14 = color14
-white_7 = color7
-white_dark_15 = color15
+bg0_h = "#1d2021"
+bg0 = "#282828"
+bg1 = "#3c3836"
+bg2 = "#504945"
+bg3 = "#665c54"
+bg4 = "#7c6f64"
+fg4 = "#a89984"
+fg3 = "#bdae93"
+fg2 = "#d5c4a1"
+fg1 = "#ebdbb2"
+fg0 = "#fbf1c7"
+
+# Reassigning variable names
+bg = "#1f1f1f"
+fg = "#c0b18b"
+black0 = color0
+red1 = color1
+green2 = color2
+yellow3 = color3
+blue4 = color4
+magenta5 = color5
+cyan6 = color6
+white7 = color7
+gray8 = color8
+red9 = color9
+green10 = color10
+yellow11 = color11
+blue12 = color12
+magenta13 = color13
+cyan14 = color14
+white15 = color15
+orange16 = "#d65d0e"
+orange17 = "#fe8019"
 
 
 power_line_colors = [
-    blue_dark_12,
-    magenta_dark_13,
-    cyan_dark_14,
+    blue12,
+    magenta13,
+    cyan14,
 ]

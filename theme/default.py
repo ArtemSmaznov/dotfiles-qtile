@@ -1,5 +1,5 @@
 import theme.colors.material as material
-import theme.colors.sweetlove as color
+import theme.colors.gruvbox as color
 
 # ░█▀▀░▀█▀░▀▀█░█▀▀░█▀▀
 # ░▀▀█░░█░░▄▀░░█▀▀░▀▀█
@@ -54,18 +54,20 @@ tasklist_icon_size = 12
 # ░█░░░█░█░█░░░█░█░█▀▄░▀▀█
 # ░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
-inactive = material.grey_800
+fg_dark = color.bg1
+inactive = color.bg2
+# inactive = material.grey_800
 alert = material.red_A200
 warning = material.yellow_300
 
-selection_bg = color.yellow_dark_11
-selection_accent = color.red_1
+selection_bg = color.green2
+selection_accent = color.green10
 
-other_selection_bg = color.green_dark_10
-other_selection_accent = color.green_2
+other_selection_bg = color.yellow11
+other_selection_accent = color.yellow3
 
-prompt = color.yellow_3
-chord = material.yellow_300
+prompt = color.orange16
+chord = color.orange17
 
 
 # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
@@ -75,15 +77,15 @@ chord = material.yellow_300
 global_layout = {
     "margin": 10,
     "border_width": 3,
-    "border_focus": color.red_dark_9,
-    "border_normal": color.black_dark_8,
-    "border_focus_stack": color.green_2,
-    "border_normal_stack": color.cyan_dark_14,
+    "border_focus": color.red9,
+    "border_normal": color.gray8,
+    "border_focus_stack": color.green10,
+    "border_normal_stack": color.cyan6,
     "single_border_width": False,
 }
 
 float_layout = {
-    "border_width": 2,
-    "border_focus": color.cyan_6,
-    "border_normal": color.black_dark_8,
+    "border_width": 3,
+    "border_focus": color.orange16,
+    "border_normal": color.gray8,
 }

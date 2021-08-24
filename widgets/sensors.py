@@ -6,41 +6,43 @@ from libqtile import widget
 # ░▀▀▀░▀░▀░▀░▀░▀░░░▀░▀
 
 
-def network_graph(bg_color=theme.background):
+def network_graph(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.NetGraph(
             interface="eno1",
             border_width=0,
             samples=95,
             line_width=2,
-            graph_color=theme.foreground,
-            fill_color="{}.5".format(theme.foreground),
-            background=bg_color,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
         ),
     ]
 
 
-def cpu_graph(bg_color=theme.background):
+def cpu_graph(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.ThermalSensor(
             font=theme.font_bold,
-            foreground=theme.foreground,
             foreground_alert=theme.alert,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             threshold=80,
         ),
         widget.TextBox(
@@ -48,35 +50,37 @@ def cpu_graph(bg_color=theme.background):
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.CPUGraph(
             border_width=0,
             samples=95,
             line_width=2,
-            graph_color=theme.foreground,
-            fill_color="{}.5".format(theme.foreground),
-            background=bg_color,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
         ),
     ]
 
 
-def memory_graph(bg_color=theme.background):
+def memory_graph(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.MemoryGraph(
             border_width=0,
             samples=95,
             line_width=2,
-            graph_color=theme.foreground,
-            fill_color="{}.5".format(theme.foreground),
-            background=bg_color,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
         ),
     ]
 
@@ -86,81 +90,88 @@ def memory_graph(bg_color=theme.background):
 # ░▀░▀░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀
 
 
-def thermals(bg_color=theme.background):
+def thermals(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.ThermalSensor(
             font=theme.font_bold,
-            foreground=theme.foreground,
             foreground_alert=theme.alert,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             threshold=80,
         ),
     ]
 
 
-def network(bg_color=theme.background):
+def network(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.Net(
             font=theme.font_bold,
             interface="eno1",
             format="{down} | {up}",
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             padding=5,
         ),
     ]
 
 
-def memory(bg_color=theme.background):
+def memory(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.Memory(
             font=theme.font_bold,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             measure_mem="G",
         ),
     ]
 
 
-def nvidia_sensors(bg_color=theme.background):
+def nvidia_sensors(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.NvidiaSensors(
             font=theme.font_bold,
-            foreground=theme.foreground,
             foreground_alert=theme.alert,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
     ]

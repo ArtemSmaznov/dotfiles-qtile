@@ -40,42 +40,43 @@ def profile():
     )
 
 
-def prompt_widget(bg_color=theme.background):
+def prompt_widget(bg=theme.prompt, fg=theme.fg_dark):
     return widget.Prompt(
         prompt=prompt,
         font=theme.font_bold,
         padding=10,
-        foreground=bg_color,
-        background=theme.prompt,
+        foreground=fg,
+        background=bg,
     )
 
 
-def time(bg_color=theme.background):
+def time(bg=theme.background, fg=theme.foreground):
     return widget.Clock(
-        font=theme.font_bold, background=bg_color, format=user.time_format
+        font=theme.font_bold, foregroung=fg, background=bg, format=user.time_format
     )
 
 
-def date(bg_color=theme.background):
+def date(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.Clock(
-            font=theme.font_bold, background=bg_color, format=user.date_format
+            font=theme.font_bold, foreground=fg, background=bg, format=user.date_format
         ),
     ]
 
 
-def layout_icon(bg_color=theme.background):
+def layout_icon(bg=theme.background, fg=theme.foreground):
     return widget.CurrentLayoutIcon(
         # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
-        foreground=theme.foreground,
-        background=bg_color,
+        foreground=fg,
+        background=bg,
         scale=0.6,
     )
 
@@ -108,16 +109,19 @@ def group_box():
     )
 
 
-def window_name(bg_color=theme.background):
-    return widget.WindowName(font=theme.font_bold, background=bg_color, padding=0)
+def window_name(bg=theme.background, fg=theme.foreground):
+    return widget.WindowName(
+        font=theme.font_bold, foreground=fg, background=bg, padding=0
+    )
 
 
-def task_list(bg_color=theme.background):
+def task_list(bg=theme.background, fg=theme.fg_dark):
     return widget.TaskList(
         font=theme.font_bold,
         highlight_method=theme.tasklist_highlight_method,
         border=theme.selection_bg,
-        background=bg_color,
+        foreground=fg,
+        background=bg,
         rounded=theme.rounded_hightlights,
         txt_floating=" ",
         txt_maximized=" ",
@@ -139,10 +143,10 @@ def notify():
     )
 
 
-def keyboard_layout(bg_color=theme.background):
+def keyboard_layout(bg=theme.background, fg=theme.foreground):
     return widget.KeyboardLayout(
-        foreground=theme.foreground,
-        background=bg_color,
+        foreground=fg,
+        background=bg,
         configured_keyboards=user.languages,
         font=theme.font_bold,
         mouse_callbacks={
@@ -154,9 +158,10 @@ def keyboard_layout(bg_color=theme.background):
     )
 
 
-def sys_tray(bg_color=theme.background):
+def sys_tray(bg=theme.background, fg=theme.foreground):
     return widget.Systray(
-        background=bg_color,
+        foreground=fg,
+        background=bg,
     )
 
 
@@ -165,14 +170,15 @@ def sys_tray(bg_color=theme.background):
 # ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
 
 
-def updater(bg_color=theme.background):
+def updater(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size - 3,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
                     apps.terminal + " -e sudo pacman -Syu"
@@ -185,9 +191,9 @@ def updater(bg_color=theme.background):
             no_update_string="n/a",
             update_interval="1800",
             font=theme.font_bold,
-            colour_have_updates=theme.foreground,
-            colour_no_updates=theme.foreground,
-            background=bg_color,
+            colour_have_updates=fg,
+            colour_no_updates=fg,
+            background=bg,
         ),
         widget.CheckUpdates(
             distro="Arch",
@@ -198,7 +204,7 @@ def updater(bg_color=theme.background):
             fontsize=theme.icon_size - 3,
             colour_have_updates=theme.alert,
             # colour_no_updates=theme.foreground,
-            background=bg_color,
+            background=bg,
         ),
         widget.CheckUpdates(
             distro="Arch",
@@ -207,24 +213,26 @@ def updater(bg_color=theme.background):
             display_format="{updates}",
             font=theme.font_bold,
             colour_have_updates=theme.alert,
-            colour_no_updates=theme.foreground,
-            background=bg_color,
+            colour_no_updates=fg,
+            background=bg,
         ),
     ]
 
 
-def volume(bg_color=theme.background):
+def volume(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
             text="",
             font=theme.font_awesome,
             fontsize=theme.icon_size,
             padding_x=2,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
         ),
         widget.Volume(
             font=theme.font_bold,
-            background=bg_color,
+            foreground=fg,
+            background=bg,
             step=user.volume_step,
             mouse_callbacks={
                 "Button3": lambda: qtile.cmd_spawn(apps.audio_manager),
@@ -233,10 +241,10 @@ def volume(bg_color=theme.background):
     ]
 
 
-def chord():
+def chord(bg=theme.chord, fg=theme.fg_dark):
     return widget.Chord(
         font=theme.font_bold,
         padding=10,
-        foreground=theme.background,
-        background=theme.chord,
+        foreground=fg,
+        background=bg,
     )

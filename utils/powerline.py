@@ -54,7 +54,7 @@ def powerline(
                     fontsize=separator_size[separator_font],
                     padding=separator_padding[separator_font],
                 ),
-                *widgets[iw](current_color),
+                *widgets[iw](current_color, theme.fg_dark),
                 widget.Sep(linewidth=0, padding=4, background=current_color),
             ]
         )
