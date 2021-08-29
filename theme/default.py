@@ -60,11 +60,11 @@ inactive = color.bg2
 alert = material.red_A200
 warning = material.yellow_300
 
-selection_bg = color.green2
-selection_accent = color.green10
-
-other_selection_bg = color.yellow11
-other_selection_accent = color.yellow3
+selection_bg = color.bg3
+selection_accent = color.yellow11
+unfocused_selection_accent = color.yellow3
+other_selection_accent = color.bg2
+unfocused_other_selection_accent = color.bg4
 
 prompt = color.orange16
 chord = color.orange17

@@ -98,12 +98,11 @@ def group_box():
         inactive=theme.inactive,
         # Background colors
         highlight_color=theme.selection_bg,
-        # Border colors - active screen
-        this_current_screen_border=theme.foreground,
-        other_screen_border=theme.other_selection_bg,
-        # Border colors - inactive screen
+        # Border colors
+        this_current_screen_border=theme.selection_accent,
+        this_screen_border=theme.unfocused_selection_accent,
         other_current_screen_border=theme.other_selection_accent,
-        this_screen_border=theme.selection_bg,
+        other_screen_border=theme.unfocused_other_selection_accent,
         # Border colors - alert
         urgent_border=theme.alert,
     )
@@ -115,7 +114,7 @@ def window_name(bg=theme.background, fg=theme.foreground):
     )
 
 
-def task_list(bg=theme.background, fg=theme.fg_dark):
+def task_list(bg=theme.background, fg=theme.foreground):
     return widget.TaskList(
         font=theme.font_bold,
         highlight_method=theme.tasklist_highlight_method,
