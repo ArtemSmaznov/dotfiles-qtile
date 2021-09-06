@@ -4,8 +4,8 @@ terminal = guess_terminal()
 text_editor = terminal + " -e vim"
 # web_browser = 'brave'
 # web_browser = "brave --disable-features=SendMouseLeaveEvents"
+# incognito_browser = web_browser + " --incognito"
 web_browser = "qutebrowser"
-incognito_browser = web_browser + " --incognito"
 incognito_browser = "qutebrowser --target private-window"
 tor_browser = "torbrowser-launcher"
 file_manager = "pcmanfm"

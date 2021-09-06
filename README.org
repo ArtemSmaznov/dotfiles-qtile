@@ -1,8 +1,12 @@
 #+TITLE: qTile
 #+AUTHOR: Artem Smaznov
+#+STARTUP: overview
+
+* Table of Contents :toc:
+- [[#dependencies][Dependencies]]
+- [[#screenshots][Screenshots]]
 
 * Dependencies
-
 | Name            | Description                                     |
 |-----------------+-------------------------------------------------|
 | [[https://fontawesome.com/][Font Awesome]]    | Font for displaying panel icons                 |
@@ -12,5 +16,4 @@
 | [[https://archlinux.org/packages/community/x86_64/python-psutil/][python-psutil]]   | Required for the Net-Graph widget               |
 
 * Screenshots
-
 [[https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.png]]

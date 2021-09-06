@@ -181,9 +181,17 @@ groups.append(
     ),
 )
 
+# Only map up to 10 Groups to number keys
+def getNumberOfKeysForGroups():
+    if len(groups) > 10:
+        return 10
+    else:
+        return len(groups)
+
+
 # Switch to another Group with SUPER + #
 # Send current window to another Group SUPER + SHIFT + #
-for i in range(10):
+for i in range(getNumberOfKeysForGroups()):
     name = groups[i].name
 
     key = str(i + 1)

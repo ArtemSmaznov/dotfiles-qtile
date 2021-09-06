@@ -140,13 +140,20 @@ keys = [
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating"),
     Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
     Key([mod], "F11", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
-    Key([mod], "d", lazy.window.toggle_minimize(), desc="Toggle minimize"),
+    Key(
+        [mod],
+        "d",
+        lazy.window.toggle_minimize(),
+        lazy.layout.down(),
+        desc="Toggle minimize",
+    ),
     # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
     # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
     # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-    # Toggle between different layouts
+    # Switch between layouts
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, shift], "space", lazy.prev_layout(), desc="Toggle between layouts"),
+    Key([mod, alt], "space", lazy.to_layout_index(0), desc="Switch to first layout"),
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),

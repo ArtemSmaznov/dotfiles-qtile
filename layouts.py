@@ -1,7 +1,10 @@
 from libqtile import layout
-from libqtile.config import Match
+from libqtile.config import Key, Match
+from libqtile.lazy import lazy
 
-from theme import global_layout, float_layout
+from keys.bindings import keys
+from keys.mods import *
+from theme import float_layout, global_layout
 
 layouts = [
     layout.MonadTall(**global_layout),
@@ -42,3 +45,22 @@ floating_layout = layout.Floating(
     ],
     **float_layout
 )
+
+# Only map up to 10 Layouts to number keys
+def getNumberOfKeysForLayouts():
+    if len(layouts) > 10:
+        return 10
+    else:
+        return len(layouts)
+
+
+# Switch to another Layout with SUPER + ALT + #
+for i in range(getNumberOfKeysForLayouts()):
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
+
+# Switch to last Layout
+keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
