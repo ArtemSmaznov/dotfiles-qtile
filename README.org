@@ -1,5 +1,6 @@
 #+TITLE: qTile
 #+AUTHOR: Artem Smaznov
+#+DESCRIPTION: A window manager written in Python
 #+STARTUP: overview
 
 * Table of Contents :toc:
