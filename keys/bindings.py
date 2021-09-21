@@ -20,7 +20,7 @@ keys = [
     Key(
         [mod, ctrl],
         "d",
-        lazy.widget["keyboardlayout"].next_keyboard(),
+        lazy.hide_show_bar("all"),
         desc="Debugging hotkey",
     ),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -47,6 +47,14 @@ keys = [
     Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
     # Power Control
     Key([alt], "F4", lazy.spawn(dm + "dmpower"), desc="A logout menu"),
+    KeyChord(
+        [mod],
+        "t",
+        [
+            Key([], "b", lazy.hide_show_bar("all"), desc="Toggle bars"),
+        ],
+        mode="Toggle",
+    ),
     KeyChord(
         [mod],
         "z",

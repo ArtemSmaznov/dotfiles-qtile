@@ -7,6 +7,7 @@ import theme.colors.gruvbox as color
 
 bar_size = 24
 bar_opacity = 1
+gap = 10
 
 
 # ░█▀▀░█▀█░█▀█░▀█▀░█▀▀
@@ -75,7 +76,7 @@ chord = color.orange17
 # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
 
 global_layout = {
-    "margin": 10,
+    "margin": gap,
     "border_width": 3,
     "border_focus": color.red9,
     "border_normal": color.gray8,
