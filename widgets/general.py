@@ -35,7 +35,7 @@ def profile():
     return widget.Image(
         filename=theme.user_icon,
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn(dm + "dmpower"),
+            "Button1": lambda: qtile.cmd_spawn(dm + "dm-power"),
         },
     )
 
