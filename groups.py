@@ -36,6 +36,7 @@ groups = [
     Group(
         "gaming",
         label="",
+        layout="max",
         matches=[
             Match(
                 wm_class=[
@@ -45,9 +46,15 @@ groups = [
                     "Citra",
                     "SuperTuxKart",
                     "Steam",
+                    "battle.net.exe",
                 ]
             ),
-            Match(title="Steam"),
+            Match(
+                title=[
+                    "Steam",
+                    "Battle.net",
+                ]
+            ),
         ],
     ),
     Group(
@@ -69,7 +76,6 @@ groups = [
                     "Subl3",
                     "code-oss",
                     "Emacs",
-                    "Cypress",
                     "Oomox",
                     "Unity",
                     "UnityHub",
@@ -159,12 +165,14 @@ groups = [
     Group(
         "sandbox",
         label="",
+        layout="max",
         matches=[
             Match(
                 wm_class=[
                     "virt-manager",
                     "VirtualBox Manager",
                     "VirtualBox Machine",
+                    "Cypress",
                 ]
             ),
         ],
