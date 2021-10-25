@@ -70,6 +70,14 @@ unfocused_other_selection_accent = color.bg4
 prompt = color.orange16
 chord = color.orange17
 
+power_line_colors = [
+    color.red1,
+    color.green2,
+    color.yellow3,
+    color.blue4,
+    color.magenta5,
+    color.cyan6,
+]
 
 # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
 # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
@@ -82,7 +90,7 @@ global_layout = {
     "border_normal": color.gray8,
     "border_focus_stack": color.green10,
     "border_normal_stack": color.cyan6,
-    "single_border_width": False,
+    "single_border_width": 3,
 }
 
 float_layout = {
