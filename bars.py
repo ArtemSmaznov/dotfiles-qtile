@@ -2,7 +2,10 @@ from libqtile import bar
 
 import theme
 import widgets
-from utils.powerline import powerline
+
+# You can import 'colorized' for alternating fonts or 'powerline' for
+# powerline-like styling of widgets
+from utils.widget_container import colorized as widget_container
 
 
 def primary_bar():
@@ -21,7 +24,7 @@ def primary_bar():
         widgets.general.keyboard_layout(),
         widgets.general.sys_tray(),
         widgets.general.separator(5),
-        *powerline(
+        *widget_container(
             widgets=[
                 widgets.general.updater,
                 widgets.sensor.thermals,
@@ -42,7 +45,7 @@ def secondary_bar():
         widgets.general.group_box(),
         widgets.general.separator(40),
         widgets.general.task_list(),
-        *powerline(
+        *widget_container(
             widgets=[
                 widgets.sensor.nvidia_sensors,
                 widgets.sensor.cpu_graph,
