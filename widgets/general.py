@@ -78,6 +78,13 @@ def layout_icon(bg=theme.background, fg=theme.foreground):
         foreground=fg,
         background=bg,
         scale=0.6,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_next_layout(),
+            "Button2": lambda: qtile.cmd_to_layout_index(0),
+            "Button3": lambda: qtile.cmd_prev_layout(),
+            "Button4": lambda: qtile.cmd_next_layout(),
+            "Button5": lambda: qtile.cmd_prev_layout(),
+        },
     )
 
 
