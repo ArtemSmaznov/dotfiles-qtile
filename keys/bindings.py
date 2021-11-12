@@ -75,6 +75,7 @@ keys = [
         [mod],
         "z",
         [
+            Key([], "z", lazy.spawn(dm + "dm-power"), desc="dm-power"),
             Key([], "l", lazy.spawn(dm + "dm-power lock"), desc="Lock Screen"),
             Key([], "s", lazy.spawn(dm + "dm-power suspend"), desc="Suspend System"),
             Key([], "p", lazy.spawn(dm + "dm-power poweroff"), desc="Shutdown System"),
@@ -127,8 +128,8 @@ keys = [
     # ░█░█░█░█░█░█░░█░░░█░░█░█░█▀▄░▀▀█
     # ░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀
     # Switch focus between monitors
-    Key([mod, alt], "h", lazy.prev_screen(), desc="Move focus to prev monitor"),
-    Key([mod, alt], "l", lazy.next_screen(), desc="Move focus to next monitor"),
+    Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev monitor"),
+    Key([mod], "period", lazy.next_screen(), desc="Move focus to next monitor"),
     Key([mod], "F1", lazy.to_screen(0), desc="Move focus to first monitor"),
     Key([mod], "F2", lazy.to_screen(1), desc="Move focus to second monitor"),
     # ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
