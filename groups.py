@@ -6,15 +6,8 @@ import apps
 from keys.bindings import keys
 from keys.mods import *
 
-# Most icons taken from https://fontawesome.com/
-
-# Optional group parameters
-# label="",
-# layout="columns",
-# spawn=apps.web_browser,
-
-# Define Groups
 groups = [
+
     Group(
         "internet",
         label="",
@@ -30,9 +23,10 @@ groups = [
                     "qutebrowser",
                     "nyxt",
                 ]
-            ),
+            )
         ],
     ),
+
     Group(
         "gaming",
         label="",
@@ -57,10 +51,11 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "coding",
         label="",
-        # spawn=apps.terminal,
+        # spawn=apps.myTerminal,
         matches=[
             Match(
                 wm_class=[
@@ -84,6 +79,7 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "computer",
         label="",
@@ -102,10 +98,11 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "music",
         label="",
-        spawn=apps.cli_music_player,
+        spawn=apps.myCliMusicPlayer,
         matches=[
             Match(
                 wm_class=[
@@ -115,6 +112,7 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "graphics",
         label="",
@@ -130,6 +128,7 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "video",
         label="",
@@ -148,6 +147,7 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "chat",
         label="",
@@ -162,6 +162,7 @@ groups = [
             ),
         ],
     ),
+
     Group(
         "sandbox",
         label="",
@@ -177,6 +178,7 @@ groups = [
             ),
         ],
     ),
+
 ]
 
 s_width = 0.8
@@ -191,7 +193,7 @@ groups.append(
         [
             DropDown(
                 "term",
-                apps.terminal,
+                apps.myTerminal,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -200,7 +202,7 @@ groups.append(
             ),
             DropDown(
                 "files",
-                apps.file_manager,
+                apps.myFileManager,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -209,7 +211,7 @@ groups.append(
             ),
             DropDown(
                 "music",
-                apps.music_player,
+                apps.myMusicPlayer,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,

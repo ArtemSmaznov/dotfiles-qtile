@@ -3,7 +3,6 @@ from libqtile import widget
 import preferences as user
 import theme
 
-
 def powerline(
     widgets=[], colors=theme.power_line_colors, separator_font=user.powerline_font
 ):
@@ -60,7 +59,6 @@ def powerline(
         )
 
     return w_container
-
 
 def colorized(widgets=[], colors=theme.power_line_colors, separator_gap=8):
     w_container = []

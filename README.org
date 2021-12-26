@@ -6,6 +6,31 @@
 * Table of Contents :toc:
 - [[#dependencies][Dependencies]]
 - [[#screenshots][Screenshots]]
+- [[#user-preferences][User Preferences]]
+- [[#config][Config]]
+  - [[#imports][Imports]]
+  - [[#general-settings][General Settings]]
+  - [[#hooks][Hooks]]
+- [[#apps][Apps]]
+- [[#windows][Windows]]
+- [[#scratchpads][Scratchpads]]
+- [[#keybindings][Keybindings]]
+  - [[#mod-keys][Mod Keys]]
+  - [[#keybindings-1][Keybindings]]
+- [[#workspaces][Workspaces]]
+- [[#layouts][Layouts]]
+  - [[#floating-windows][Floating Windows]]
+  - [[#bindings][Bindings]]
+- [[#bar][Bar]]
+  - [[#screens][Screens]]
+  - [[#bars][Bars]]
+- [[#widgets][Widgets]]
+  - [[#initialization][Initialization]]
+  - [[#general][General]]
+  - [[#sensors][Sensors]]
+- [[#utils][Utils]]
+  - [[#initialization-1][Initialization]]
+  - [[#widget-container][Widget Container]]
 
 * Dependencies
 |-----------------+-------------------------------------------------|
@@ -25,3 +50,1615 @@ sudo pacman -S qtile python-xlib python-psutil
 
 * Screenshots
 [[https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.png]]
+
+* User Preferences
+Bar widgets font
+Values:
+- =powerline=
+- =nerd=
+- =unicode=
+#+begin_src python :tangle preferences.py
+powerline_font = "powerline"
+#+end_src
+
+System Control
+#+begin_src python :tangle preferences.py
+volume_step = 3
+#+end_src
+
+Regional
+#+begin_src python :tangle preferences.py
+languages   = ["us", "ru"]
+# languages = ['us', 'ru', 'jp']
+time_format = "%l:%M %p"
+date_format = "%a, %d %b %Y"
+#+end_src
+
+Paths
+#+begin_src python :tangle preferences.py
+dmscripts = "~/.local/bin/dmscripts/"
+#+end_src
+
+* Config
+** Imports
+#+begin_src python :tangle config.py
+import os
+import subprocess
+from typing import List
+
+from libqtile import hook
+
+from groups import groups
+from keys.bindings import *
+from layouts import *
+from screens import screens
+from widgets import *
+#+end_src
+
+** General Settings
+#+begin_src python :tangle config.py
+auto_fullscreen            = True
+bring_front_click          = "floating_only"
+cursor_warp                = False
+dgroups_app_rules          = []  # type: List
+focus_on_window_activation = "smart"
+follow_mouse_focus         = False
+reconfigure_screens        = True
+auto_minimize              = True
+#+end_src
+
+** Hooks
+Startup
+#+begin_src python :tangle config.py
+@hook.subscribe.startup_once
+def autostart():
+    autostart_script = os.path.expanduser("~/.config/autostart-scripts/autostart.sh")
+    subprocess.call([autostart_script])
+#+end_src
+
+* Apps
+#+begin_src python :tangle apps.py
+from libqtile.utils import guess_terminal
+#+end_src
+
+#+begin_src python :tangle apps.py
+myTerminal         = guess_terminal()
+myTextEditor       = myTerminal + " -e vim"
+# myWebBrowser     = "brave --disable-features=SendMouseLeaveEvents"
+myWebBrowser       = "qutebrowser"
+myIncognitoBrowser = "qutebrowser --target private-window"
+myTorBrowser       = "torbrowser-launcher"
+myFileManager      = "pcmanfm"
+myMusicPlayer      = "youtubemusic-nativefier"
+myCliMusicPlayer   = myTerminal + " -e tmux attach -t music"
+myVideoPlayer      = "celluloid"
+myGame             = "/usr/bin/steam-runtime %U"
+myIde              = "emacsclient -c -a 'emacs'"
+myImageEditor      = "gimp"
+myVectorEditor     = "inkscape"
+myVideoEditor      = "kdenlive"
+myPhotoLibrary     = "digikam"
+myTorrentClient    = "transmission-qt"
+myVpn              = "/opt/piavpn/bin/pia-client --quiet"
+myVm               = "virtualbox"
+myLauncher         = "rofi -show drun"
+myPasswordManager  = "rofi-pass"
+myCalculator       = "gnome-calculator"
+
+myMyNetworkManager = "nm-connection-editor"
+myBluetoothManager = "blueman-manager"
+myPowerManager     = "xfce4-power-manager-settings"
+myAudioManager     = myTerminal + " -e alsamixer"
+#+end_src
+
+* TODO Windows
+* TODO Scratchpads
+* Keybindings
+** Mod Keys
+#+begin_src python :tangle keys/mods.py
+mod   = "mod4"
+alt   = "mod1"
+ctrl  = "control"
+shift = "shift"
+#+end_src
+
+** Keybindings
+#+begin_src python :tangle keys/bindings.py
+import os
+
+import apps as apps
+import utils
+from libqtile.config import Click, Drag, Key, KeyChord
+from libqtile.lazy import lazy
+from preferences import dmscripts
+
+from keys.mods import *
+#+end_src
+
+#+begin_src python :tangle keys/bindings.py
+dm = os.path.expanduser(dmscripts)
+
+keys = [
+    #
+    # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█
+    # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█
+    # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀
+    #
+    Key([mod, ctrl], "r", lazy.restart(), desc="Restart qTile"),
+    Key([mod, ctrl], "q", lazy.shutdown(), desc="Quit qTile"),
+    #
+    # Debugging
+    #
+    Key(
+        [mod, ctrl],
+        "d",
+        lazy.hide_show_bar("all"),
+        desc="Debugging hotkey",
+    ),
+    #
+    # Swith Keyboard Layouts
+    #
+    # Key(
+    #     [alt],
+    #     "Shift_L",
+    #     lazy.widget["keyboardlayout"].next_keyboard(),
+    #     desc="Next keyboard layout"
+    # ),
+    Key(
+        [shift],
+        "Alt_L",
+        lazy.widget["keyboardlayout"].next_keyboard(),
+        desc="Next keyboard layout",
+    ),
+    #
+    # Changing UI
+    #
+    KeyChord(
+        [mod],
+        "t",
+        [
+            Key([], "b", lazy.hide_show_bar("all"), desc="Toggle bars"),
+            Key([], "z", lazy.hide_show_bar("all"), desc="Toggle bars"),
+        ],
+        mode="Toggle",
+    ),
+    #
+    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
+    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
+    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
+    #
+    Key([mod], "q", lazy.window.kill(), desc="Close focused Window"),
+    # Toggle windows states
+    Key([mod], "F11", lazy.window.toggle_fullscreen(), desc="Toggle Fullscreen"),
+    Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle Floating"),
+    Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle Maximize"),
+    Key(
+        [mod, alt],
+        "m",
+        lazy.window.toggle_minimize(),
+        lazy.layout.down(),
+        desc="Toggle Minimize",
+    ),
+    # Switch between windows
+    Key([alt], "Tab", lazy.group.next_window(), desc="Move focus to next Window"),
+    Key(
+        [alt, shift],
+        "Tab",
+        lazy.group.prev_window(),
+        desc="Move focus to prev Window",
+    ),
+    Key([mod], "h", lazy.layout.left(), desc="Move focus to left Window"),
+    Key([mod], "l", lazy.layout.right(), desc="Move focus to right Window"),
+    Key([mod], "j", lazy.layout.down(), desc="Move focus to below Window"),
+    Key([mod], "k", lazy.layout.up(), desc="Move focus to above Window"),
+    # Move windows between left/right columns or move up/down in current stack.
+    # Moving out of range in Columns layout will create new column.
+    Key(
+        [mod, shift],
+        "h",
+        lazy.layout.shuffle_left(),
+        desc="Swap focused Window with the one to the left",
+    ),
+    Key(
+        [mod, shift],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Swap focused Window with the one to the right",
+    ),
+    Key(
+        [mod, shift],
+        "j",
+        lazy.layout.shuffle_down(),
+        desc="Swap focused Window with the one below",
+    ),
+    Key(
+        [mod, shift],
+        "k",
+        lazy.layout.shuffle_up(),
+        desc="Swap focused Window with the one above",
+    ),
+    # Grow windows. If current window is on the edge of screen and direction
+    # will be to screen edge - window would shrink.
+    Key(
+        [mod, ctrl],
+        "h",
+        lazy.layout.grow_left(),
+        desc="Grow focused Window left",
+    ),
+    Key(
+        [mod, ctrl],
+        "l",
+        lazy.layout.grow_right(),
+        desc="Grow focused Window right",
+    ),
+    Key([mod, ctrl], "j", lazy.layout.grow_down(), desc="Grow focused Window down"),
+    Key([mod, ctrl], "k", lazy.layout.grow_up(), desc="Grow focused Window up"),
+    #
+    # ░█▄█░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀▄░█▀▀
+    # ░█░█░█░█░█░█░░█░░░█░░█░█░█▀▄░▀▀█
+    # ░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀
+    #
+    # Switch focus between monitors
+    Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev Screen"),
+    Key([mod], "period", lazy.next_screen(), desc="Move focus to next Screen"),
+    Key([mod], "F1", lazy.to_screen(0), desc="Move focus to 1st Screen"),
+    Key([mod], "F2", lazy.to_screen(1), desc="Move focus to 2nd Screen"),
+    #
+    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
+    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
+    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
+    #
+    # Switch between layouts
+    Key([mod], "space", lazy.next_layout(), desc="Switch Laouts"),
+    Key([mod, shift], "space", lazy.prev_layout(), desc="Switch Laouts"),
+    Key([mod, alt], "space", lazy.to_layout_index(0), desc="Switch to default Layout"),
+    Key([mod], "equal", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Toggle between split and unsplit sides of stack.
+    # Split = all windows displayed
+    # Unsplit = 1 window displayed, like Max layout, but still with
+    # multiple stack panes
+    Key(
+        [mod, shift],
+        "Return",
+        lazy.layout.toggle_split(),
+        desc="Toggle between split and unsplit sides of stack",
+    ),
+    #
+    # ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
+    # ░█░█░█▀▄░█░█░█░█░█▀▀░▀▀█
+    # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
+    #
+    Key([mod], "Tab", lazy.screen.toggle_group()),
+    Key([mod], "F12", lazy.group["coding"].toscreen(1)),
+    KeyChord(
+        [mod],
+        "g",
+        [
+            Key(
+                [], "h", lazy.screen.prev_group(), desc="Move to the group on the left"
+            ),
+            Key(
+                [], "l", lazy.screen.next_group(), desc="Move to the group on the right"
+            ),
+            Key(
+                [],
+                "d",
+                lazy.function(utils.clear_default_groups),
+                desc="Delete system 1-9 groups after a bad config",
+            ),
+        ],
+        mode="Groups",
+    ),
+    # ScratchPad
+    Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle("term")),
+    KeyChord(
+        [mod],
+        "s",
+        [
+            Key([], "t", lazy.group["scratchpad"].dropdown_toggle("term")),
+            Key([], "e", lazy.group["scratchpad"].dropdown_toggle("files")),
+            Key([], "m", lazy.group["scratchpad"].dropdown_toggle("music")),
+        ],
+        mode="Scratchpads",
+    ),
+    #
+    # ░█▄█░█▀▀░█▀▄░▀█▀░█▀█
+    # ░█░█░█▀▀░█░█░░█░░█▀█
+    # ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀
+    #
+    Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
+    Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
+    Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
+    #
+    # ░█▀█░█▀█░█▀█░█▀▀
+    # ░█▀█░█▀▀░█▀▀░▀▀█
+    # ░▀░▀░▀░░░▀░░░▀▀▀
+    Key([ctrl, alt], "t", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
+    Key([mod], "Return", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
+    Key([mod], "c", lazy.spawn(apps.myIde), desc="Launch IDE"),
+    Key([mod], "e", lazy.spawn(apps.myFileManager), desc="Launch File Manager"),
+    Key([mod], "b", lazy.spawn(apps.myWebBrowser), desc="Launch Web Browser"),
+    Key(
+        [mod],
+        "i",
+        lazy.spawn(apps.myIncognitoBrowser),
+        desc="Launch Web Browser in Incognito Mode",
+    ),
+    Key(
+        [mod],
+        "p",
+        lazy.spawn(apps.myPasswordManager),
+        desc="Launch password manager",
+    ),
+    Key([mod], "r", lazy.spawn(apps.myLauncher), desc="Launch Launcher"),
+    Key([mod, shift], "r", lazy.spawncmd(), desc="Launch Prompt Widget"),
+    # Primary
+    KeyChord(
+        [mod],
+        "o",
+        [
+            Key([], "t", lazy.spawn(apps.myTorBrowser), desc="Launch Tor Browser"),
+            Key([], "m", lazy.spawn(apps.myMusicPlayer), desc="Launch Music Player"),
+            Key([], "v", lazy.spawn(apps.myVideoPlayer), desc="Launch Video Player"),
+            Key([], "s", lazy.spawn(apps.myGame), desc="Launch Steam"),
+        ],
+        mode="Open Primary",
+    ),
+    # Secondary
+    KeyChord(
+        [ctrl, alt],
+        "o",
+        [
+            Key([], "t", lazy.spawn(apps.myTextEditor), desc="Launch Text Editor"),
+            Key([], "p", lazy.spawn(apps.myPhotoLibrary), desc="Launch Photo Library"),
+            Key([], "g", lazy.spawn(apps.myImageEditor), desc="Launch Image Editor"),
+            Key([], "r", lazy.spawn(apps.myVectorEditor), desc="Launch Vector Editor"),
+            Key([], "v", lazy.spawn(apps.myVideoEditor), desc="Launch Video Editor"),
+        ],
+        mode="Open Secondary",
+    ),
+    #
+    # ░█▀▄░█▄█░░░░░█▀▀░█▀▀░█▀▄░▀█▀░█▀█░▀█▀░█▀▀
+    # ░█░█░█░█░▄▄▄░▀▀█░█░░░█▀▄░░█░░█▀▀░░█░░▀▀█
+    # ░▀▀░░▀░▀░░░░░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░░░░▀░░▀▀▀
+    #
+    KeyChord(
+        [mod],
+        "d",
+        [
+            Key([mod], "d", lazy.spawn(dm + "dm-master"), desc="Lock Screen"),
+            Key([], "w", lazy.spawn(dm + "dm-wallpaper"), desc="Lock Screen"),
+            Key([], "r", lazy.spawn(dm + "dm-record"), desc="Lock Screen"),
+            Key([], "p", lazy.spawn(dm + "dm-power"), desc="Lock Screen"),
+            Key([], "s", lazy.spawn(dm + "dm-screenshot"), desc="Lock Screen"),
+            # Key([], "b", lazy.spawn(dm + "dm-bookman"), desc="Lock Screen"),
+            Key([], "n", lazy.spawn(dm + "dm-notify"), desc="Lock Screen"),
+            Key([], "backslash", lazy.spawn(dm + "dm-notify"), desc="Lock Screen"),
+        ],
+        mode="dm-scripts",
+    ),
+    #
+    # ░█▀█░█▀█░█░█░█▀▀░█▀▄
+    # ░█▀▀░█░█░█▄█░█▀▀░█▀▄
+    # ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀
+    #
+    Key([alt], "F4", lazy.spawn(dm + "dm-power"), desc="Logout Menu"),
+    KeyChord(
+        [mod],
+        "z",
+        [
+            Key([], "z", lazy.spawn(dm + "dm-power"), desc="dm-power"),
+            Key([], "l", lazy.spawn(dm + "dm-power lock"), desc="Lock Screen"),
+            Key([], "s", lazy.spawn(dm + "dm-power suspend"), desc="Suspend System"),
+            Key([], "p", lazy.spawn(dm + "dm-power poweroff"), desc="Shutdown System"),
+            Key([], "r", lazy.spawn(dm + "dm-power reboot"), desc="Reboot System"),
+            Key([], "w", lazy.spawn(dm + "dm-power windows"), desc="Reboot to Windows"),
+        ],
+        mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows",
+    ),
+    #
+    # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
+    # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
+    # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
+    #
+    Key(
+        [mod],
+        "Print",
+        lazy.spawn(dm + "dm-screenshot full"),
+        desc="Full Desktop Screenshot",
+    ),
+    Key(
+        [],
+        "Print",
+        lazy.spawn(dm + "dm-screenshot screen"),
+        desc="Fullscreen Screenshot",
+    ),
+    Key(
+        [mod, shift],
+        "Print",
+        lazy.spawn(dm + "dm-screenshot area"),
+        desc="Selection Area Screenshot",
+    ),
+    Key(
+        [alt],
+        "Print",
+        lazy.spawn(dm + "dm-screenshot window"),
+        desc="Active Window Screenshot",
+    ),
+    #
+    # ░█▀█░█▀█░▀█▀░▀█▀░█▀▀░▀█▀░█▀▀░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
+    # ░█░█░█░█░░█░░░█░░█▀▀░░█░░█░░░█▀█░░█░░░█░░█░█░█░█░▀▀█
+    # ░▀░▀░▀▀▀░░▀░░▀▀▀░▀░░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
+    #
+    KeyChord(
+        [mod],
+        "backslash",
+        [
+            Key(
+                [],
+                "backslash",
+                lazy.spawn(dm + "dm-notify recents"),
+                desc="Show recent Notifications",
+            ),
+            Key(
+                [],
+                "r",
+                lazy.spawn(dm + "dm-notify recents"),
+                desc="Show recent Notifications",
+            ),
+            Key(
+                [shift],
+                "c",
+                lazy.spawn(dm + "dm-notify clear"),
+                desc="Clear all Notifications",
+            ),
+            Key(
+                [],
+                "c",
+                lazy.spawn(dm + "dm-notify close"),
+                desc="Clear last Notification",
+            ),
+            Key(
+                [],
+                "a",
+                lazy.spawn(dm + "dm-notify context"),
+                desc="Open last Notification",
+            ),
+        ],
+        mode="Notifications",
+    ),
+]
+
+
+# ░█▄█░█▀█░█░█░█▀▀░█▀▀
+# ░█░█░█░█░█░█░▀▀█░█▀▀
+# ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
+
+# Drag floating layouts.
+mouse = [
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
+]
+#+end_src
+
+* Workspaces (Groups)
+#+begin_src python :tangle groups.py
+from libqtile.config import DropDown, Group, Key, ScratchPad
+from libqtile.dgroups import Match
+from libqtile.lazy import lazy
+
+import apps
+from keys.bindings import keys
+from keys.mods import *
+#+end_src
+
+Icons come from https://fontawesome.com/
+
+Optional group parameters
+#+begin_example python
+label="",
+layout="columns",
+spawn=apps.myWebBrowser,
+#+end_example
+
+#+begin_src python :tangle groups.py
+groups = [
+#+end_src
+
+** Internet
+#+begin_src python :tangle groups.py
+    Group(
+        "internet",
+        label="",
+        matches=[
+            Match(
+                wm_class=[
+                    "firefox",
+                    "Tor Browser",
+                    "Chromium",
+                    "Google-chrome",
+                    "Brave-browser",
+                    "vivaldi-stable",
+                    "qutebrowser",
+                    "nyxt",
+                ]
+            )
+        ],
+    ),
+#+end_src
+
+** Gaming
+#+begin_src python :tangle groups.py
+    Group(
+        "gaming",
+        label="",
+        layout="max",
+        matches=[
+            Match(
+                wm_class=[
+                    "Wine",
+                    "dolphin-emu",
+                    "Lutris",
+                    "Citra",
+                    "SuperTuxKart",
+                    "Steam",
+                    "battle.net.exe",
+                ]
+            ),
+            Match(
+                title=[
+                    "Steam",
+                    "Battle.net",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Coding
+#+begin_src python :tangle groups.py
+    Group(
+        "coding",
+        label="",
+        # spawn=apps.myTerminal,
+        matches=[
+            Match(
+                wm_class=[
+                    # 'Alacritty',
+                    # 'Terminator',
+                    # 'URxvt',
+                    # 'UXTerm',
+                    # 'kitty',
+                    # 'K3rmit',
+                    # 'XTerm',
+                    "Geany",
+                    "Atom",
+                    "Subl3",
+                    "code-oss",
+                    "Emacs",
+                    "Oomox",
+                    "Unity",
+                    "UnityHub",
+                    "jetbrains-studio",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Computer
+#+begin_src python :tangle groups.py
+    Group(
+        "computer",
+        label="",
+        matches=[
+            Match(
+                wm_class=[
+                    "dolphin",
+                    "ark",
+                    "Nemo",
+                    "pcmanfm",
+                    "File-roller",
+                    "googledocs",
+                    "keep",
+                    "calendar",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Music
+#+begin_src python :tangle groups.py
+    Group(
+        "music",
+        label="",
+        spawn=apps.myCliMusicPlayer,
+        matches=[
+            Match(
+                wm_class=[
+                    "Spotify",
+                    "youtubemusic-nativefier-040164",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Graphics
+#+begin_src python :tangle groups.py
+    Group(
+        "graphics",
+        label="",
+        matches=[
+            Match(
+                wm_class=[
+                    "Gimp-2.10",
+                    "Gimp",
+                    "Inkscape",
+                    "Flowblade",
+                    "digikam",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Video
+#+begin_src python :tangle groups.py
+    Group(
+        "video",
+        label="",
+        matches=[
+            Match(
+                title=[
+                    "Celluloid",
+                ],
+            ),
+            Match(
+                wm_class=[
+                    "vlc",
+                    "obs",
+                    "kdenlive",
+                ],
+            ),
+        ],
+    ),
+#+end_src
+
+** Chats
+#+begin_src python :tangle groups.py
+    Group(
+        "chat",
+        label="",
+        matches=[
+            Match(
+                wm_class=[
+                    "whatsapp-for-linux",
+                    "Slack",
+                    "discord",
+                    "signal",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+** Sandbox
+#+begin_src python :tangle groups.py
+    Group(
+        "sandbox",
+        label="",
+        layout="max",
+        matches=[
+            Match(
+                wm_class=[
+                    "virt-manager",
+                    "VirtualBox Manager",
+                    "VirtualBox Machine",
+                    "Cypress",
+                ]
+            ),
+        ],
+    ),
+#+end_src
+
+#+begin_src python :tangle groups.py
+]
+
+s_width = 0.8
+s_height = 0.8
+s_left_margin = (1.0 - s_height) / 2
+s_top_margin = (1.0 - s_height) / 2
+
+# Add a ScratchPad Group
+groups.append(
+    ScratchPad(
+        "scratchpad",
+        [
+            DropDown(
+                "term",
+                apps.myTerminal,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "files",
+                apps.myFileManager,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "music",
+                apps.myMusicPlayer,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+        ],
+    ),
+)
+
+# Only map up to 10 Groups to number keys
+def getNumberOfKeysForGroups():
+    if len(groups) > 10:
+        return 10
+    else:
+        return len(groups)
+
+
+# Switch to another Group with SUPER + #
+# Send current window to another Group SUPER + SHIFT + #
+for i in range(getNumberOfKeysForGroups()):
+    name = groups[i].name
+
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod], key, lazy.group[name].toscreen()))
+    keys.append(Key([mod, shift], key, lazy.window.togroup(name)))
+#+end_src
+
+* Layouts
+#+begin_src python :tangle layouts.py
+from libqtile import layout
+from libqtile.config import Key, Match
+from libqtile.lazy import lazy
+
+from keys.bindings import keys
+from keys.mods import *
+from theme import float_layout, global_layout
+#+end_src
+
+#+begin_src python :tangle layouts.py
+layouts = [ layout.MonadTall(**global_layout)
+          , layout.Columns(**global_layout)
+          , layout.Tile(**global_layout)
+          # , layout.MonadWide(**global_layout)
+          # , layout.Stack(num_stacks=2)
+          # , layout.Matrix()
+          # , layout.RatioTile()
+          # , layout.TreeTab()
+          # , layout.VerticalTile(**global_layout)
+          # , layout.Zoomy()
+          , layout.Bsp(**global_layout)
+          , layout.Max(**global_layout) ]
+#+end_src
+
+** Floating Windows
+Run the utility of =xprop= to see the wm class and name of an X client.
+#+begin_src python :tangle layouts.py
+floating_layout = layout.Floating(
+    float_rules=[
+        # default_float_rules include: utility, notification, toolbar, splash, dialog,
+        # file_progress, confirm, download and error.
+        ,*layout.Floating.default_float_rules,
+        #  Defaults
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="makebranch"),  # gitk
+        Match(title="branchdialog"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(title="pinentry"),  # GPG key password entry
+        #  Steam
+        Match(wm_class="Steam", title="Friends List"),
+        Match(wm_class="Steam", title="News"),
+        Match(wm_class="Steam", title="Guard"),
+        Match(wm_class="Steam", title="Screenshot Uploader"),
+        # Match(wm_class='Steam', title='Self Updater'),
+        #  Other
+        Match(wm_class="Nitrogen"),
+    ],
+    ,**float_layout
+)
+#+end_src
+
+** Bindings
+#+begin_src python :tangle layouts.py
+# Only map up to 10 Layouts to number keys
+def getNumberOfKeysForLayouts():
+    if len(layouts) > 10:
+        return 10
+    else:
+        return len(layouts)
+
+
+# Switch to another Layout with SUPER + ALT + #
+for i in range(getNumberOfKeysForLayouts()):
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
+
+# Switch to last Layout
+keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
+#+end_src
+
+* Bar
+#+begin_src python :tangle screens.py
+from libqtile.config import Screen
+from Xlib import display as xdisplay
+
+import bars
+#+end_src
+
+** Screens
+#+begin_src python :tangle screens.py
+def get_num_monitors():
+    num_monitors = 0
+    try:
+        display = xdisplay.Display()
+        screen = display.screen()
+        resources = screen.root.xrandr_get_screen_resources()
+
+        for output in resources.outputs:
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
+            preferred = False
+            if hasattr(monitor, "preferred"):
+                preferred = monitor.preferred
+            elif hasattr(monitor, "num_preferred"):
+                preferred = monitor.num_preferred
+            if preferred:
+                num_monitors += 1
+    except Exception as e:
+        # always setup at least one monitor
+        return 1
+    else:
+        return num_monitors
+
+
+num_monitors = get_num_monitors()
+
+screens = [
+    Screen(
+        top=bars.init_bar("primary"),
+    )
+]
+
+if num_monitors > 1:
+    for m in range(num_monitors - 1):
+        screens.append(
+            Screen(
+                top=bars.init_bar("secondary"),
+            )
+        )
+#+end_src
+
+** Bars
+#+begin_src python :tangle bars.py
+from libqtile import bar
+
+import theme
+import widgets
+
+# You can import 'colorized' for alternating fonts or 'powerline' for
+# powerline-like styling of widgets
+from utils.widget_container import colorized as widget_container
+#+end_src
+
+*** Primary
+#+begin_src python :tangle bars.py
+def primary_bar():
+    return [ widgets.general.separator(4)
+           , widgets.general.start_widget()
+           , widgets.general.separator(2)
+           , widgets.general.prompt_widget()
+           , widgets.general.chord()
+           , widgets.general.separator(4)
+           , widgets.general.time()
+           , widgets.general.layout_icon()
+           , widgets.general.group_box()
+           , widgets.general.separator(20)
+           , widgets.general.task_list()
+           , widgets.general.keyboard_layout()
+           , widgets.general.sys_tray()
+           , widgets.general.separator(5)
+           ,,*widget_container(
+                widgets=[ widgets.general.updater
+                        , widgets.sensor.thermals
+                        , widgets.sensor.network_graph
+                        , widgets.general.volume
+                        , widgets.general.date ])
+           , widgets.general.profile()
+    ]
+#+end_src
+
+*** Secondary
+#+begin_src python :tangle bars.py
+def secondary_bar():
+    return [ widgets.general.separator()
+           , widgets.general.time()
+           , widgets.general.layout_icon()
+           , widgets.general.group_box()
+           , widgets.general.separator(40)
+           , widgets.general.task_list()
+           ,,*widget_container(
+                widgets=[ widgets.sensor.nvidia_sensors
+                        , widgets.sensor.cpu_graph
+                        , widgets.sensor.memory_graph
+                        , widgets.sensor.network_graph
+                        , widgets.general.volume
+                        , widgets.general.date ])
+    ]
+#+end_src
+
+*** Assigning
+#+begin_src python :tangle bars.py
+def init_bar(s="secondary"):
+    if s == "primary": my_bar = primary_bar()
+    elif s == "secondary": my_bar = secondary_bar()
+    else: my_bar = secondary_bar()
+
+    return bar.Bar( my_bar
+                  , theme.bar_size
+                  , background=theme.background
+                  , opacity=theme.bar_opacity
+    )
+#+end_src
+
+* Widgets
+** Initialization
+#+begin_src python :tangle widgets/__init__.py
+import widgets.general as general
+import widgets.sensors as sensor
+import theme
+
+# Default widget settings
+widget_defaults = dict( font=theme.font_regular
+                      , fontsize=11
+                      , padding=3
+                      , foreground=theme.foreground
+)
+
+extension_defaults = widget_defaults.copy()
+#+end_src
+
+** General
+#+begin_src python :tangle widgets/general.py
+import os
+import socket
+
+import apps
+import preferences as user
+import theme
+from libqtile import lazy, qtile, widget
+from preferences import dmscripts
+
+dm = os.path.expanduser(dmscripts)
+prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+#+end_src
+
+*** Separator
+#+begin_src python :tangle widgets/general.py
+def separator(size=6, backround=theme.background):
+    return widget.Sep(linewidth=0, padding=size, background=backround)
+#+end_src
+
+*** Start
+#+begin_src python :tangle widgets/general.py
+def start_widget():
+    return widget.Image(
+        filename=theme.distributor_logo,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(apps.myLauncher),
+        },
+    )
+#+end_src
+
+*** User Profile
+#+begin_src python :tangle widgets/general.py
+def profile():
+    return widget.Image(
+        filename=theme.user_icon,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(dm + "dm-power"),
+        },
+    )
+#+end_src
+
+*** Run Prompt
+#+begin_src python :tangle widgets/general.py
+def prompt_widget(bg=theme.prompt, fg=theme.fg_dark):
+    return widget.Prompt(
+        prompt=prompt,
+        font=theme.font_bold,
+        padding=10,
+        foreground=fg,
+        background=bg,
+    )
+#+end_src
+
+*** Time
+#+begin_src python :tangle widgets/general.py
+def time(bg=theme.background, fg=theme.foreground):
+    return widget.Clock(
+        font=theme.font_bold, foregroung=fg, background=bg, format=user.time_format
+    )
+#+end_src
+
+*** Date
+#+begin_src python :tangle widgets/general.py
+def date(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Clock(
+            font=theme.font_bold, foreground=fg, background=bg, format=user.date_format
+        ),
+    ]
+#+end_src
+
+*** Layouts
+#+begin_src python :tangle widgets/general.py
+def layout_icon(bg=theme.background, fg=theme.foreground):
+    return widget.CurrentLayoutIcon(
+        # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
+        foreground=fg,
+        background=bg,
+        scale=0.6,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_next_layout(),
+            "Button2": lambda: qtile.cmd_to_layout_index(0),
+            "Button3": lambda: qtile.cmd_prev_layout(),
+            "Button4": lambda: qtile.cmd_next_layout(),
+            "Button5": lambda: qtile.cmd_prev_layout(),
+        },
+    )
+#+end_src
+
+*** Workspaces
+#+begin_src python :tangle widgets/general.py
+def group_box():
+    return widget.GroupBox(
+        font=theme.font_awesome,
+        fontsize=theme.group_icon_size,
+        margin_y=3,
+        margin_x=0,
+        padding_y=5,
+        padding_x=3,
+        borderwidth=3,
+        highlight_method=theme.group_highlight_method,
+        disable_drag=True,
+        hide_unused=False,
+        # Icon colors
+        active=theme.foreground,
+        inactive=theme.inactive,
+        # Background colors
+        highlight_color=theme.selection_bg,
+        # Border colors
+        this_current_screen_border=theme.selection_accent,
+        this_screen_border=theme.unfocused_selection_accent,
+        other_current_screen_border=theme.other_selection_accent,
+        other_screen_border=theme.unfocused_other_selection_accent,
+        # Border colors - alert
+        urgent_border=theme.alert,
+    )
+#+end_src
+
+*** Window Name
+#+begin_src python :tangle widgets/general.py
+def window_name(bg=theme.background, fg=theme.foreground):
+    return widget.WindowName(
+        font=theme.font_bold, foreground=fg, background=bg, padding=0
+    )
+#+end_src
+
+*** Windows
+#+begin_src python :tangle widgets/general.py
+def task_list(bg=theme.background, fg=theme.foreground):
+    return widget.TaskList(
+        font=theme.font_bold,
+        highlight_method=theme.tasklist_highlight_method,
+        border=theme.selection_bg,
+        foreground=fg,
+        background=bg,
+        rounded=theme.rounded_hightlights,
+        txt_floating=" ",
+        txt_maximized=" ",
+        txt_minimized=" ",
+        icon_size=theme.tasklist_icon_size,
+        max_title_width=150,
+        padding_x=5,
+        padding_y=5,
+        margin=0,
+    )
+#+end_src
+
+*** Notifications
+Do not use if notifications are managed by another notification server such as
+Dunst
+#+begin_src python :tangle widgets/general.py
+def notify():
+    return widget.Notify(
+        foreground=theme.selection_accent,
+        foreground_urgent=theme.alert,
+        foreground_low=theme.foreground,
+    )
+#+end_src
+
+*** Keyboard Layout
+#+begin_src python :tangle widgets/general.py
+def keyboard_layout(bg=theme.background, fg=theme.foreground):
+    return widget.KeyboardLayout(
+        foreground=fg,
+        background=bg,
+        configured_keyboards=user.languages,
+        font=theme.font_bold,
+        mouse_callbacks={
+            # This doesn't work
+            # "Button1": lambda: lazy.widget["keyboardlayout"].next_keyboard(),
+            "Button1": lambda: qtile.cmd_spawn("setxkbmap us"),
+            "Button3": lambda: qtile.cmd_spawn("setxkbmap ru"),
+        },
+    )
+#+end_src
+
+*** System Tray
+#+begin_src python :tangle widgets/general.py
+def sys_tray(bg=theme.background, fg=theme.foreground):
+    return widget.Systray(
+        foreground=fg,
+        background=bg,
+    )
+#+end_src
+
+*** Updates
+#+begin_src python :tangle widgets/general.py
+def updater(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size - 3,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn(
+                    apps.myTerminal + " -e sudo pacman -Syu"
+                ),
+            },
+        ),
+        widget.CheckUpdates(
+            distro="Arch_checkupdates",
+            display_format="{updates}",
+            no_update_string="n/a",
+            update_interval="1800",
+            font=theme.font_bold,
+            colour_have_updates=fg,
+            colour_no_updates=fg,
+            background=bg,
+        ),
+        widget.CheckUpdates(
+            distro="Arch",
+            custom_command="pacman -Qu | grep -e nvidia -e linux",
+            update_interval="1800",
+            display_format="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size - 3,
+            colour_have_updates=theme.alert,
+            # colour_no_updates=theme.foreground,
+            background=bg,
+        ),
+        widget.CheckUpdates(
+            distro="Arch",
+            custom_command="pacman -Qu | grep -e nvidia -e linux",
+            update_interval="1800",
+            display_format="{updates}",
+            font=theme.font_bold,
+            colour_have_updates=theme.alert,
+            colour_no_updates=fg,
+            background=bg,
+        ),
+    ]
+#+end_src
+
+*** Volume
+#+begin_src python :tangle widgets/general.py
+def volume(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Volume(
+            font=theme.font_bold,
+            foreground=fg,
+            background=bg,
+            step=user.volume_step,
+            mouse_callbacks={
+                "Button3": lambda: qtile.cmd_spawn(apps.myAudioManager),
+            },
+        ),
+    ]
+#+end_src
+
+*** Chords
+#+begin_src python :tangle widgets/general.py
+def chord(bg=theme.chord, fg=theme.fg_dark):
+    return widget.Chord(
+        font=theme.font_bold,
+        padding=10,
+        foreground=fg,
+        background=bg,
+    )
+#+end_src
+
+** Sensors
+#+begin_src python :tangle widgets/sensors.py
+import theme
+from libqtile import widget
+#+end_src
+
+*** Graphs
+**** Network
+#+begin_src python :tangle widgets/sensors.py
+def network_graph(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.NetGraph(
+            interface="eno1",
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+#+end_src
+
+**** CPU
+#+begin_src python :tangle widgets/sensors.py
+def cpu_graph(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.ThermalSensor(
+            font=theme.font_bold,
+            foreground_alert=theme.alert,
+            foreground=fg,
+            background=bg,
+            threshold=80,
+        ),
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.CPUGraph(
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+#+end_src
+
+**** RAM
+#+begin_src python :tangle widgets/sensors.py
+def memory_graph(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.MemoryGraph(
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+#+end_src
+
+*** Metric
+**** Thermal
+#+begin_src python :tangle widgets/sensors.py
+def thermals(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.ThermalSensor(
+            font=theme.font_bold,
+            foreground_alert=theme.alert,
+            foreground=fg,
+            background=bg,
+            threshold=80,
+        ),
+    ]
+#+end_src
+
+**** Network
+#+begin_src python :tangle widgets/sensors.py
+def network(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Net(
+            font=theme.font_bold,
+            interface="eno1",
+            format="{down} | {up}",
+            foreground=fg,
+            background=bg,
+            padding=5,
+        ),
+    ]
+#+end_src
+
+**** RAM
+#+begin_src python :tangle widgets/sensors.py
+def memory(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Memory(
+            font=theme.font_bold,
+            foreground=fg,
+            background=bg,
+            measure_mem="G",
+        ),
+    ]
+#+end_src
+
+**** Nvidia
+#+begin_src python :tangle widgets/sensors.py
+def nvidia_sensors(bg=theme.background, fg=theme.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.NvidiaSensors(
+            font=theme.font_bold,
+            foreground_alert=theme.alert,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.TextBox(
+            text="",
+            font=theme.font_awesome,
+            fontsize=theme.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+    ]
+#+end_src
+
+* Utils
+#+begin_src python :tangle utils/__init__.py
+import preferences as user
+#+end_src
+
+#+begin_src python :tangle utils/__init__.py
+def clear_default_groups(qtile):
+    for i in range(10):
+        qtile.cmd_delgroup(str(i + 1))
+#+end_src
+
+** Volume
+Increase Volume
+#+begin_src python :tangle utils/__init__.py
+def volume_increase(qtile):
+    qtile.cmd_spawn("amixer -q sset Master on " + str(user.volume_step) + "%+")
+#+end_src
+
+Decrease Volume
+#+begin_src python :tangle utils/__init__.py
+def volume_decrease(qtile):
+    qtile.cmd_spawn("amixer -q sset Master on " + str(user.volume_step) + "%-")
+#+end_src
+
+Mute
+#+begin_src python :tangle utils/__init__.py
+def volume_mute(qtile):
+    qtile.cmd_spawn("amixer -q sset Master toggle")
+#+end_src
+
+** Widget Container
+#+begin_src python :tangle utils/widget_container.py
+from libqtile import widget
+
+import preferences as user
+import theme
+#+end_src
+
+*** Powerline
+#+begin_src python :tangle utils/widget_container.py
+def powerline(
+    widgets=[], colors=theme.power_line_colors, separator_font=user.powerline_font
+):
+    separator = {
+        "powerline": "",
+        "nerd": "",
+        "unicode": "◀",
+    }
+    separator_size = {
+        "powerline": 23,
+        "nerd": 64,
+        "unicode": 28,
+    }
+    separator_padding = {
+        "powerline": 0,
+        "nerd": -14,
+        "unicode": -4,
+    }
+    w_container = []
+    is_first_color_iteration = True
+
+    for iw in range(len(widgets)):
+        # Generate a looping color index
+        ic = iw
+        while ic >= len(colors):
+            ic = ic - len(colors)
+            is_first_color_iteration = False
+
+        # Set the background color for the current segment
+        current_color = colors[ic]
+
+        # Set the background color for the preceding segment
+        if ic != 0:
+            previous_color = colors[ic - 1]
+        else:
+            if is_first_color_iteration:
+                previous_color = theme.background
+            else:
+                previous_color = colors[len(colors) - 1]
+
+        # Create a segment
+        w_container.extend(
+            [
+                widget.TextBox(
+                    text=separator[separator_font],
+                    foreground=current_color,
+                    background=previous_color,
+                    fontsize=separator_size[separator_font],
+                    padding=separator_padding[separator_font],
+                ),
+                *widgets[iw](current_color, theme.fg_dark),
+                widget.Sep(linewidth=0, padding=4, background=current_color),
+            ]
+        )
+
+    return w_container
+#+end_src
+
+*** Colorized
+#+begin_src python :tangle utils/widget_container.py
+def colorized(widgets=[], colors=theme.power_line_colors, separator_gap=8):
+    w_container = []
+    is_first_color_iteration = True
+
+    for iw in range(len(widgets)):
+        # Generate a looping color index
+        ic = iw
+        while ic >= len(colors):
+            ic = ic - len(colors)
+            is_first_color_iteration = False
+
+        # Set the background color for the current segment
+        current_color = colors[ic]
+
+        # Set the background color for the preceding segment
+        if ic != 0:
+            previous_color = colors[ic - 1]
+        else:
+            if is_first_color_iteration:
+                previous_color = theme.background
+            else:
+                previous_color = colors[len(colors) - 1]
+
+        # Create a segment
+        w_container.extend(
+            [
+                widget.Sep(
+                    linewidth=0, padding=separator_gap, background=theme.background
+                ),
+                *widgets[iw](theme.background, current_color),
+            ]
+        )
+
+    # Create an extra gap after the widget
+    w_container.extend(
+        [
+            widget.Sep(linewidth=0, padding=4, background=theme.background),
+        ]
+    )
+
+    return w_container
+#+end_src

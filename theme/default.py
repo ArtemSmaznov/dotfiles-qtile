@@ -85,16 +85,16 @@ power_line_colors = [
 
 global_layout = {
     "margin": gap,
-    "border_width": 3,
+    "border_width": 4,
     "border_focus": color.red9,
     "border_normal": color.gray8,
     "border_focus_stack": color.green10,
     "border_normal_stack": color.cyan6,
-    "single_border_width": 3,
+    "single_border_width": 4,
 }
 
 float_layout = {
-    "border_width": 3,
+    "border_width": 4,
     "border_focus": color.orange16,
     "border_normal": color.gray8,
 }

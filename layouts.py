@@ -6,22 +6,19 @@ from keys.bindings import keys
 from keys.mods import *
 from theme import float_layout, global_layout
 
-layouts = [
-    layout.MonadTall(**global_layout),
-    layout.Columns(**global_layout),
-    layout.Tile(**global_layout),
-    # layout.MonadWide(**global_layout),
-    # layout.Stack(num_stacks=2),
-    # layout.Matrix(),
-    # layout.RatioTile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(**global_layout),
-    # layout.Zoomy(),
-    layout.Bsp(**global_layout),
-    layout.Max(**global_layout),
-]
+layouts = [ layout.MonadTall(**global_layout)
+          , layout.Columns(**global_layout)
+          , layout.Tile(**global_layout)
+          # , layout.MonadWide(**global_layout)
+          # , layout.Stack(num_stacks=2)
+          # , layout.Matrix()
+          # , layout.RatioTile()
+          # , layout.TreeTab()
+          # , layout.VerticalTile(**global_layout)
+          # , layout.Zoomy()
+          , layout.Bsp(**global_layout)
+          , layout.Max(**global_layout) ]
 
-# Run the utility of `xprop` to see the wm class and name of an X client.
 floating_layout = layout.Floating(
     float_rules=[
         # default_float_rules include: utility, notification, toolbar, splash, dialog,

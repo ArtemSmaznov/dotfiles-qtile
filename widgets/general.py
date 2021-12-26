@@ -10,26 +10,16 @@ from preferences import dmscripts
 dm = os.path.expanduser(dmscripts)
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
-
-# ░█░█░▀█▀░█▀▄░█▀▀░█▀▀░▀█▀░█▀▀
-# ░█▄█░░█░░█░█░█░█░█▀▀░░█░░▀▀█
-# ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-#
-# Most icons taken from https://fontawesome.com/
-
-
 def separator(size=6, backround=theme.background):
     return widget.Sep(linewidth=0, padding=size, background=backround)
-
 
 def start_widget():
     return widget.Image(
         filename=theme.distributor_logo,
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn(apps.launcher),
+            "Button1": lambda: qtile.cmd_spawn(apps.myLauncher),
         },
     )
-
 
 def profile():
     return widget.Image(
@@ -38,7 +28,6 @@ def profile():
             "Button1": lambda: qtile.cmd_spawn(dm + "dm-power"),
         },
     )
-
 
 def prompt_widget(bg=theme.prompt, fg=theme.fg_dark):
     return widget.Prompt(
@@ -49,12 +38,10 @@ def prompt_widget(bg=theme.prompt, fg=theme.fg_dark):
         background=bg,
     )
 
-
 def time(bg=theme.background, fg=theme.foreground):
     return widget.Clock(
         font=theme.font_bold, foregroung=fg, background=bg, format=user.time_format
     )
-
 
 def date(bg=theme.background, fg=theme.foreground):
     return [
@@ -71,7 +58,6 @@ def date(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-
 def layout_icon(bg=theme.background, fg=theme.foreground):
     return widget.CurrentLayoutIcon(
         # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
@@ -86,7 +72,6 @@ def layout_icon(bg=theme.background, fg=theme.foreground):
             "Button5": lambda: qtile.cmd_prev_layout(),
         },
     )
-
 
 def group_box():
     return widget.GroupBox(
@@ -114,12 +99,10 @@ def group_box():
         urgent_border=theme.alert,
     )
 
-
 def window_name(bg=theme.background, fg=theme.foreground):
     return widget.WindowName(
         font=theme.font_bold, foreground=fg, background=bg, padding=0
     )
-
 
 def task_list(bg=theme.background, fg=theme.foreground):
     return widget.TaskList(
@@ -139,15 +122,12 @@ def task_list(bg=theme.background, fg=theme.foreground):
         margin=0,
     )
 
-
-# Do not use if notifications are managed by another notificaton server such as Dunst
 def notify():
     return widget.Notify(
         foreground=theme.selection_accent,
         foreground_urgent=theme.alert,
         foreground_low=theme.foreground,
     )
-
 
 def keyboard_layout(bg=theme.background, fg=theme.foreground):
     return widget.KeyboardLayout(
@@ -163,18 +143,11 @@ def keyboard_layout(bg=theme.background, fg=theme.foreground):
         },
     )
 
-
 def sys_tray(bg=theme.background, fg=theme.foreground):
     return widget.Systray(
         foreground=fg,
         background=bg,
     )
-
-
-# ░█▀█░█▀█░█░█░█▀▀░█▀▄░█░░░▀█▀░█▀█░█▀▀
-# ░█▀▀░█░█░█▄█░█▀▀░█▀▄░█░░░░█░░█░█░█▀▀
-# ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
-
 
 def updater(bg=theme.background, fg=theme.foreground):
     return [
@@ -187,7 +160,7 @@ def updater(bg=theme.background, fg=theme.foreground):
             background=bg,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
-                    apps.terminal + " -e sudo pacman -Syu"
+                    apps.myTerminal + " -e sudo pacman -Syu"
                 ),
             },
         ),
@@ -224,7 +197,6 @@ def updater(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-
 def volume(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
@@ -241,11 +213,10 @@ def volume(bg=theme.background, fg=theme.foreground):
             background=bg,
             step=user.volume_step,
             mouse_callbacks={
-                "Button3": lambda: qtile.cmd_spawn(apps.audio_manager),
+                "Button3": lambda: qtile.cmd_spawn(apps.myAudioManager),
             },
         ),
     ]
-
 
 def chord(bg=theme.chord, fg=theme.fg_dark):
     return widget.Chord(

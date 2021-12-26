@@ -3,7 +3,6 @@ from Xlib import display as xdisplay
 
 import bars
 
-
 def get_num_monitors():
     num_monitors = 0
     try:

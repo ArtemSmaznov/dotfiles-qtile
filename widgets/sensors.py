@@ -1,11 +1,6 @@
 import theme
 from libqtile import widget
 
-# ░█▀▀░█▀▄░█▀█░█▀█░█░█
-# ░█░█░█▀▄░█▀█░█▀▀░█▀█
-# ░▀▀▀░▀░▀░▀░▀░▀░░░▀░▀
-
-
 def network_graph(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
@@ -26,7 +21,6 @@ def network_graph(bg=theme.background, fg=theme.foreground):
             background=bg,
         ),
     ]
-
 
 def cpu_graph(bg=theme.background, fg=theme.foreground):
     return [
@@ -63,7 +57,6 @@ def cpu_graph(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-
 def memory_graph(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
@@ -84,12 +77,6 @@ def memory_graph(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-
-# ░█▄█░█▀▀░▀█▀░█▀▄░▀█▀░█▀▀
-# ░█░█░█▀▀░░█░░█▀▄░░█░░█░░
-# ░▀░▀░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀
-
-
 def thermals(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
@@ -108,7 +95,6 @@ def thermals(bg=theme.background, fg=theme.foreground):
             threshold=80,
         ),
     ]
-
 
 def network(bg=theme.background, fg=theme.foreground):
     return [
@@ -130,7 +116,6 @@ def network(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-
 def memory(bg=theme.background, fg=theme.foreground):
     return [
         widget.TextBox(
@@ -148,7 +133,6 @@ def memory(bg=theme.background, fg=theme.foreground):
             measure_mem="G",
         ),
     ]
-
 
 def nvidia_sensors(bg=theme.background, fg=theme.foreground):
     return [
