@@ -179,12 +179,43 @@ groups = [
     ),
 ]
 
+s_width = 0.8
+s_height = 0.8
+s_left_margin = (1.0 - s_height) / 2
+s_top_margin = (1.0 - s_height) / 2
+
 # Add a ScratchPad Group
 groups.append(
     ScratchPad(
         "scratchpad",
         [
-            DropDown("term", apps.terminal, height=0.6, warp_pointer=False),
+            DropDown(
+                "term",
+                apps.terminal,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "files",
+                apps.file_manager,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "music",
+                apps.music_player,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
         ],
     ),
 )

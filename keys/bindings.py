@@ -65,8 +65,8 @@ keys = [
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle Floating"),
     Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle Maximize"),
     Key(
-        [mod],
-        "d",
+        [mod, alt],
+        "m",
         lazy.window.toggle_minimize(),
         lazy.layout.down(),
         desc="Toggle Minimize",
@@ -161,8 +161,6 @@ keys = [
     # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
     #
     Key([mod], "Tab", lazy.screen.toggle_group()),
-    # ScratchPad
-    Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle("term")),
     Key([mod], "F12", lazy.group["coding"].toscreen(1)),
     KeyChord(
         [mod],
@@ -182,6 +180,18 @@ keys = [
             ),
         ],
         mode="Groups",
+    ),
+    # ScratchPad
+    Key([mod], "quoteleft", lazy.group["scratchpad"].dropdown_toggle("term")),
+    KeyChord(
+        [mod],
+        "s",
+        [
+            Key([], "t", lazy.group["scratchpad"].dropdown_toggle("term")),
+            Key([], "e", lazy.group["scratchpad"].dropdown_toggle("files")),
+            Key([], "m", lazy.group["scratchpad"].dropdown_toggle("music")),
+        ],
+        mode="Scratchpads",
     ),
     #
     # ░█▄█░█▀▀░█▀▄░▀█▀░█▀█
@@ -246,9 +256,9 @@ keys = [
     #
     KeyChord(
         [mod],
-        "s",
+        "d",
         [
-            Key([mod], "s", lazy.spawn(dm + "dm-master"), desc="Lock Screen"),
+            Key([mod], "d", lazy.spawn(dm + "dm-master"), desc="Lock Screen"),
             Key([], "w", lazy.spawn(dm + "dm-wallpaper"), desc="Lock Screen"),
             Key([], "r", lazy.spawn(dm + "dm-record"), desc="Lock Screen"),
             Key([], "p", lazy.spawn(dm + "dm-power"), desc="Lock Screen"),
