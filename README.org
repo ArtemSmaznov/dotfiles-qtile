@@ -6,12 +6,12 @@
 * Table of Contents :toc:
 - [[#dependencies][Dependencies]]
 - [[#screenshots][Screenshots]]
+- [[#imports][Imports]]
+- [[#hooks][Hooks]]
+- [[#general-settings][General Settings]]
 - [[#user-preferences][User Preferences]]
 - [[#apps][Apps]]
-- [[#imports][Imports]]
-- [[#general-settings][General Settings]]
-- [[#layouts][Layouts]]
-- [[#floating-windows][Floating Windows]]
+- [[#windows][Windows]]
 - [[#workspaces-groups][Workspaces (Groups)]]
   - [[#internet][Internet]]
   - [[#gaming][Gaming]]
@@ -22,20 +22,16 @@
   - [[#video][Video]]
   - [[#chats][Chats]]
   - [[#sandbox][Sandbox]]
-  - [[#more][More]]
+- [[#scratchpads][Scratchpads]]
+- [[#layouts][Layouts]]
 - [[#bar][Bar]]
   - [[#primary][Primary]]
   - [[#secondary][Secondary]]
-  - [[#assigning][Assigning]]
-- [[#screens][Screens]]
+  - [[#screens][Screens]]
 - [[#keybindings][Keybindings]]
   - [[#mod-keys][Mod Keys]]
-  - [[#bindings][Bindings]]
-  - [[#layouts-1][Layouts]]
-  - [[#workspaces-groups-1][Workspaces (Groups)]]
-- [[#hooks][Hooks]]
-- [[#windows][Windows]]
-- [[#scratchpads][Scratchpads]]
+  - [[#keybindings-1][Keybindings]]
+  - [[#mouse-bindings][Mouse Bindings]]
 - [[#utils][Utils]]
   - [[#volume][Volume]]
   - [[#widget-container][Widget Container]]
@@ -578,21 +574,20 @@ if num_monitors > 1:
 ** Mod Keys
 #+begin_src python :tangle config.py
 mod   = "mod4"
-alt   = "mod1"
-ctrl  = "control"
 shift = "shift"
+ctrl  = "control"
+alt   = "mod1"
 #+end_src
 
-** Bindings
+** Keybindings
 #+begin_src python :tangle config.py
+keys = []
 dm = os.path.expanduser(dmscripts)
+#+end_src
 
-keys = [
-    #
-    # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█
-    # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█
-    # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀
-    #
+*** System
+#+begin_src python :tangle config.py
+keys.extend([
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart qTile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Quit qTile"),
     #
@@ -631,11 +626,12 @@ keys = [
         ],
         mode="Toggle",
     ),
-    #
-    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
-    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
-    #
+])
+#+end_src
+
+*** Windows
+#+begin_src python :tangle config.py
+keys.extend([
     Key([mod], "q", lazy.window.kill(), desc="Close focused Window"),
     # Toggle windows states
     Key([mod], "F11", lazy.window.toggle_fullscreen(), desc="Toggle Fullscreen"),
@@ -702,21 +698,23 @@ keys = [
     ),
     Key([mod, ctrl], "j", lazy.layout.grow_down(), desc="Grow focused Window down"),
     Key([mod, ctrl], "k", lazy.layout.grow_up(), desc="Grow focused Window up"),
-    #
-    # ░█▄█░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀▄░█▀▀
-    # ░█░█░█░█░█░█░░█░░░█░░█░█░█▀▄░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀
-    #
+])
+#+end_src
+
+*** Monitors
+#+begin_src python :tangle config.py
+keys.extend([
     # Switch focus between monitors
     Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev Screen"),
     Key([mod], "period", lazy.next_screen(), desc="Move focus to next Screen"),
     Key([mod], "F1", lazy.to_screen(0), desc="Move focus to 1st Screen"),
     Key([mod], "F2", lazy.to_screen(1), desc="Move focus to 2nd Screen"),
-    #
-    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
-    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
-    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-    #
+])
+#+end_src
+
+*** Layouts
+#+begin_src python :tangle config.py
+keys.extend([
     # Switch between layouts
     Key([mod], "space", lazy.next_layout(), desc="Switch Laouts"),
     Key([mod, shift], "space", lazy.prev_layout(), desc="Switch Laouts"),
@@ -732,11 +730,32 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    #
-    # ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
-    # ░█░█░█▀▄░█░█░█░█░█▀▀░▀▀█
-    # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
-    #
+])
+#+end_src
+
+#+begin_src python :tangle config.py
+# Only map up to 10 Layouts to number keys
+def getNumberOfKeysForLayouts():
+    if len(layouts) > 10:
+        return 10
+    else:
+        return len(layouts)
+
+# Switch to another Layout with SUPER + ALT + #
+for i in range(getNumberOfKeysForLayouts()):
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
+
+# Switch to last Layout
+keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
+#+end_src
+
+*** Workspaces (Groups)
+#+begin_src python :tangle config.py
+keys.extend([
     Key([mod], "Tab", lazy.screen.toggle_group()),
     Key([mod], "F12", lazy.group["coding"].toscreen(1)),
     KeyChord(
@@ -770,19 +789,45 @@ keys = [
         ],
         mode="Scratchpads",
     ),
-    #
-    # ░█▄█░█▀▀░█▀▄░▀█▀░█▀█
-    # ░█░█░█▀▀░█░█░░█░░█▀█
-    # ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀
-    #
+])
+#+end_src
+
+#+begin_src python :tangle config.py
+# Only map up to 10 Groups to number keys
+def getNumberOfKeysForGroups():
+    if len(groups) > 10:
+        return 10
+    else:
+        return len(groups)
+
+
+# Switch to another Group with SUPER + #
+# Send current window to another Group SUPER + SHIFT + #
+for i in range(getNumberOfKeysForGroups()):
+    name = groups[i].name
+
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.extend([
+        Key([mod], key, lazy.group[name].toscreen()),
+        Key([mod, shift], key, lazy.window.togroup(name))
+    ])
+#+end_src
+
+*** Media Keys
+#+begin_src python :tangle config.py
+keys.extend([
     Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
     Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
     Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
-    #
-    # ░█▀█░█▀█░█▀█░█▀▀
-    # ░█▀█░█▀▀░█▀▀░▀▀█
-    # ░▀░▀░▀░░░▀░░░▀▀▀
-    Key([ctrl, alt], "t", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
+])
+#+end_src
+
+*** Launching Apps
+#+begin_src python :tangle config.py
+keys.extend([
     Key([mod], "Return", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
     Key([mod], "c", lazy.spawn(apps.myIde), desc="Launch IDE"),
     Key([mod], "e", lazy.spawn(apps.myFileManager), desc="Launch File Manager"),
@@ -826,11 +871,12 @@ keys = [
         ],
         mode="Open Secondary",
     ),
-    #
-    # ░█▀▄░█▄█░░░░░█▀▀░█▀▀░█▀▄░▀█▀░█▀█░▀█▀░█▀▀
-    # ░█░█░█░█░▄▄▄░▀▀█░█░░░█▀▄░░█░░█▀▀░░█░░▀▀█
-    # ░▀▀░░▀░▀░░░░░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░░░░▀░░▀▀▀
-    #
+])
+#+end_src
+
+*** dm-scripts
+#+begin_src python :tangle config.py
+keys.extend([
     KeyChord(
         [mod],
         "d",
@@ -846,11 +892,12 @@ keys = [
         ],
         mode="dm-scripts",
     ),
-    #
-    # ░█▀█░█▀█░█░█░█▀▀░█▀▄
-    # ░█▀▀░█░█░█▄█░█▀▀░█▀▄
-    # ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀
-    #
+])
+#+end_src
+
+*** Power Control
+#+begin_src python :tangle config.py
+keys.extend([
     Key([alt], "F4", lazy.spawn(dm + "dm-power"), desc="Logout Menu"),
     KeyChord(
         [mod],
@@ -865,11 +912,12 @@ keys = [
         ],
         mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows",
     ),
-    #
-    # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
-    # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
-    # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
-    #
+])
+#+end_src
+
+*** Screenshot
+#+begin_src python :tangle config.py
+keys.extend([
     Key(
         [mod],
         "Print",
@@ -894,11 +942,12 @@ keys = [
         lazy.spawn(dm + "dm-screenshot window"),
         desc="Active Window Screenshot",
     ),
-    #
-    # ░█▀█░█▀█░▀█▀░▀█▀░█▀▀░▀█▀░█▀▀░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
-    # ░█░█░█░█░░█░░░█░░█▀▀░░█░░█░░░█▀█░░█░░░█░░█░█░█░█░▀▀█
-    # ░▀░▀░▀▀▀░░▀░░▀▀▀░▀░░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
-    #
+])
+#+end_src
+
+*** Notifications
+#+begin_src python :tangle config.py
+keys.extend([
     KeyChord(
         [mod],
         "backslash",
@@ -936,13 +985,11 @@ keys = [
         ],
         mode="Notifications",
     ),
-]
+])
+#+end_src
 
-
-# ░█▄█░█▀█░█░█░█▀▀░█▀▀
-# ░█░█░█░█░█░█░▀▀█░█▀▀
-# ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
-
+** Mouse Bindings
+#+begin_src python :tangle config.py
 # Drag floating layouts.
 mouse = [
     Drag(
@@ -956,50 +1003,6 @@ mouse = [
     ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
-#+end_src
-
-** Workspaces (Groups)
-#+begin_src python :tangle config.py
-# Only map up to 10 Groups to number keys
-def getNumberOfKeysForGroups():
-    if len(groups) > 10:
-        return 10
-    else:
-        return len(groups)
-
-
-# Switch to another Group with SUPER + #
-# Send current window to another Group SUPER + SHIFT + #
-for i in range(getNumberOfKeysForGroups()):
-    name = groups[i].name
-
-    key = str(i + 1)
-    if i + 1 == 10:
-        key = "0"
-
-    keys.append(Key([mod], key, lazy.group[name].toscreen()))
-    keys.append(Key([mod, shift], key, lazy.window.togroup(name)))
-#+end_src
-
-** Layouts
-#+begin_src python :tangle config.py
-# Only map up to 10 Layouts to number keys
-def getNumberOfKeysForLayouts():
-    if len(layouts) > 10:
-        return 10
-    else:
-        return len(layouts)
-
-# Switch to another Layout with SUPER + ALT + #
-for i in range(getNumberOfKeysForLayouts()):
-    key = str(i + 1)
-    if i + 1 == 10:
-        key = "0"
-
-    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
-
-# Switch to last Layout
-keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
 #+end_src
 
 * Utils

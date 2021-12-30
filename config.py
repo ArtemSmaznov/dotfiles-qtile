@@ -376,18 +376,14 @@ if num_monitors > 1:
         )
 
 mod   = "mod4"
-alt   = "mod1"
-ctrl  = "control"
 shift = "shift"
+ctrl  = "control"
+alt   = "mod1"
 
+keys = []
 dm = os.path.expanduser(dmscripts)
 
-keys = [
-    #
-    # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█
-    # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█
-    # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀
-    #
+keys.extend([
     Key([mod, ctrl], "r", lazy.restart(), desc="Restart qTile"),
     Key([mod, ctrl], "q", lazy.shutdown(), desc="Quit qTile"),
     #
@@ -426,11 +422,9 @@ keys = [
         ],
         mode="Toggle",
     ),
-    #
-    # ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░█▀▀
-    # ░█▄█░░█░░█░█░█░█░█░█░█▄█░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
-    #
+])
+
+keys.extend([
     Key([mod], "q", lazy.window.kill(), desc="Close focused Window"),
     # Toggle windows states
     Key([mod], "F11", lazy.window.toggle_fullscreen(), desc="Toggle Fullscreen"),
@@ -497,21 +491,17 @@ keys = [
     ),
     Key([mod, ctrl], "j", lazy.layout.grow_down(), desc="Grow focused Window down"),
     Key([mod, ctrl], "k", lazy.layout.grow_up(), desc="Grow focused Window up"),
-    #
-    # ░█▄█░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀▄░█▀▀
-    # ░█░█░█░█░█░█░░█░░░█░░█░█░█▀▄░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀
-    #
+])
+
+keys.extend([
     # Switch focus between monitors
     Key([mod], "comma", lazy.prev_screen(), desc="Move focus to prev Screen"),
     Key([mod], "period", lazy.next_screen(), desc="Move focus to next Screen"),
     Key([mod], "F1", lazy.to_screen(0), desc="Move focus to 1st Screen"),
     Key([mod], "F2", lazy.to_screen(1), desc="Move focus to 2nd Screen"),
-    #
-    # ░█░░░█▀█░█░█░█▀█░█░█░▀█▀░█▀▀
-    # ░█░░░█▀█░░█░░█░█░█░█░░█░░▀▀█
-    # ░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀
-    #
+])
+
+keys.extend([
     # Switch between layouts
     Key([mod], "space", lazy.next_layout(), desc="Switch Laouts"),
     Key([mod, shift], "space", lazy.prev_layout(), desc="Switch Laouts"),
@@ -527,11 +517,27 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    #
-    # ░█▀▀░█▀▄░█▀█░█░█░█▀█░█▀▀
-    # ░█░█░█▀▄░█░█░█░█░█▀▀░▀▀█
-    # ░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀
-    #
+])
+
+# Only map up to 10 Layouts to number keys
+def getNumberOfKeysForLayouts():
+    if len(layouts) > 10:
+        return 10
+    else:
+        return len(layouts)
+
+# Switch to another Layout with SUPER + ALT + #
+for i in range(getNumberOfKeysForLayouts()):
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
+
+# Switch to last Layout
+keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
+
+keys.extend([
     Key([mod], "Tab", lazy.screen.toggle_group()),
     Key([mod], "F12", lazy.group["coding"].toscreen(1)),
     KeyChord(
@@ -565,19 +571,37 @@ keys = [
         ],
         mode="Scratchpads",
     ),
-    #
-    # ░█▄█░█▀▀░█▀▄░▀█▀░█▀█
-    # ░█░█░█▀▀░█░█░░█░░█▀█
-    # ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀
-    #
+])
+
+# Only map up to 10 Groups to number keys
+def getNumberOfKeysForGroups():
+    if len(groups) > 10:
+        return 10
+    else:
+        return len(groups)
+
+
+# Switch to another Group with SUPER + #
+# Send current window to another Group SUPER + SHIFT + #
+for i in range(getNumberOfKeysForGroups()):
+    name = groups[i].name
+
+    key = str(i + 1)
+    if i + 1 == 10:
+        key = "0"
+
+    keys.extend([
+        Key([mod], key, lazy.group[name].toscreen()),
+        Key([mod, shift], key, lazy.window.togroup(name))
+    ])
+
+keys.extend([
     Key([], "XF86AudioRaiseVolume", lazy.function(utils.volume_increase)),
     Key([], "XF86AudioLowerVolume", lazy.function(utils.volume_decrease)),
     Key([], "XF86AudioMute", lazy.function(utils.volume_mute)),
-    #
-    # ░█▀█░█▀█░█▀█░█▀▀
-    # ░█▀█░█▀▀░█▀▀░▀▀█
-    # ░▀░▀░▀░░░▀░░░▀▀▀
-    Key([ctrl, alt], "t", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
+])
+
+keys.extend([
     Key([mod], "Return", lazy.spawn(apps.myTerminal), desc="Launch Terminal"),
     Key([mod], "c", lazy.spawn(apps.myIde), desc="Launch IDE"),
     Key([mod], "e", lazy.spawn(apps.myFileManager), desc="Launch File Manager"),
@@ -621,11 +645,9 @@ keys = [
         ],
         mode="Open Secondary",
     ),
-    #
-    # ░█▀▄░█▄█░░░░░█▀▀░█▀▀░█▀▄░▀█▀░█▀█░▀█▀░█▀▀
-    # ░█░█░█░█░▄▄▄░▀▀█░█░░░█▀▄░░█░░█▀▀░░█░░▀▀█
-    # ░▀▀░░▀░▀░░░░░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░░░░▀░░▀▀▀
-    #
+])
+
+keys.extend([
     KeyChord(
         [mod],
         "d",
@@ -641,11 +663,9 @@ keys = [
         ],
         mode="dm-scripts",
     ),
-    #
-    # ░█▀█░█▀█░█░█░█▀▀░█▀▄
-    # ░█▀▀░█░█░█▄█░█▀▀░█▀▄
-    # ░▀░░░▀▀▀░▀░▀░▀▀▀░▀░▀
-    #
+])
+
+keys.extend([
     Key([alt], "F4", lazy.spawn(dm + "dm-power"), desc="Logout Menu"),
     KeyChord(
         [mod],
@@ -660,11 +680,9 @@ keys = [
         ],
         mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows",
     ),
-    #
-    # ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀
-    # ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░
-    # ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░
-    #
+])
+
+keys.extend([
     Key(
         [mod],
         "Print",
@@ -689,11 +707,9 @@ keys = [
         lazy.spawn(dm + "dm-screenshot window"),
         desc="Active Window Screenshot",
     ),
-    #
-    # ░█▀█░█▀█░▀█▀░▀█▀░█▀▀░▀█▀░█▀▀░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
-    # ░█░█░█░█░░█░░░█░░█▀▀░░█░░█░░░█▀█░░█░░░█░░█░█░█░█░▀▀█
-    # ░▀░▀░▀▀▀░░▀░░▀▀▀░▀░░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
-    #
+])
+
+keys.extend([
     KeyChord(
         [mod],
         "backslash",
@@ -731,12 +747,7 @@ keys = [
         ],
         mode="Notifications",
     ),
-]
-
-
-# ░█▄█░█▀█░█░█░█▀▀░█▀▀
-# ░█░█░█░█░█░█░▀▀█░█▀▀
-# ░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
+])
 
 # Drag floating layouts.
 mouse = [
@@ -751,41 +762,3 @@ mouse = [
     ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
-
-# Only map up to 10 Groups to number keys
-def getNumberOfKeysForGroups():
-    if len(groups) > 10:
-        return 10
-    else:
-        return len(groups)
-
-
-# Switch to another Group with SUPER + #
-# Send current window to another Group SUPER + SHIFT + #
-for i in range(getNumberOfKeysForGroups()):
-    name = groups[i].name
-
-    key = str(i + 1)
-    if i + 1 == 10:
-        key = "0"
-
-    keys.append(Key([mod], key, lazy.group[name].toscreen()))
-    keys.append(Key([mod, shift], key, lazy.window.togroup(name)))
-
-# Only map up to 10 Layouts to number keys
-def getNumberOfKeysForLayouts():
-    if len(layouts) > 10:
-        return 10
-    else:
-        return len(layouts)
-
-# Switch to another Layout with SUPER + ALT + #
-for i in range(getNumberOfKeysForLayouts()):
-    key = str(i + 1)
-    if i + 1 == 10:
-        key = "0"
-
-    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
-
-# Switch to last Layout
-keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
