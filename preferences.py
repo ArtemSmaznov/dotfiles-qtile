@@ -7,4 +7,4 @@ languages   = ["us", "ru"]
 time_format = "%l:%M %p"
 date_format = "%a, %d %b %Y"
 
-dmscripts = "~/.local/bin/dmscripts/"
+dmscripts = "~/.local/bin/dm-scripts/"
