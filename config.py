@@ -218,7 +218,7 @@ groups = [
     Group(
         "monitor",
         label="chart-bar",
-        layout="max",
+        spawn=apps.myCliSysMonitor,
         matches=[
             Match(
                 wm_class=[
@@ -253,7 +253,7 @@ groups.append(
             ),
             DropDown(
                 "htop",
-                apps.myCliTaskManager,
+                apps.myCliSysTasks,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -600,14 +600,14 @@ keys.extend([
     Key( [ ctrl, alt ] , "Delete"    , lazy.group["NSP"].dropdown_toggle("htop"    ) , desc="Htop Scratchpad"         ) ,
 
     KeyChord( [ mod ] , "s" , [
+        Key( [] , "a" , lazy.group["NSP"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
+        Key( [] , "c" , lazy.group["NSP"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
+        Key( [] , "d" , lazy.group["NSP"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
         Key( [] , "h" , lazy.group["NSP"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
         Key( [] , "m" , lazy.group["NSP"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
-        Key( [] , "c" , lazy.group["NSP"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
-        Key( [] , "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
-        Key( [] , "d" , lazy.group["NSP"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
-        Key( [] , "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
         Key( [] , "t" , lazy.group["NSP"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
-        Key( [] , "a" , lazy.group["NSP"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
+        Key( [] , "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
+        Key( [] , "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
     ], mode="Scratchpads"),
 ])
 
@@ -689,7 +689,7 @@ keys.extend([
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
         Key( [] , "t" , lazy.spawn(apps.myCliText  ) , desc="Launch Text Editor"   ),
-        Key( [] , "p" , lazy.spawn(apps.myPicLibrary) , desc="Launch Photo Library" ),
+        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary) , desc="Launch Photo Library" ),
         Key( [] , "g" , lazy.spawn(apps.myImgEditor ) , desc="Launch Image Editor"  ),
         Key( [] , "r" , lazy.spawn(apps.myVctEditor) , desc="Launch Vector Editor" ),
         Key( [] , "v" , lazy.spawn(apps.myVidEditor ) , desc="Launch Video Editor"  ),
