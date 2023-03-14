@@ -252,7 +252,7 @@ groups.append(
             ),
             DropDown(
                 "htop",
-                apps.myHtop,
+                apps.myCliTaskManager,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -261,7 +261,7 @@ groups.append(
             ),
             DropDown(
                 "files",
-                apps.myFiles,
+                apps.myCliFiles,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -662,24 +662,24 @@ keys.extend([
     Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
     Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde             ) , desc="Launch IDE"                           ),
     Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser      ) , desc="Launch Web Browser"                   ),
-    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncognitoBrowser) , desc="Launch Web Browser in Incognito Mode" ),
-    Key( [ mod        ] , "p"      , lazy.spawn(apps.myPasswordManager ) , desc="Autofill Passwords"                   ),
+    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncBrowser) , desc="Launch Web Browser in Incognito Mode" ),
+    Key( [ mod        ] , "p"      , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
     Key( [ mod        ] , "r"      , lazy.spawn(apps.myLauncher        ) , desc="Launch Launcher"                      ),
     Key( [ mod, shift ] , "r"      , lazy.spawn("dmenu_run"            ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
         Key( [] , "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        Key( [] , "s" , lazy.spawn(apps.myGame       ) , desc="Launch Steam"        ),
+        Key( [] , "s" , lazy.spawn(apps.mySteam       ) , desc="Launch Steam"        ),
     ], mode="Open Primary"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        Key( [] , "t" , lazy.spawn(apps.myTextEditor  ) , desc="Launch Text Editor"   ),
-        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary) , desc="Launch Photo Library" ),
-        Key( [] , "g" , lazy.spawn(apps.myImageEditor ) , desc="Launch Image Editor"  ),
-        Key( [] , "r" , lazy.spawn(apps.myVectorEditor) , desc="Launch Vector Editor" ),
-        Key( [] , "v" , lazy.spawn(apps.myVideoEditor ) , desc="Launch Video Editor"  ),
+        Key( [] , "t" , lazy.spawn(apps.myCliText  ) , desc="Launch Text Editor"   ),
+        Key( [] , "p" , lazy.spawn(apps.myPicLibrary) , desc="Launch Photo Library" ),
+        Key( [] , "g" , lazy.spawn(apps.myImgEditor ) , desc="Launch Image Editor"  ),
+        Key( [] , "r" , lazy.spawn(apps.myVctEditor) , desc="Launch Vector Editor" ),
+        Key( [] , "v" , lazy.spawn(apps.myVidEditor ) , desc="Launch Video Editor"  ),
     ], mode="Open Secondary"),
 ])
 

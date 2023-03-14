@@ -140,38 +140,45 @@ from libqtile.utils import guess_terminal
 #+end_src
 
 #+begin_src python :tangle apps.py
-myTerminal         = guess_terminal()
-myTextEditor       = myTerminal + " -e vim"
-myHtop             = myTerminal + " -e htop"
-myFiles            = myTerminal + " -e vifmrun"
-myCliMusic         = myTerminal + " -e ncmpcpp"
-myVirtManager      = "virt-manager"
-myAnki             = "anki"
-myWebBrowser       = "qutebrowser"
-myIncognitoBrowser = "qutebrowser --target private-window"
-myTorBrowser       = "torbrowser-launcher"
-myFileManager      = "pcmanfm"
-myVideoPlayer      = "celluloid"
-myGame             = "/usr/bin/steam-runtime %U"
-myIde              = "emacsclient -c -a 'emacs'"
-myImageEditor      = "gimp"
-myVectorEditor     = "inkscape"
-myVideoEditor      = "kdenlive"
-myPhotoLibrary     = "digikam"
-myTorrent          = "transmission-gtk"
-myVpn              = "/opt/piavpn/bin/pia-client --quiet"
-myVm               = "virtualbox"
-myLauncher         = "rofi -show drun"
-myPasswordManager  = "rofi-pass"
-myCalculator       = "gnome-calculator"
+# cli tools
+myTerminal       = guess_terminal()
+myCliText        = myTerminal + " -e vim"
+myCliTaskManager = myTerminal + " -e htop"
+myCliMonitor     = myTerminal + " -e btop"
+myCliFiles       = myTerminal + " -e vifmrun"
+myCliMusic       = myTerminal + " -e ncmpcpp"
+myCliSysAudio    = myTerminal + " -e alsamixer"
 
-myWhatsApp         = "whatsapp-for-linux"
-myDiscord          = "discord"
+# core tools
+myLauncher       = "rofi -show drun"
+myWebBrowser     = "qutebrowser"
+myIncBrowser     = "qutebrowser --target private-window"
+myTorBrowser     = "torbrowser-launcher"
+myFiles          = "pcmanfm"
+myIde            = "emacsclient -c -a 'emacs'"
 
-myMyNetworkManager = "nm-connection-editor"
-myBluetoothManager = "blueman-manager"
-myPowerManager     = "xfce4-power-manager-settings"
-myAudioManager     = myTerminal + " -e alsamixer"
+# extra tools
+mySteam          = "/usr/bin/steam-runtime %U"
+myTorrent        = "transmission-gtk"
+myPassManager    = "rofi-pass"
+myVirtManager    = "virt-manager"
+myCalculator     = "gnome-calculator"
+myAnki           = "anki"
+
+# graphics tools
+myImgEditor      = "gimp"
+myVctEditor      = "inkscape"
+myVidEditor      = "kdenlive"
+myPicLibrary     = "digikam"
+
+# chat apps
+myWhatsApp       = "whatsapp-for-linux"
+myDiscord        = "discord"
+
+# system tools
+mySysNetwork     = "nm-connection-editor"
+mySysBluetooth   = "blueman-manager"
+mySysPower       = "xfce4-power-manager-settings"
 #+end_src
 
 * Windows
@@ -437,7 +444,7 @@ groups.append(
             ),
             DropDown(
                 "htop",
-                apps.myHtop,
+                apps.myCliTaskManager,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -446,7 +453,7 @@ groups.append(
             ),
             DropDown(
                 "files",
-                apps.myFiles,
+                apps.myCliFiles,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -930,24 +937,24 @@ keys.extend([
     Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
     Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde             ) , desc="Launch IDE"                           ),
     Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser      ) , desc="Launch Web Browser"                   ),
-    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncognitoBrowser) , desc="Launch Web Browser in Incognito Mode" ),
-    Key( [ mod        ] , "p"      , lazy.spawn(apps.myPasswordManager ) , desc="Autofill Passwords"                   ),
+    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncBrowser) , desc="Launch Web Browser in Incognito Mode" ),
+    Key( [ mod        ] , "p"      , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
     Key( [ mod        ] , "r"      , lazy.spawn(apps.myLauncher        ) , desc="Launch Launcher"                      ),
     Key( [ mod, shift ] , "r"      , lazy.spawn("dmenu_run"            ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
         Key( [] , "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        Key( [] , "s" , lazy.spawn(apps.myGame       ) , desc="Launch Steam"        ),
+        Key( [] , "s" , lazy.spawn(apps.mySteam       ) , desc="Launch Steam"        ),
     ], mode="Open Primary"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        Key( [] , "t" , lazy.spawn(apps.myTextEditor  ) , desc="Launch Text Editor"   ),
-        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary) , desc="Launch Photo Library" ),
-        Key( [] , "g" , lazy.spawn(apps.myImageEditor ) , desc="Launch Image Editor"  ),
-        Key( [] , "r" , lazy.spawn(apps.myVectorEditor) , desc="Launch Vector Editor" ),
-        Key( [] , "v" , lazy.spawn(apps.myVideoEditor ) , desc="Launch Video Editor"  ),
+        Key( [] , "t" , lazy.spawn(apps.myCliText  ) , desc="Launch Text Editor"   ),
+        Key( [] , "p" , lazy.spawn(apps.myPicLibrary) , desc="Launch Photo Library" ),
+        Key( [] , "g" , lazy.spawn(apps.myImgEditor ) , desc="Launch Image Editor"  ),
+        Key( [] , "r" , lazy.spawn(apps.myVctEditor) , desc="Launch Vector Editor" ),
+        Key( [] , "v" , lazy.spawn(apps.myVidEditor ) , desc="Launch Video Editor"  ),
     ], mode="Open Secondary"),
 ])
 #+end_src
@@ -1393,7 +1400,7 @@ def volume(bg=themes.background, fg=themes.foreground):
             background=bg,
             step=user.volume_step,
             mouse_callbacks={
-                "Button3": lambda: qtile.cmd_spawn(apps.myAudioManager),
+                "Button3": lambda: qtile.cmd_spawn(apps.myCliSysAudio),
             },
         ),
     ]

@@ -213,7 +213,7 @@ def volume(bg=themes.background, fg=themes.foreground):
             background=bg,
             step=user.volume_step,
             mouse_callbacks={
-                "Button3": lambda: qtile.cmd_spawn(apps.myAudioManager),
+                "Button3": lambda: qtile.cmd_spawn(apps.myCliSysAudio),
             },
         ),
     ]
