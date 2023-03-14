@@ -131,6 +131,7 @@ date_format = "%a, %d %b %Y"
 
 Paths
 #+begin_src python :tangle preferences.py
+scripts_dir = "~/.local/bin/"
 dmscripts = "~/.local/bin/dm-scripts/"
 #+end_src
 
@@ -766,6 +767,10 @@ keys.extend([
 
 Moving Windows
 #+begin_src python :tangle config.py
+keys.extend([
+    Key( [ mod, shift ] , "comma"  , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(0)) , desc="Move window to Screen" ),
+    Key( [ mod, shift ] , "period" , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(1)) , desc="Move window to Screen" ),
+])
 #+end_src
 
 Swapping

@@ -523,7 +523,10 @@ keys.extend([
     Key( [ mod ] , "F2"     , lazy.to_screen(1)  , desc="Move focus to 2nd Screen"  ),
 ])
 
-
+keys.extend([
+    Key( [ mod, shift ] , "comma"  , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(0)) , desc="Move window to Screen" ),
+    Key( [ mod, shift ] , "period" , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(1)) , desc="Move window to Screen" ),
+])
 
 
 
