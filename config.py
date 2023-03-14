@@ -10,8 +10,8 @@ from Xlib import display as xdisplay
 from widgets import *
 from preferences import dmscripts
 
-from theme import float_layout, global_layout
-import theme
+from themes import float_layout, global_layout
+import themes
 import utils
 import widgets
 import apps
@@ -394,9 +394,9 @@ def init_bar(s="secondary"):
     else: my_bar = secondary_bar()
 
     return bar.Bar( my_bar
-                  , theme.bar_size
-                  , background=theme.background
-                  , opacity=theme.bar_opacity
+                  , themes.bar_size
+                  , background=themes.background
+                  , opacity=themes.bar_opacity
     )
 
 def get_num_monitors():

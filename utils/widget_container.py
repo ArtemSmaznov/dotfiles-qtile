@@ -1,10 +1,10 @@
 from libqtile import widget
 
 import preferences as user
-import theme
+import themes
 
 def powerline(
-    widgets=[], colors=theme.power_line_colors, separator_font=user.powerline_font
+    widgets=[], colors=themes.power_line_colors, separator_font=user.powerline_font
 ):
     separator = {
         "powerline": "",
@@ -39,7 +39,7 @@ def powerline(
             previous_color = colors[ic - 1]
         else:
             if is_first_color_iteration:
-                previous_color = theme.background
+                previous_color = themes.background
             else:
                 previous_color = colors[len(colors) - 1]
 
@@ -53,14 +53,14 @@ def powerline(
                     fontsize=separator_size[separator_font],
                     padding=separator_padding[separator_font],
                 ),
-                *widgets[iw](current_color, theme.fg_dark),
+                *widgets[iw](current_color, themes.fg_dark),
                 widget.Sep(linewidth=0, padding=4, background=current_color),
             ]
         )
 
     return w_container
 
-def colorized(widgets=[], colors=theme.power_line_colors, separator_gap=8):
+def colorized(widgets=[], colors=themes.power_line_colors, separator_gap=8):
     w_container = []
     is_first_color_iteration = True
 
@@ -79,7 +79,7 @@ def colorized(widgets=[], colors=theme.power_line_colors, separator_gap=8):
             previous_color = colors[ic - 1]
         else:
             if is_first_color_iteration:
-                previous_color = theme.background
+                previous_color = themes.background
             else:
                 previous_color = colors[len(colors) - 1]
 
@@ -87,16 +87,16 @@ def colorized(widgets=[], colors=theme.power_line_colors, separator_gap=8):
         w_container.extend(
             [
                 widget.Sep(
-                    linewidth=0, padding=separator_gap, background=theme.background
+                    linewidth=0, padding=separator_gap, background=themes.background
                 ),
-                *widgets[iw](theme.background, current_color),
+                *widgets[iw](themes.background, current_color),
             ]
         )
 
     # Create an extra gap after the widget
     w_container.extend(
         [
-            widget.Sep(linewidth=0, padding=4, background=theme.background),
+            widget.Sep(linewidth=0, padding=4, background=themes.background),
         ]
     )
 

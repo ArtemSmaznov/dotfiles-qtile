@@ -3,19 +3,19 @@ import socket
 
 import apps
 import preferences as user
-import theme
+import themes
 from libqtile import lazy, qtile, widget
 from preferences import dmscripts
 
 dm = os.path.expanduser(dmscripts)
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
-def separator(size=6, backround=theme.background):
+def separator(size=6, backround=themes.background):
     return widget.Sep(linewidth=0, padding=size, background=backround)
 
 def start_widget():
     return widget.Image(
-        filename=theme.distributor_logo,
+        filename=themes.distributor_logo,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn(apps.myLauncher),
         },
@@ -23,42 +23,42 @@ def start_widget():
 
 def profile():
     return widget.Image(
-        filename=theme.user_icon,
+        filename=themes.user_icon,
         mouse_callbacks={
             "Button1": lambda: qtile.cmd_spawn(dm + "dm-power"),
         },
     )
 
-def prompt_widget(bg=theme.prompt, fg=theme.fg_dark):
+def prompt_widget(bg=themes.prompt, fg=themes.fg_dark):
     return widget.Prompt(
         prompt=prompt,
-        font=theme.font_bold,
+        font=themes.font_bold,
         padding=10,
         foreground=fg,
         background=bg,
     )
 
-def time(bg=theme.background, fg=theme.foreground):
+def time(bg=themes.background, fg=themes.foreground):
     return widget.Clock(
-        font=theme.font_bold, foregroung=fg, background=bg, format=user.time_format
+        font=themes.font_bold, foregroung=fg, background=bg, format=user.time_format
     )
 
-def date(bg=theme.background, fg=theme.foreground):
+def date(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
             text="",
-            font=theme.font_awesome,
-            fontsize=theme.icon_size,
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
             padding_x=2,
             foreground=fg,
             background=bg,
         ),
         widget.Clock(
-            font=theme.font_bold, foreground=fg, background=bg, format=user.date_format
+            font=themes.font_bold, foreground=fg, background=bg, format=user.date_format
         ),
     ]
 
-def layout_icon(bg=theme.background, fg=theme.foreground):
+def layout_icon(bg=themes.background, fg=themes.foreground):
     return widget.CurrentLayoutIcon(
         # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
         foreground=fg,
@@ -75,47 +75,47 @@ def layout_icon(bg=theme.background, fg=theme.foreground):
 
 def group_box():
     return widget.GroupBox(
-        font=theme.font_awesome,
-        fontsize=theme.group_icon_size,
+        font=themes.font_awesome,
+        fontsize=themes.group_icon_size,
         margin_y=3,
         margin_x=0,
         padding_y=5,
         padding_x=3,
         borderwidth=3,
-        highlight_method=theme.group_highlight_method,
+        highlight_method=themes.group_highlight_method,
         disable_drag=True,
         hide_unused=False,
         # Icon colors
-        active=theme.foreground,
-        inactive=theme.inactive,
+        active=themes.foreground,
+        inactive=themes.inactive,
         # Background colors
-        highlight_color=theme.selection_bg,
+        highlight_color=themes.selection_bg,
         # Border colors
-        this_current_screen_border=theme.selection_accent,
-        this_screen_border=theme.unfocused_selection_accent,
-        other_current_screen_border=theme.other_selection_accent,
-        other_screen_border=theme.unfocused_other_selection_accent,
+        this_current_screen_border=themes.selection_accent,
+        this_screen_border=themes.unfocused_selection_accent,
+        other_current_screen_border=themes.other_selection_accent,
+        other_screen_border=themes.unfocused_other_selection_accent,
         # Border colors - alert
-        urgent_border=theme.alert,
+        urgent_border=themes.alert,
     )
 
-def window_name(bg=theme.background, fg=theme.foreground):
+def window_name(bg=themes.background, fg=themes.foreground):
     return widget.WindowName(
-        font=theme.font_bold, foreground=fg, background=bg, padding=0
+        font=themes.font_bold, foreground=fg, background=bg, padding=0
     )
 
-def task_list(bg=theme.background, fg=theme.foreground):
+def task_list(bg=themes.background, fg=themes.foreground):
     return widget.TaskList(
-        font=theme.font_bold,
-        highlight_method=theme.tasklist_highlight_method,
-        border=theme.selection_bg,
+        font=themes.font_bold,
+        highlight_method=themes.tasklist_highlight_method,
+        border=themes.selection_bg,
         foreground=fg,
         background=bg,
-        rounded=theme.rounded_hightlights,
+        rounded=themes.rounded_hightlights,
         txt_floating=" ",
         txt_maximized=" ",
         txt_minimized=" ",
-        icon_size=theme.tasklist_icon_size,
+        icon_size=themes.tasklist_icon_size,
         max_title_width=150,
         padding_x=5,
         padding_y=5,
@@ -124,17 +124,17 @@ def task_list(bg=theme.background, fg=theme.foreground):
 
 def notify():
     return widget.Notify(
-        foreground=theme.selection_accent,
-        foreground_urgent=theme.alert,
-        foreground_low=theme.foreground,
+        foreground=themes.selection_accent,
+        foreground_urgent=themes.alert,
+        foreground_low=themes.foreground,
     )
 
-def keyboard_layout(bg=theme.background, fg=theme.foreground):
+def keyboard_layout(bg=themes.background, fg=themes.foreground):
     return widget.KeyboardLayout(
         foreground=fg,
         background=bg,
         configured_keyboards=user.languages,
-        font=theme.font_bold,
+        font=themes.font_bold,
         mouse_callbacks={
             # This doesn't work
             # "Button1": lambda: lazy.widget["keyboardlayout"].next_keyboard(),
@@ -143,18 +143,18 @@ def keyboard_layout(bg=theme.background, fg=theme.foreground):
         },
     )
 
-def sys_tray(bg=theme.background, fg=theme.foreground):
+def sys_tray(bg=themes.background, fg=themes.foreground):
     return widget.Systray(
         foreground=fg,
         background=bg,
     )
 
-def updater(bg=theme.background, fg=theme.foreground):
+def updater(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
             text="",
-            font=theme.font_awesome,
-            fontsize=theme.icon_size - 3,
+            font=themes.font_awesome,
+            fontsize=themes.icon_size - 3,
             padding_x=2,
             foreground=fg,
             background=bg,
@@ -169,7 +169,7 @@ def updater(bg=theme.background, fg=theme.foreground):
             display_format="{updates}",
             no_update_string="n/a",
             update_interval="1800",
-            font=theme.font_bold,
+            font=themes.font_bold,
             colour_have_updates=fg,
             colour_no_updates=fg,
             background=bg,
@@ -179,10 +179,10 @@ def updater(bg=theme.background, fg=theme.foreground):
             custom_command="pacman -Qu | grep -e nvidia -e linux",
             update_interval="1800",
             display_format="",
-            font=theme.font_awesome,
-            fontsize=theme.icon_size - 3,
-            colour_have_updates=theme.alert,
-            # colour_no_updates=theme.foreground,
+            font=themes.font_awesome,
+            fontsize=themes.icon_size - 3,
+            colour_have_updates=themes.alert,
+            # colour_no_updates=themes.foreground,
             background=bg,
         ),
         widget.CheckUpdates(
@@ -190,25 +190,25 @@ def updater(bg=theme.background, fg=theme.foreground):
             custom_command="pacman -Qu | grep -e nvidia -e linux",
             update_interval="1800",
             display_format="{updates}",
-            font=theme.font_bold,
-            colour_have_updates=theme.alert,
+            font=themes.font_bold,
+            colour_have_updates=themes.alert,
             colour_no_updates=fg,
             background=bg,
         ),
     ]
 
-def volume(bg=theme.background, fg=theme.foreground):
+def volume(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
             text="",
-            font=theme.font_awesome,
-            fontsize=theme.icon_size,
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
             padding_x=2,
             foreground=fg,
             background=bg,
         ),
         widget.Volume(
-            font=theme.font_bold,
+            font=themes.font_bold,
             foreground=fg,
             background=bg,
             step=user.volume_step,
@@ -218,9 +218,9 @@ def volume(bg=theme.background, fg=theme.foreground):
         ),
     ]
 
-def chord(bg=theme.chord, fg=theme.fg_dark):
+def chord(bg=themes.chord, fg=themes.fg_dark):
     return widget.Chord(
-        font=theme.font_bold,
+        font=themes.font_bold,
         padding=10,
         foreground=fg,
         background=bg,
