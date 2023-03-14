@@ -239,7 +239,7 @@ s_top_margin = (1.0 - s_height) / 2
 # Add a ScratchPad Group
 groups.append(
     ScratchPad(
-        "scratchpad",
+        "NSP",
         [
             DropDown(
                 "terminal",
@@ -582,19 +582,19 @@ for i in range(getNumberOfKeysForGroups()):
     ])
 
 keys.extend([
-    Key( [ mod ] , "quoteleft" , lazy.group["scratchpad"].dropdown_toggle("terminal") , desc="Terminal Scratchpad" ),
-    Key( [ mod ] , "e"         , lazy.group["scratchpad"].dropdown_toggle("files")    , desc="File Manager Scratchpad" ),
-    # , ("C-M1-<Delete>" , namedScratchpadAction myScratchPads "htop"        ) -- Htop Scratchpad
+    Key( [ mod       ] , "quoteleft" , lazy.group["NSP"].dropdown_toggle("terminal") , desc="Terminal Scratchpad"     ) ,
+    Key( [ mod       ] , "e"         , lazy.group["NSP"].dropdown_toggle("files"   ) , desc="File Manager Scratchpad" ) ,
+    Key( [ ctrl, alt ] , "Delete"    , lazy.group["NSP"].dropdown_toggle("htop"    ) , desc="Htop Scratchpad"         ) ,
 
     KeyChord( [ mod ] , "s" , [
-        Key( [] , "h" , lazy.group["scratchpad"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
-        Key( [] , "m" , lazy.group["scratchpad"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
-        Key( [] , "c" , lazy.group["scratchpad"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
-        Key( [] , "w" , lazy.group["scratchpad"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
-        Key( [] , "d" , lazy.group["scratchpad"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
-        Key( [] , "v" , lazy.group["scratchpad"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
-        Key( [] , "t" , lazy.group["scratchpad"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
-        Key( [] , "a" , lazy.group["scratchpad"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
+        Key( [] , "h" , lazy.group["NSP"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
+        Key( [] , "m" , lazy.group["NSP"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
+        Key( [] , "c" , lazy.group["NSP"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
+        Key( [] , "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
+        Key( [] , "d" , lazy.group["NSP"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
+        Key( [] , "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
+        Key( [] , "t" , lazy.group["NSP"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
+        Key( [] , "a" , lazy.group["NSP"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
     ], mode="Scratchpads"),
 ])
 
