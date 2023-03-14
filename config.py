@@ -249,6 +249,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "htop",
@@ -258,6 +259,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "files",
@@ -267,6 +269,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "music",
@@ -276,6 +279,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "virtmanager",
@@ -285,6 +289,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "torrent",
@@ -294,6 +299,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "calc",
@@ -303,6 +309,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "whatsapp",
@@ -312,6 +319,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "discord",
@@ -321,6 +329,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
             DropDown(
                 "anki",
@@ -330,6 +339,7 @@ groups.append(
                 width=s_width,
                 height=s_height,
                 warp_pointer=False,
+                on_focus_lost_hide=False,
             ),
         ],
     ),
