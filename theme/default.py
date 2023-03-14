@@ -17,7 +17,7 @@ gap = 10
 font_regular = "SF Pro Text Regular"
 font_bold = "SF Pro Text Bold"
 
-font_awesome = "Font Awesome 5 Free Regular"
+font_awesome = "Font Awesome 6 Free Solid"
 icon_size = 14
 
 

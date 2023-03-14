@@ -22,7 +22,7 @@ from utils.widget_container import colorized as widget_container
 
 @hook.subscribe.startup_once
 def autostart():
-    autostart_script = os.path.expanduser("~/.config/autostart-scripts/autostart.sh")
+    autostart_script = os.path.expanduser("~/.local/bin/auto-start.sh")
     subprocess.call([autostart_script])
 
 auto_fullscreen            = True
@@ -62,7 +62,7 @@ groups = [
 
     Group(
         "internet",
-        label="",
+        label="globe",
         matches=[
             Match(
                 wm_class=[
@@ -81,7 +81,7 @@ groups = [
 
     Group(
         "gaming",
-        label="",
+        label="gamepad",
         layout="max",
         matches=[
             Match(
@@ -106,7 +106,7 @@ groups = [
 
     Group(
         "coding",
-        label="",
+        label="keyboard",
         # spawn=apps.myTerminal,
         matches=[
             Match(
@@ -134,7 +134,7 @@ groups = [
 
     Group(
         "computer",
-        label="",
+        label="folder",
         matches=[
             Match(
                 wm_class=[
@@ -153,8 +153,8 @@ groups = [
 
     Group(
         "music",
-        label="",
-        spawn=apps.myCliMusicPlayer,
+        label="headphones",
+        spawn=apps.myCliMusic,
         matches=[
             Match(
                 wm_class=[
@@ -167,7 +167,7 @@ groups = [
 
     Group(
         "graphics",
-        label="",
+        label="camera",
         matches=[
             Match(
                 wm_class=[
@@ -182,8 +182,23 @@ groups = [
     ),
 
     Group(
-        "video",
-        label="",
+        "chat",
+        label="sms",
+        matches=[
+            Match(
+                wm_class=[
+                    "whatsapp-for-linux",
+                    "Slack",
+                    "discord",
+                    "signal",
+                ]
+            ),
+        ],
+    ),
+
+    Group(
+        "sandbox",
+        label="layer-group",
         matches=[
             Match(
                 title=[
@@ -201,23 +216,8 @@ groups = [
     ),
 
     Group(
-        "chat",
-        label="",
-        matches=[
-            Match(
-                wm_class=[
-                    "whatsapp-for-linux",
-                    "Slack",
-                    "discord",
-                    "signal",
-                ]
-            ),
-        ],
-    ),
-
-    Group(
-        "sandbox",
-        label="",
+        "monitor",
+        label="chart-bar",
         layout="max",
         matches=[
             Match(
@@ -242,7 +242,7 @@ groups.append(
         "scratchpad",
         [
             DropDown(
-                "term",
+                "terminal",
                 apps.myTerminal,
                 x=s_left_margin,
                 y=s_top_margin,
@@ -251,8 +251,17 @@ groups.append(
                 warp_pointer=False,
             ),
             DropDown(
+                "htop",
+                apps.myHtop,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
                 "files",
-                apps.myFileManager,
+                apps.myFiles,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -261,7 +270,61 @@ groups.append(
             ),
             DropDown(
                 "music",
-                apps.myMusicPlayer,
+                apps.myCliMusic,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "virtmanager",
+                apps.myVirtManager,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "torrent",
+                apps.myTorrent,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "calc",
+                apps.myCalculator,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "whatsapp",
+                apps.myWhatsApp,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "discord",
+                apps.myDiscord,
+                x=s_left_margin,
+                y=s_top_margin,
+                width=s_width,
+                height=s_height,
+                warp_pointer=False,
+            ),
+            DropDown(
+                "anki",
+                apps.myAnki,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -519,11 +582,19 @@ for i in range(getNumberOfKeysForGroups()):
     ])
 
 keys.extend([
-    Key( [ mod ] , "quoteleft" , lazy.group["scratchpad"].dropdown_toggle("term") , desc="Terminal Scratchpad" ),
+    Key( [ mod ] , "quoteleft" , lazy.group["scratchpad"].dropdown_toggle("terminal") , desc="Terminal Scratchpad" ),
+    Key( [ mod ] , "e"         , lazy.group["scratchpad"].dropdown_toggle("files")    , desc="File Manager Scratchpad" ),
+    # , ("C-M1-<Delete>" , namedScratchpadAction myScratchPads "htop"        ) -- Htop Scratchpad
 
     KeyChord( [ mod ] , "s" , [
-        Key( [] , "e" , lazy.group["scratchpad"].dropdown_toggle("files") , desc="File Manager Scratchpad" ),
-        Key( [] , "m" , lazy.group["scratchpad"].dropdown_toggle("music") , desc="Music Scratchpad"        ),
+        Key( [] , "h" , lazy.group["scratchpad"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
+        Key( [] , "m" , lazy.group["scratchpad"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
+        Key( [] , "c" , lazy.group["scratchpad"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
+        Key( [] , "w" , lazy.group["scratchpad"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
+        Key( [] , "d" , lazy.group["scratchpad"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
+        Key( [] , "v" , lazy.group["scratchpad"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
+        Key( [] , "t" , lazy.group["scratchpad"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
+        Key( [] , "a" , lazy.group["scratchpad"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
     ], mode="Scratchpads"),
 ])
 
@@ -590,7 +661,6 @@ keys.extend([
     Key( [ ctrl, alt  ] , "t"      , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
     Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
     Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde             ) , desc="Launch IDE"                           ),
-    Key( [ mod        ] , "e"      , lazy.spawn(apps.myFileManager     ) , desc="Launch File Manager"                  ),
     Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser      ) , desc="Launch Web Browser"                   ),
     Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncognitoBrowser) , desc="Launch Web Browser in Incognito Mode" ),
     Key( [ mod        ] , "p"      , lazy.spawn(apps.myPasswordManager ) , desc="Autofill Passwords"                   ),
@@ -600,8 +670,6 @@ keys.extend([
     # Primary
     KeyChord( [ mod ] , "o" , [
         Key( [] , "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        Key( [] , "m" , lazy.spawn(apps.myMusicPlayer) , desc="Launch Music Player" ),
-        Key( [] , "v" , lazy.spawn(apps.myVideoPlayer) , desc="Launch Video Player" ),
         Key( [] , "s" , lazy.spawn(apps.myGame       ) , desc="Launch Steam"        ),
     ], mode="Open Primary"),
 
