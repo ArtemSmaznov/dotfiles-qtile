@@ -8,7 +8,6 @@ from typing import List
 from Xlib import display as xdisplay
 
 from widgets import *
-from preferences import dmscripts
 
 from themes import float_layout, global_layout
 import themes
@@ -28,6 +27,9 @@ focus_on_window_activation = "smart"
 follow_mouse_focus         = False
 reconfigure_screens        = True
 auto_minimize              = True
+
+myScript   = os.path.expanduser("~/.local/bin/")
+myDMScript = os.path.expanduser("~/.local/bin/dm-scripts/")
 
 @hook.subscribe.startup_once
 def autostart():
@@ -456,8 +458,6 @@ shift = "shift"
 ctrl  = "control"
 alt   = "mod1"
 
-myScript = os.path.expanduser("~/.local/bin/")
-myDMScript = os.path.expanduser(dmscripts)
 keys = []
 
 keys.append(
