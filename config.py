@@ -453,9 +453,9 @@ shift = "shift"
 ctrl  = "control"
 alt   = "mod1"
 
-keys = []
 myScript = os.path.expanduser("~/.local/bin/")
 myDMScript = os.path.expanduser(dmscripts)
+keys = []
 
 keys.append(
     Key( [ mod, ctrl ] , "d" , lazy.hide_show_bar("all") , desc="Debugging" )
@@ -473,7 +473,7 @@ keys.extend([
         Key([] , "z" , lazy.hide_show_bar("all")         , desc="Toggle Zen Mobde"   ),
         Key([] , "s" , lazy.hide_show_bar("all")         , desc="Toggle Statusbar"   ),
         Key([] , "k" , lazy.spawn(myDMScript + "dm-keys toggle") , desc="Toggle Key Grabber" ),
-    ], mode="Toggle"),
+    ], name="Toggle"),
 ])
 
 keys.extend([
@@ -563,14 +563,14 @@ for i in range(getNumberOfKeysForLayouts()):
 keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
 
 keys.extend([
-    Key( [ mod ] , "Tab" , lazy.screen.toggle_group()      , desc="Toggle Workspace" ),
-    Key( [ mod ] , "F12" , lazy.group["coding"].toscreen(1), desc="meh"              ),
+    Key( [ mod ] , "Tab" , lazy.screen.toggle_group()       , desc="Toggle Workspace" ),
+    Key( [ mod ] , "F12" , lazy.group["coding"].toscreen(1) , desc="meh"              ),
 
     KeyChord( [ mod ] , "g" , [
         Key( [] , "h" , lazy.screen.prev_group()                  , desc="Move to the group on the left"               ),
         Key( [] , "l" , lazy.screen.next_group()                  , desc="Move to the group on the right"              ),
         Key( [] , "d" , lazy.function(utils.clear_default_groups) , desc="Delete system 1-9 groups after a bad config" ),
-    ], mode="Groups"),
+    ], name="Groups"),
 ])
 
 # Only map up to 10 Groups to number keys
@@ -609,7 +609,7 @@ keys.extend([
         Key( [] , "t" , lazy.group["NSP"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
         Key( [] , "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
         Key( [] , "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
-    ], mode="Scratchpads"),
+    ], name="Scratchpads"),
 ])
 
 keys.extend([
@@ -636,7 +636,7 @@ keys.extend([
         Key( [     ] , "n"         , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
         Key( [     ] , "backslash" , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
         Key( [     ] , "k"         , lazy.spawn(myDMScript + "dm-keys"      ) , desc="DM Keys"       ),
-    ], mode="dm-scripts"),
+    ], name="dm-scripts"),
 ])
 
 keys.extend([
@@ -649,7 +649,7 @@ keys.extend([
         Key( [] , "p" , lazy.spawn(myDMScript + "dm-power poweroff") , desc="Shutdown System"   ),
         Key( [] , "r" , lazy.spawn(myDMScript + "dm-power reboot"  ) , desc="Reboot System"     ),
         Key( [] , "w" , lazy.spawn(myDMScript + "dm-power windows" ) , desc="Reboot to Windows" ),
-    ], mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows"),
+    ], name="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows"),
 ])
 
 keys.extend([
@@ -668,33 +668,33 @@ keys.extend([
         Key( [ shift ] , "c"         , lazy.spawn(myDMScript + "dm-notify clear"  ) , desc="Clear all Notifications"        ),
         Key( [       ] , "c"         , lazy.spawn(myDMScript + "dm-notify close"  ) , desc="Clear last Notification"        ),
         Key( [       ] , "a"         , lazy.spawn(myDMScript + "dm-notify context") , desc="Open last Notification"         ),
-    ], mode="Notifications"),
+    ], name="Notifications", mode=True),
 ])
 
 keys.extend([
-    Key( [ ctrl, alt  ] , "t"      , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
-    Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal        ) , desc="Launch Terminal"                      ),
-    Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde             ) , desc="Launch IDE"                           ),
-    Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser      ) , desc="Launch Web Browser"                   ),
-    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncBrowser) , desc="Launch Web Browser in Incognito Mode" ),
+    Key( [ ctrl, alt  ] , "t"      , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
+    Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
+    Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde         ) , desc="Launch IDE"                           ),
+    Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser  ) , desc="Launch Web Browser"                   ),
+    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
     Key( [ mod        ] , "p"      , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
-    Key( [ mod        ] , "r"      , lazy.spawn(apps.myLauncher        ) , desc="Launch Launcher"                      ),
-    Key( [ mod, shift ] , "r"      , lazy.spawn("dmenu_run"            ) , desc="Launch dmenu"                         ),
+    Key( [ mod        ] , "r"      , lazy.spawn(apps.myLauncher    ) , desc="Launch Launcher"                      ),
+    Key( [ mod, shift ] , "r"      , lazy.spawn("dmenu_run"        ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
         Key( [] , "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        Key( [] , "s" , lazy.spawn(apps.mySteam       ) , desc="Launch Steam"        ),
-    ], mode="Open Primary"),
+        Key( [] , "s" , lazy.spawn(apps.mySteam      ) , desc="Launch Steam"        ),
+    ], name="Launch"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        Key( [] , "t" , lazy.spawn(apps.myCliText  ) , desc="Launch Text Editor"   ),
-        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary) , desc="Launch Photo Library" ),
-        Key( [] , "g" , lazy.spawn(apps.myImgEditor ) , desc="Launch Image Editor"  ),
-        Key( [] , "r" , lazy.spawn(apps.myVctEditor) , desc="Launch Vector Editor" ),
-        Key( [] , "v" , lazy.spawn(apps.myVidEditor ) , desc="Launch Video Editor"  ),
-    ], mode="Open Secondary"),
+        Key( [] , "t" , lazy.spawn(apps.myCliText      ) , desc="Launch Text Editor"   ),
+        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary ) , desc="Launch Photo Library" ),
+        Key( [] , "g" , lazy.spawn(apps.myImgEditor    ) , desc="Launch Image Editor"  ),
+        Key( [] , "r" , lazy.spawn(apps.myVctEditor    ) , desc="Launch Vector Editor" ),
+        Key( [] , "v" , lazy.spawn(apps.myVidEditor    ) , desc="Launch Video Editor"  ),
+    ], name="Launch Secondary"),
 ])
 
 # Drag floating layouts.
