@@ -366,8 +366,9 @@ def primary_bar():
            , widgets.general.chord()
            , widgets.general.separator(4)
            , widgets.general.time()
-           , widgets.general.layout_icon()
            , widgets.general.group_box()
+           , widgets.general.separator(4)
+           , widgets.general.layout_icon()
            , widgets.general.separator(20)
            , widgets.general.task_list()
            , widgets.general.keyboard_layout()
@@ -384,9 +385,11 @@ def primary_bar():
 
 def secondary_bar():
     return [ widgets.general.separator()
+           , widgets.general.start_widget()
            , widgets.general.time()
-           , widgets.general.layout_icon()
            , widgets.general.group_box()
+           , widgets.general.separator(4)
+           , widgets.general.layout_icon()
            , widgets.general.separator(40)
            , widgets.general.task_list()
            ,*widget_container(
