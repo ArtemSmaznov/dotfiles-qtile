@@ -20,11 +20,6 @@ import apps
 # powerline-like styling of widgets
 from utils.widget_container import colorized as widget_container
 
-@hook.subscribe.startup_once
-def autostart():
-    autostart_script = os.path.expanduser("~/.local/bin/auto-start.sh")
-    subprocess.call([autostart_script])
-
 auto_fullscreen            = True
 bring_front_click          = "floating_only"
 cursor_warp                = False
@@ -33,6 +28,11 @@ focus_on_window_activation = "smart"
 follow_mouse_focus         = False
 reconfigure_screens        = True
 auto_minimize              = True
+
+@hook.subscribe.startup_once
+def autostart():
+    autostart_script = os.path.expanduser("~/.local/bin/auto-start.sh")
+    subprocess.call([autostart_script])
 
 floating_layout = layout.Floating(
     float_rules=[
@@ -454,7 +454,8 @@ ctrl  = "control"
 alt   = "mod1"
 
 keys = []
-dm = os.path.expanduser(dmscripts)
+myScript = os.path.expanduser("~/.local/bin/")
+myDMScript = os.path.expanduser(dmscripts)
 
 keys.append(
     Key( [ mod, ctrl ] , "d" , lazy.hide_show_bar("all") , desc="Debugging" )
@@ -465,13 +466,13 @@ keys.extend([
     Key( [ mod, ctrl ] , "q" , lazy.shutdown() , desc="Quit qTile"    ),
 
     # Swith Keyboard Layouts
-    Key( [ shift ] , "Alt_L" , lazy.spawn(dm + "dm-lang") , desc="Language Switching" ),
+    Key( [ shift ] , "Alt_L" , lazy.spawn(myDMScript + "dm-lang") , desc="Language Switching" ),
 
     # Changing UI
     KeyChord( [ mod ] , "t" , [
         Key([] , "z" , lazy.hide_show_bar("all")         , desc="Toggle Zen Mobde"   ),
         Key([] , "s" , lazy.hide_show_bar("all")         , desc="Toggle Statusbar"   ),
-        Key([] , "k" , lazy.spawn(dm + "dm-keys toggle") , desc="Toggle Key Grabber" ),
+        Key([] , "k" , lazy.spawn(myDMScript + "dm-keys toggle") , desc="Toggle Key Grabber" ),
     ], mode="Toggle"),
 ])
 
@@ -612,9 +613,9 @@ keys.extend([
 ])
 
 keys.extend([
-    Key( [      ] , "XF86AudioRaiseVolume" , lazy.spawn("amixer set Master 2%+ unmute") , desc="Increase System Volume" ),
-    Key( [      ] , "XF86AudioLowerVolume" , lazy.spawn("amixer set Master 2%- unmute") , desc="Decrease System Volume" ),
-    Key( [      ] , "XF86AudioMute"        , lazy.spawn("amixer set Master toggle"    ) , desc="Mute"                   ),
+    Key( [      ] , "XF86AudioRaiseVolume" , lazy.spawn(myScript + "set-volume.sh + 2") , desc="Increase System Volume" ),
+    Key( [      ] , "XF86AudioLowerVolume" , lazy.spawn(myScript + "set-volume.sh - 2") , desc="Decrease System Volume" ),
+    Key( [      ] , "XF86AudioMute"        , lazy.spawn(myScript + "toggle-mute.sh"   ) , desc="Mute"                   ),
     Key( [ ctrl ] , "XF86AudioRaiseVolume" , lazy.spawn("mpc volume +2"               ) , desc="Increase Player Volume" ),
     Key( [ ctrl ] , "XF86AudioLowerVolume" , lazy.spawn("mpc volume -2"               ) , desc="Decrease Player Volume" ),
     Key( [      ] , "XF86AudioPrev"        , lazy.spawn("mpc prev"                    ) , desc="Prev Song"              ),
@@ -625,48 +626,48 @@ keys.extend([
 
 keys.extend([
     KeyChord( [ mod ] , "d" , [
-        Key( [ mod ] , "d"         , lazy.spawn(dm + "dm-master"    ) , desc="DM Master"     ),
-        Key( [     ] , "w"         , lazy.spawn(dm + "dm-wallpaper" ) , desc="DM Wallpaper"  ),
-        Key( [     ] , "r"         , lazy.spawn(dm + "dm-record"    ) , desc="DM Record"     ),
-        Key( [     ] , "p"         , lazy.spawn(dm + "dm-power"     ) , desc="DM Power"      ),
-        Key( [     ] , "t"         , lazy.spawn(dm + "dm-theme"     ) , desc="DM Theme"      ),
-        Key( [     ] , "s"         , lazy.spawn(dm + "dm-screenshot") , desc="DM Screenshot" ),
-        Key( [     ] , "b"         , lazy.spawn(dm + "dm-bookman"   ) , desc="DM Bookman"    ),
-        Key( [     ] , "n"         , lazy.spawn(dm + "dm-notify"    ) , desc="DM Notify"     ),
-        Key( [     ] , "backslash" , lazy.spawn(dm + "dm-notify"    ) , desc="DM Notify"     ),
-        Key( [     ] , "k"         , lazy.spawn(dm + "dm-keys"      ) , desc="DM Keys"       ),
+        Key( [ mod ] , "d"         , lazy.spawn(myDMScript + "dm-master"    ) , desc="DM Master"     ),
+        Key( [     ] , "w"         , lazy.spawn(myDMScript + "dm-wallpaper" ) , desc="DM Wallpaper"  ),
+        Key( [     ] , "r"         , lazy.spawn(myDMScript + "dm-record"    ) , desc="DM Record"     ),
+        Key( [     ] , "p"         , lazy.spawn(myDMScript + "dm-power"     ) , desc="DM Power"      ),
+        Key( [     ] , "t"         , lazy.spawn(myDMScript + "dm-theme"     ) , desc="DM Theme"      ),
+        Key( [     ] , "s"         , lazy.spawn(myDMScript + "dm-screenshot") , desc="DM Screenshot" ),
+        Key( [     ] , "b"         , lazy.spawn(myDMScript + "dm-bookman"   ) , desc="DM Bookman"    ),
+        Key( [     ] , "n"         , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
+        Key( [     ] , "backslash" , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
+        Key( [     ] , "k"         , lazy.spawn(myDMScript + "dm-keys"      ) , desc="DM Keys"       ),
     ], mode="dm-scripts"),
 ])
 
 keys.extend([
-    Key( [ alt ] , "F4" , lazy.spawn(dm + "dm-power") , desc="Logout Menu"),
+    Key( [ alt ] , "F4" , lazy.spawn(myDMScript + "dm-power") , desc="Logout Menu"),
 
     KeyChord( [ mod ] , "z" , [
-        Key( [] , "z" , lazy.spawn(dm + "dm-power"         ) , desc="dm-power"          ),
-        Key( [] , "l" , lazy.spawn(dm + "dm-power lock"    ) , desc="Lock Screen"       ),
-        Key( [] , "s" , lazy.spawn(dm + "dm-power suspend" ) , desc="Suspend System"    ),
-        Key( [] , "p" , lazy.spawn(dm + "dm-power poweroff") , desc="Shutdown System"   ),
-        Key( [] , "r" , lazy.spawn(dm + "dm-power reboot"  ) , desc="Reboot System"     ),
-        Key( [] , "w" , lazy.spawn(dm + "dm-power windows" ) , desc="Reboot to Windows" ),
+        Key( [] , "z" , lazy.spawn(myDMScript + "dm-power"         ) , desc="dm-power"          ),
+        Key( [] , "l" , lazy.spawn(myDMScript + "dm-power lock"    ) , desc="Lock Screen"       ),
+        Key( [] , "s" , lazy.spawn(myDMScript + "dm-power suspend" ) , desc="Suspend System"    ),
+        Key( [] , "p" , lazy.spawn(myDMScript + "dm-power poweroff") , desc="Shutdown System"   ),
+        Key( [] , "r" , lazy.spawn(myDMScript + "dm-power reboot"  ) , desc="Reboot System"     ),
+        Key( [] , "w" , lazy.spawn(myDMScript + "dm-power windows" ) , desc="Reboot to Windows" ),
     ], mode="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows"),
 ])
 
 keys.extend([
-    Key( [            ] , "Print" , lazy.spawn(dm + "dm-screenshot screen") , desc="Fullscreen Screenshot"     ),
-    Key( [ mod, shift ] , "Print" , lazy.spawn(dm + "dm-screenshot area"  ) , desc="Selection Area Screenshot" ),
-    Key( [ alt        ] , "Print" , lazy.spawn(dm + "dm-screenshot window") , desc="Active Window Screenshot"  ),
-    Key( [ mod        ] , "Print" , lazy.spawn(dm + "dm-screenshot full"  ) , desc="Full Desktop Screenshot"   ),
+    Key( [            ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot screen") , desc="Fullscreen Screenshot"     ),
+    Key( [ mod, shift ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot area"  ) , desc="Selection Area Screenshot" ),
+    Key( [ alt        ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot window") , desc="Active Window Screenshot"  ),
+    Key( [ mod        ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot full"  ) , desc="Full Desktop Screenshot"   ),
 ])
 
 keys.extend([
     KeyChord( [ mod ] , "backslash" , [
-        Key( [       ] , "backslash" , lazy.spawn(dm + "dm-notify recent" ) , desc="Show most recent Notifications" ),
-        Key( [ mod   ] , "backslash" , lazy.spawn(dm + "dm-notify recent" ) , desc="Show most recent Notifications" ),
-        Key( [ shift ] , "backslash" , lazy.spawn(dm + "dm-notify recents") , desc="Show few recent Notifications"  ),
-        Key( [       ] , "r"         , lazy.spawn(dm + "dm-notify recents") , desc="Show few recent Notifications"  ),
-        Key( [ shift ] , "c"         , lazy.spawn(dm + "dm-notify clear"  ) , desc="Clear all Notifications"        ),
-        Key( [       ] , "c"         , lazy.spawn(dm + "dm-notify close"  ) , desc="Clear last Notification"        ),
-        Key( [       ] , "a"         , lazy.spawn(dm + "dm-notify context") , desc="Open last Notification"         ),
+        Key( [       ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
+        Key( [ mod   ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
+        Key( [ shift ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
+        Key( [       ] , "r"         , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
+        Key( [ shift ] , "c"         , lazy.spawn(myDMScript + "dm-notify clear"  ) , desc="Clear all Notifications"        ),
+        Key( [       ] , "c"         , lazy.spawn(myDMScript + "dm-notify close"  ) , desc="Clear last Notification"        ),
+        Key( [       ] , "a"         , lazy.spawn(myDMScript + "dm-notify context") , desc="Open last Notification"         ),
     ], mode="Notifications"),
 ])
 

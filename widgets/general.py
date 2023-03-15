@@ -7,7 +7,7 @@ import themes
 from libqtile import lazy, qtile, widget
 from preferences import dmscripts
 
-dm = os.path.expanduser(dmscripts)
+myDMScript = os.path.expanduser(dmscripts)
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 def separator(size=6, backround=themes.background):
@@ -25,7 +25,7 @@ def profile():
     return widget.Image(
         filename=themes.user_icon,
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn(dm + "dm-power"),
+            "Button1": lambda: qtile.cmd_spawn(myDMScript + "dm-power"),
         },
     )
 
