@@ -1,19 +1,17 @@
 import os
 import subprocess
 
-from libqtile import hook, layout, bar
-from libqtile.config import Key, Match, DropDown, Group, ScratchPad, Screen, Click, Drag, KeyChord
+from libqtile import bar, hook, layout
+from libqtile.config import (DropDown, EzClick, EzDrag, EzKey, Group, KeyChord,
+                             Match, ScratchPad, Screen)
 from libqtile.lazy import lazy
-from typing import List
 from Xlib import display as xdisplay
 
-from widgets import *
-
-from themes import float_layout, global_layout
+import apps
 import themes
 import utils
 import widgets
-import apps
+from themes import float_layout, global_layout
 
 # You can import 'colorized' for alternating fonts or 'powerline' for
 # powerline-like styling of widgets
@@ -461,90 +459,91 @@ alt   = "mod1"
 keys = []
 
 keys.append(
-    Key( [ mod, ctrl ] , "d" , lazy.hide_show_bar("all") , desc="Debugging" )
+    EzKey( "M-C-d" , lazy.hide_show_bar("all") , desc="Debugging" )
 )
 
 keys.extend([
-    Key( [ mod, ctrl ] , "r" , lazy.restart()  , desc="Restart qTile" ),
-    Key( [ mod, ctrl ] , "q" , lazy.shutdown() , desc="Quit qTile"    ),
+    EzKey( "M-C-S-r" , lazy.restart()       , desc="Restart qTile"       ),
+    EzKey( "M-C-r"   , lazy.reload_config() , desc="Reload qTile Config" ),
+    EzKey( "M-C-q"   , lazy.shutdown()      , desc="Quit qTile"          ),
 
     # Swith Keyboard Layouts
-    Key( [ shift ] , "Alt_L" , lazy.spawn(myDMScript + "dm-lang") , desc="Language Switching" ),
+    EzKey( "S-<Alt_L>" , lazy.spawn(myDMScript + "dm-lang") , desc="Language Switching" ),
 
     # Changing UI
     KeyChord( [ mod ] , "t" , [
-        Key([] , "z" , lazy.hide_show_bar("all")         , desc="Toggle Zen Mobde"   ),
-        Key([] , "s" , lazy.hide_show_bar("all")         , desc="Toggle Statusbar"   ),
-        Key([] , "k" , lazy.spawn(myDMScript + "dm-keys toggle") , desc="Toggle Key Grabber" ),
+        EzKey( "z" , lazy.hide_show_bar("all")                 , desc="Toggle Zen Mobde"   ),
+        EzKey( "s" , lazy.hide_show_bar("all")                 , desc="Toggle Statusbar"   ),
+        EzKey( "k" , lazy.spawn(myDMScript + "dm-keys toggle") , desc="Toggle Key Grabber" ),
     ], name="Toggle"),
 ])
 
 keys.extend([
-    Key( [ mod        ] , "q"   , lazy.window.kill()              , desc="Close focused Window" ),
-    Key( [ mod        ] , "F11" , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    Key( [ mod, shift ] , "f"   , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    Key( [ mod        ] , "m"   , lazy.window.toggle_maximize()   , desc="Toggle Maximize"      ),
-    Key( [ mod        ] , "f"   , lazy.window.toggle_floating()   , desc="Toggle Floating"      ),
+    EzKey( "M-q"     , lazy.window.kill()              , desc="Close focused Window" ),
+    EzKey( "M-<F11>" , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
+    EzKey( "M-S-f"   , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
+    EzKey( "M-m"     , lazy.window.toggle_maximize()   , desc="Toggle Maximize"      ),
+    EzKey( "M-f"     , lazy.window.toggle_floating()   , desc="Toggle Floating"      ),
 
-    Key( [ mod, alt ] , "m" ,
+    EzKey( "M-A-m" ,
         lazy.window.toggle_minimize(),
         lazy.layout.down(),
         desc="Toggle Minimize"),
 ])
 
 keys.extend([
-    Key( [ mod        ] , "slash" , lazy.PLACEHOLDER         , desc="Switch navigation layer (Tiled vs Floating screens)" ),
-    Key( [ alt        ] , "Tab"   , lazy.group.next_window() , desc="Move focus to next Window"                           ),
-    Key( [ alt, shift ] , "Tab"   , lazy.group.prev_window() , desc="Move focus to prev Window"                           ),
-    Key( [ mod        ] , "h"     , lazy.layout.left()       , desc="Move focus to left Window"                           ),
-    Key( [ mod        ] , "l"     , lazy.layout.right()      , desc="Move focus to right Window"                          ),
-    Key( [ mod        ] , "j"     , lazy.layout.down()       , desc="Move focus to below Window"                          ),
-    Key( [ mod        ] , "k"     , lazy.layout.up()         , desc="Move focus to above Window"                          ),
+    EzKey( "M-<Slash>" , lazy.PLACEHOLDER         , desc="Switch navigation layer (Tiled vs Floating screens)" ),
+    EzKey( "A-<Tab>"   , lazy.group.next_window() , desc="Move focus to next Window"                           ),
+    EzKey( "A-S-<Tab>" , lazy.group.prev_window() , desc="Move focus to prev Window"                           ),
+    EzKey( "M-h"       , lazy.layout.left()       , desc="Move focus to left Window"                           ),
+    EzKey( "M-l"       , lazy.layout.right()      , desc="Move focus to right Window"                          ),
+    EzKey( "M-j"       , lazy.layout.down()       , desc="Move focus to below Window"                          ),
+    EzKey( "M-k"       , lazy.layout.up()         , desc="Move focus to above Window"                          ),
 ])
 
 keys.extend([
-    Key( [ mod, shift ] , "h" , lazy.layout.shuffle_left()  , desc="Swap focused Window with the one to the left"  ),
-    Key( [ mod, shift ] , "l" , lazy.layout.shuffle_right() , desc="Swap focused Window with the one to the right" ),
-    Key( [ mod, shift ] , "j" , lazy.layout.shuffle_down()  , desc="Swap focused Window with the one below"        ),
-    Key( [ mod, shift ] , "k" , lazy.layout.shuffle_up()    , desc="Swap focused Window with the one above"        ),
+    EzKey( "M-S-h" , lazy.layout.shuffle_left()  , desc="Swap focused Window with the one to the left"  ),
+    EzKey( "M-S-l" , lazy.layout.shuffle_right() , desc="Swap focused Window with the one to the right" ),
+    EzKey( "M-S-j" , lazy.layout.shuffle_down()  , desc="Swap focused Window with the one below"        ),
+    EzKey( "M-S-k" , lazy.layout.shuffle_up()    , desc="Swap focused Window with the one above"        ),
 ])
 
 keys.extend([
-    Key( [ mod, ctrl ] , "h" , lazy.layout.grow_left()  , desc="Grow focused Window left"  ),
-    Key( [ mod, ctrl ] , "l" , lazy.layout.grow_right() , desc="Grow focused Window right" ),
-    Key( [ mod, ctrl ] , "j" , lazy.layout.grow_down()  , desc="Grow focused Window down"  ),
-    Key( [ mod, ctrl ] , "k" , lazy.layout.grow_up()    , desc="Grow focused Window up"    ),
-])
-
-
-
-
-
-keys.extend([
-    Key( [ mod ] , "comma"  , lazy.prev_screen() , desc="Move focus to prev Screen" ),
-    Key( [ mod ] , "period" , lazy.next_screen() , desc="Move focus to next Screen" ),
-    Key( [ mod ] , "F1"     , lazy.to_screen(0)  , desc="Move focus to 1st Screen"  ),
-    Key( [ mod ] , "F2"     , lazy.to_screen(1)  , desc="Move focus to 2nd Screen"  ),
-])
-
-keys.extend([
-    Key( [ mod, shift ] , "comma"  , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(0)) , desc="Move window to Screen" ),
-    Key( [ mod, shift ] , "period" , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(1)) , desc="Move window to Screen" ),
+    EzKey( "M-C-h" , lazy.layout.grow_left()  , desc="Grow focused Window left"  ),
+    EzKey( "M-C-l" , lazy.layout.grow_right() , desc="Grow focused Window right" ),
+    EzKey( "M-C-j" , lazy.layout.grow_down()  , desc="Grow focused Window down"  ),
+    EzKey( "M-C-k" , lazy.layout.grow_up()    , desc="Grow focused Window up"    ),
 ])
 
 
 
+
+
 keys.extend([
-    Key( [ mod ]        , "space" , lazy.next_layout()      , desc="Switch Laouts"            ),
-    Key( [ mod, shift ] , "space" , lazy.prev_layout()      , desc="Switch Laouts"            ),
-    Key( [ mod, alt ]   , "space" , lazy.to_layout_index(0) , desc="Switch to default Layout" ),
-    Key( [ mod ]        , "equal" , lazy.layout.normalize() , desc="Reset all window sizes"   ),
+    EzKey( "M-<Comma>"  , lazy.prev_screen() , desc="Move focus to prev Screen" ),
+    EzKey( "M-<Period>" , lazy.next_screen() , desc="Move focus to next Screen" ),
+    EzKey( "M-<F1>"     , lazy.to_screen(0)  , desc="Move focus to 1st Screen"  ),
+    EzKey( "M-<F2>"     , lazy.to_screen(1)  , desc="Move focus to 2nd Screen"  ),
+])
+
+keys.extend([
+    EzKey( "M-S-<Comma>"  , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(0)) , desc="Move window to Screen" ),
+    EzKey( "M-S-<Period>" , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(1)) , desc="Move window to Screen" ),
+])
+
+
+
+keys.extend([
+    EzKey( "M-<Space>" , lazy.next_layout()      , desc="Switch Laouts"            ),
+    EzKey( "M-S-<Space>" , lazy.prev_layout()      , desc="Switch Laouts"            ),
+    EzKey( "M-A-<Space>" , lazy.to_layout_index(0) , desc="Switch to default Layout" ),
+    EzKey( "M-<Equal>" , lazy.layout.normalize() , desc="Reset all window sizes"   ),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key( [ mod, shift ] , "Return" , lazy.layout.toggle_split() , desc="Toggle between split and unsplit sides of stack" ),
+    EzKey( "M-S-<Return>" , lazy.layout.toggle_split() , desc="Toggle between split and unsplit sides of stack" ),
 ])
 
 # Only map up to 10 Layouts to number keys
@@ -560,19 +559,23 @@ for i in range(getNumberOfKeysForLayouts()):
     if i + 1 == 10:
         key = "0"
 
-    keys.append(Key([mod, alt], key, lazy.to_layout_index(i)))
+    keys.append(
+        EzKey( f"M-A-{key}", lazy.to_layout_index(i))
+    )
 
 # Switch to last Layout
-keys.append(Key([mod, alt], "quoteleft", lazy.to_layout_index(len(layouts) - 1)))
+keys.append(
+    EzKey( "M-A-<Quoteleft>", lazy.to_layout_index(len(layouts) - 1))
+)
 
 keys.extend([
-    Key( [ mod ] , "Tab" , lazy.screen.toggle_group()       , desc="Toggle Workspace" ),
-    Key( [ mod ] , "F12" , lazy.group["coding"].toscreen(1) , desc="meh"              ),
+    EzKey( "M-<Tab>" , lazy.screen.toggle_group()       , desc="Toggle Workspace" ),
+    EzKey( "M-<F12>" , lazy.group["coding"].toscreen(1) , desc="meh"              ),
 
     KeyChord( [ mod ] , "g" , [
-        Key( [] , "h" , lazy.screen.prev_group()                  , desc="Move to the group on the left"               ),
-        Key( [] , "l" , lazy.screen.next_group()                  , desc="Move to the group on the right"              ),
-        Key( [] , "d" , lazy.function(utils.clear_default_groups) , desc="Delete system 1-9 groups after a bad config" ),
+        EzKey( "h" , lazy.screen.prev_group()                  , desc="Move to the group on the left"               ),
+        EzKey( "l" , lazy.screen.next_group()                  , desc="Move to the group on the right"              ),
+        EzKey( "d" , lazy.function(utils.clear_default_groups) , desc="Delete system 1-9 groups after a bad config" ),
     ], name="Groups"),
 ])
 
@@ -594,122 +597,119 @@ for i in range(getNumberOfKeysForGroups()):
         key = "0"
 
     keys.extend([
-        Key( [ mod ]        , key , lazy.group[name].toscreen() ),
-        Key( [ mod, shift ] , key , lazy.window.togroup(name)   )
+        EzKey( f"M-{key}"   , lazy.group[name].toscreen() ),
+        EzKey( f"M-S-{key}" , lazy.window.togroup(name)   )
     ])
 
 keys.extend([
-    Key( [ mod       ] , "quoteleft" , lazy.group["NSP"].dropdown_toggle("terminal") , desc="Terminal Scratchpad"     ) ,
-    Key( [ mod       ] , "e"         , lazy.group["NSP"].dropdown_toggle("files"   ) , desc="File Manager Scratchpad" ) ,
-    Key( [ ctrl, alt ] , "Delete"    , lazy.group["NSP"].dropdown_toggle("htop"    ) , desc="Htop Scratchpad"         ) ,
+    EzKey( "M-<Quoteleft>" , lazy.group["NSP"].dropdown_toggle("terminal") , desc="Terminal Scratchpad"     ) ,
+    EzKey( "M-e"           , lazy.group["NSP"].dropdown_toggle("files"   ) , desc="File Manager Scratchpad" ) ,
+    EzKey( "C-A-<Delete>"  , lazy.group["NSP"].dropdown_toggle("htop"    ) , desc="Htop Scratchpad"         ) ,
 
     KeyChord( [ mod ] , "s" , [
-        Key( [] , "a" , lazy.group["NSP"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
-        Key( [] , "c" , lazy.group["NSP"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
-        Key( [] , "d" , lazy.group["NSP"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
-        Key( [] , "h" , lazy.group["NSP"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
-        Key( [] , "m" , lazy.group["NSP"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
-        Key( [] , "t" , lazy.group["NSP"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
-        Key( [] , "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
-        Key( [] , "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
+        EzKey( "a" , lazy.group["NSP"].dropdown_toggle("anki"       ) , desc="Anki Scratchpad"        ) ,
+        EzKey( "c" , lazy.group["NSP"].dropdown_toggle("calc"       ) , desc="Calculator Scratchpad"  ) ,
+        EzKey( "d" , lazy.group["NSP"].dropdown_toggle("discord"    ) , desc="Discord Scratchpad"     ) ,
+        EzKey( "h" , lazy.group["NSP"].dropdown_toggle("htop"       ) , desc="Htop Scratchpad"        ) ,
+        EzKey( "m" , lazy.group["NSP"].dropdown_toggle("music"      ) , desc="Music Scratchpad"       ) ,
+        EzKey( "t" , lazy.group["NSP"].dropdown_toggle("torrent"    ) , desc="Torrent Scratchpad"     ) ,
+        EzKey( "v" , lazy.group["NSP"].dropdown_toggle("virtmanager") , desc="VirtManager Scratchpad" ) ,
+        EzKey( "w" , lazy.group["NSP"].dropdown_toggle("whatsapp"   ) , desc="WhatsApp Scratchpad"    ) ,
     ], name="Scratchpads"),
 ])
 
 keys.extend([
-    Key( [      ] , "XF86AudioRaiseVolume" , lazy.spawn(myScript + "set-volume.sh + 2") , desc="Increase System Volume" ),
-    Key( [      ] , "XF86AudioLowerVolume" , lazy.spawn(myScript + "set-volume.sh - 2") , desc="Decrease System Volume" ),
-    Key( [      ] , "XF86AudioMute"        , lazy.spawn(myScript + "toggle-mute.sh"   ) , desc="Mute"                   ),
-    Key( [ ctrl ] , "XF86AudioRaiseVolume" , lazy.spawn("mpc volume +2"               ) , desc="Increase Player Volume" ),
-    Key( [ ctrl ] , "XF86AudioLowerVolume" , lazy.spawn("mpc volume -2"               ) , desc="Decrease Player Volume" ),
-    Key( [      ] , "XF86AudioPrev"        , lazy.spawn("mpc prev"                    ) , desc="Prev Song"              ),
-    Key( [      ] , "XF86AudioNext"        , lazy.spawn("mpc next"                    ) , desc="Next Song"              ),
-    Key( [      ] , "XF86AudioPlay"        , lazy.spawn("mpc toggle"                  ) , desc="Play/Pause Music"       ),
-    Key( [      ] , "XF86AudioStop"        , lazy.spawn("mpc stop"                    ) , desc="Stop Music"             ),
+    EzKey( "<XF86AudioRaiseVolume>"   , lazy.spawn(myScript + "set-volume.sh + 2") , desc="Increase System Volume" ),
+    EzKey( "<XF86AudioLowerVolume>"   , lazy.spawn(myScript + "set-volume.sh - 2") , desc="Decrease System Volume" ),
+    EzKey( "<XF86AudioMute>"          , lazy.spawn(myScript + "toggle-mute.sh"   ) , desc="Mute"                   ),
+    EzKey( "C-<XF86AudioRaiseVolume>" , lazy.spawn("mpc volume +2"               ) , desc="Increase Player Volume" ),
+    EzKey( "C-<XF86AudioLowerVolume>" , lazy.spawn("mpc volume -2"               ) , desc="Decrease Player Volume" ),
+    EzKey( "<XF86AudioPrev>"          , lazy.spawn("mpc prev"                    ) , desc="Prev Song"              ),
+    EzKey( "<XF86AudioNext>"          , lazy.spawn("mpc next"                    ) , desc="Next Song"              ),
+    EzKey( "<XF86AudioPlay>"          , lazy.spawn("mpc toggle"                  ) , desc="Play/Pause Music"       ),
+    EzKey( "<XF86AudioStop>"          , lazy.spawn("mpc stop"                    ) , desc="Stop Music"             ),
 ])
 
 keys.extend([
     KeyChord( [ mod ] , "d" , [
-        Key( [ mod ] , "d"         , lazy.spawn(myDMScript + "dm-master"    ) , desc="DM Master"     ),
-        Key( [     ] , "w"         , lazy.spawn(myDMScript + "dm-wallpaper" ) , desc="DM Wallpaper"  ),
-        Key( [     ] , "r"         , lazy.spawn(myDMScript + "dm-record"    ) , desc="DM Record"     ),
-        Key( [     ] , "p"         , lazy.spawn(myDMScript + "dm-power"     ) , desc="DM Power"      ),
-        Key( [     ] , "t"         , lazy.spawn(myDMScript + "dm-theme"     ) , desc="DM Theme"      ),
-        Key( [     ] , "s"         , lazy.spawn(myDMScript + "dm-screenshot") , desc="DM Screenshot" ),
-        Key( [     ] , "b"         , lazy.spawn(myDMScript + "dm-bookman"   ) , desc="DM Bookman"    ),
-        Key( [     ] , "n"         , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
-        Key( [     ] , "backslash" , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
-        Key( [     ] , "k"         , lazy.spawn(myDMScript + "dm-keys"      ) , desc="DM Keys"       ),
+        EzKey( "M-d"         , lazy.spawn(myDMScript + "dm-master"    ) , desc="DM Master"     ),
+        EzKey( "w"           , lazy.spawn(myDMScript + "dm-wallpaper" ) , desc="DM Wallpaper"  ),
+        EzKey( "r"           , lazy.spawn(myDMScript + "dm-record"    ) , desc="DM Record"     ),
+        EzKey( "p"           , lazy.spawn(myDMScript + "dm-power"     ) , desc="DM Power"      ),
+        EzKey( "t"           , lazy.spawn(myDMScript + "dm-theme"     ) , desc="DM Theme"      ),
+        EzKey( "s"           , lazy.spawn(myDMScript + "dm-screenshot") , desc="DM Screenshot" ),
+        EzKey( "b"           , lazy.spawn(myDMScript + "dm-bookman"   ) , desc="DM Bookman"    ),
+        EzKey( "n"           , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
+        EzKey( "<Backslash>" , lazy.spawn(myDMScript + "dm-notify"    ) , desc="DM Notify"     ),
+        EzKey( "k"           , lazy.spawn(myDMScript + "dm-keys"      ) , desc="DM Keys"       ),
     ], name="dm-scripts"),
 ])
 
 keys.extend([
-    Key( [ alt ] , "F4" , lazy.spawn(myDMScript + "dm-power") , desc="Logout Menu"),
+    EzKey( "A-<F4>" , lazy.spawn(myDMScript + "dm-power") , desc="Logout Menu"),
 
     KeyChord( [ mod ] , "z" , [
-        Key( [] , "z" , lazy.spawn(myDMScript + "dm-power"         ) , desc="dm-power"          ),
-        Key( [] , "l" , lazy.spawn(myDMScript + "dm-power lock"    ) , desc="Lock Screen"       ),
-        Key( [] , "s" , lazy.spawn(myDMScript + "dm-power suspend" ) , desc="Suspend System"    ),
-        Key( [] , "p" , lazy.spawn(myDMScript + "dm-power poweroff") , desc="Shutdown System"   ),
-        Key( [] , "r" , lazy.spawn(myDMScript + "dm-power reboot"  ) , desc="Reboot System"     ),
-        Key( [] , "w" , lazy.spawn(myDMScript + "dm-power windows" ) , desc="Reboot to Windows" ),
+        EzKey( "z" , lazy.spawn(myDMScript + "dm-power"         ) , desc="dm-power"          ),
+        EzKey( "l" , lazy.spawn(myDMScript + "dm-power lock"    ) , desc="Lock Screen"       ),
+        EzKey( "s" , lazy.spawn(myDMScript + "dm-power suspend" ) , desc="Suspend System"    ),
+        EzKey( "p" , lazy.spawn(myDMScript + "dm-power poweroff") , desc="Shutdown System"   ),
+        EzKey( "r" , lazy.spawn(myDMScript + "dm-power reboot"  ) , desc="Reboot System"     ),
+        EzKey( "w" , lazy.spawn(myDMScript + "dm-power windows" ) , desc="Reboot to Windows" ),
     ], name="(l)ock, (s)uspend, (p)oweroff, (r)eboot, (w)indows"),
 ])
 
 keys.extend([
-    Key( [            ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot screen") , desc="Fullscreen Screenshot"     ),
-    Key( [ mod, shift ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot area"  ) , desc="Selection Area Screenshot" ),
-    Key( [ alt        ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot window") , desc="Active Window Screenshot"  ),
-    Key( [ mod        ] , "Print" , lazy.spawn(myDMScript + "dm-screenshot full"  ) , desc="Full Desktop Screenshot"   ),
+    EzKey( "<Print>" , lazy.spawn(myDMScript + "dm-screenshot screen") , desc="Fullscreen Screenshot"     ),
+    EzKey( "M-S-<Print>" , lazy.spawn(myDMScript + "dm-screenshot area"  ) , desc="Selection Area Screenshot" ),
+    EzKey( "A-<Print>" , lazy.spawn(myDMScript + "dm-screenshot window") , desc="Active Window Screenshot"  ),
+    EzKey( "M-<Print>" , lazy.spawn(myDMScript + "dm-screenshot full"  ) , desc="Full Desktop Screenshot"   ),
 ])
 
 keys.extend([
     KeyChord( [ mod ] , "backslash" , [
-        Key( [       ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
-        Key( [ mod   ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
-        Key( [ shift ] , "backslash" , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
-        Key( [       ] , "r"         , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
-        Key( [ shift ] , "c"         , lazy.spawn(myDMScript + "dm-notify clear"  ) , desc="Clear all Notifications"        ),
-        Key( [       ] , "c"         , lazy.spawn(myDMScript + "dm-notify close"  ) , desc="Clear last Notification"        ),
-        Key( [       ] , "a"         , lazy.spawn(myDMScript + "dm-notify context") , desc="Open last Notification"         ),
+        EzKey( "<Backslash>"   , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
+        EzKey( "M-<Backslash>" , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
+        EzKey( "S-<Backslash>" , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
+        EzKey( "r"             , lazy.spawn(myDMScript + "dm-notify recents") , desc="Show few recent Notifications"  ),
+        EzKey( "S-c"           , lazy.spawn(myDMScript + "dm-notify clear"  ) , desc="Clear all Notifications"        ),
+        EzKey( "c"             , lazy.spawn(myDMScript + "dm-notify close"  ) , desc="Clear last Notification"        ),
+        EzKey( "a"             , lazy.spawn(myDMScript + "dm-notify context") , desc="Open last Notification"         ),
     ], name="Notifications", mode=True),
 ])
 
 keys.extend([
-    Key( [ ctrl, alt  ] , "t"      , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    Key( [ mod        ] , "Return" , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    Key( [ mod        ] , "c"      , lazy.spawn(apps.myIde         ) , desc="Launch IDE"                           ),
-    Key( [ mod        ] , "b"      , lazy.spawn(apps.myWebBrowser  ) , desc="Launch Web Browser"                   ),
-    Key( [ mod        ] , "i"      , lazy.spawn(apps.myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
-    Key( [ mod        ] , "p"      , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
-    Key( [ mod        ] , "r"      , lazy.spawn(apps.myLauncher    ) , desc="Launch Launcher"                      ),
-    Key( [ mod, shift ] , "r"      , lazy.spawn("dmenu_run"        ) , desc="Launch dmenu"                         ),
+    EzKey( "C-A-t"      , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-<Return>" , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-c"        , lazy.spawn(apps.myIde         ) , desc="Launch IDE"                           ),
+    EzKey( "M-b"        , lazy.spawn(apps.myWebBrowser  ) , desc="Launch Web Browser"                   ),
+    EzKey( "M-i"        , lazy.spawn(apps.myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
+    EzKey( "M-p"        , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
+    EzKey( "M-r"        , lazy.spawn(apps.myLauncher    ) , desc="Launch Launcher"                      ),
+    EzKey( "M-S-r"      , lazy.spawn("dmenu_run"        ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
-        Key( [] , "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        Key( [] , "s" , lazy.spawn(apps.mySteam      ) , desc="Launch Steam"        ),
+        EzKey( "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
+        EzKey( "s" , lazy.spawn(apps.mySteam      ) , desc="Launch Steam"        ),
     ], name="Launch"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        Key( [] , "t" , lazy.spawn(apps.myCliText      ) , desc="Launch Text Editor"   ),
-        Key( [] , "p" , lazy.spawn(apps.myPhotoLibrary ) , desc="Launch Photo Library" ),
-        Key( [] , "g" , lazy.spawn(apps.myImgEditor    ) , desc="Launch Image Editor"  ),
-        Key( [] , "r" , lazy.spawn(apps.myVctEditor    ) , desc="Launch Vector Editor" ),
-        Key( [] , "v" , lazy.spawn(apps.myVidEditor    ) , desc="Launch Video Editor"  ),
+        EzKey( "t" , lazy.spawn(apps.myCliText      ) , desc="Launch Text Editor"   ),
+        EzKey( "p" , lazy.spawn(apps.myPhotoLibrary ) , desc="Launch Photo Library" ),
+        EzKey( "g" , lazy.spawn(apps.myImgEditor    ) , desc="Launch Image Editor"  ),
+        EzKey( "r" , lazy.spawn(apps.myVctEditor    ) , desc="Launch Vector Editor" ),
+        EzKey( "v" , lazy.spawn(apps.myVidEditor    ) , desc="Launch Video Editor"  ),
     ], name="Launch Secondary"),
 ])
 
 # Drag floating layouts.
 mouse = [
-    Drag(
-        [mod],
-        "Button1",
+    EzDrag(
+        "M-1",
         lazy.window.set_position_floating(),
         start=lazy.window.get_position(),
     ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    EzDrag( "M-3" , lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    EzClick( "M-2", lazy.window.bring_to_front()),
 ]
