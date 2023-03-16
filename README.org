@@ -2,6 +2,7 @@
 #+author:      Artem Smaznov
 #+description: A window manager written in Python
 #+startup:     overview
+#+property:    header-args :tangle config.py
 #+auto_tangle: t
 
 * Table of Contents :toc:
@@ -9,7 +10,6 @@
 - [[#screenshots][Screenshots]]
 - [[#imports][Imports]]
 - [[#general][General]]
-- [[#user-preferences][User Preferences]]
 - [[#hooks][Hooks]]
 - [[#apps][Apps]]
 - [[#windows][Windows]]
@@ -25,21 +25,19 @@
   - [[#monitor][Monitor]]
 - [[#scratchpads][Scratchpads]]
 - [[#layouts][Layouts]]
-- [[#bar][Bar]]
-  - [[#primary][Primary]]
-  - [[#secondary][Secondary]]
-  - [[#screens][Screens]]
 - [[#keybindings][Keybindings]]
   - [[#mod-keys][Mod Keys]]
   - [[#keybindings-1][Keybindings]]
   - [[#mouse-bindings][Mouse Bindings]]
 - [[#utils][Utils]]
-  - [[#volume][Volume]]
   - [[#widget-container][Widget Container]]
 - [[#widgets][Widgets]]
-  - [[#initialization][Initialization]]
   - [[#general-1][General]]
   - [[#sensors][Sensors]]
+- [[#bar][Bar]]
+  - [[#primary][Primary]]
+  - [[#secondary][Secondary]]
+  - [[#screens][Screens]]
 
 * Dependencies
 |-----------------+-------------------------------------------------|
@@ -61,20 +59,20 @@ sudo pacman -S qtile python-xlib python-psutil
 [[https://raw.githubusercontent.com/ArtemSmaznov/screenshots/master/qTile/desktop.png]]
 
 * Imports
-#+begin_src python :tangle config.py
+#+begin_src python
 import os
+import socket
 import subprocess
 
-from libqtile import bar, hook, layout
+from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import (DropDown, EzClick, EzDrag, EzKey, Group, KeyChord,
                              Match, ScratchPad, Screen)
 from libqtile.lazy import lazy
+from libqtile.utils import guess_terminal
 from Xlib import display as xdisplay
 
-import apps
 import themes
 import utils
-import widgets
 from themes import float_layout, global_layout
 
 # You can import 'colorized' for alternating fonts or 'powerline' for
@@ -83,7 +81,8 @@ from utils.widget_container import colorized as widget_container
 #+end_src
 
 * General
-#+begin_src python :tangle config.py
+Core
+#+begin_src python
 auto_fullscreen            = True
 bring_front_click          = "floating_only"
 cursor_warp                = False
@@ -92,31 +91,32 @@ focus_on_window_activation = "smart"
 follow_mouse_focus         = False
 reconfigure_screens        = True
 auto_minimize              = True
+
+# Default widget settings
+widget_defaults = dict( font=themes.font_regular
+                      , fontsize=11
+                      , padding=3
+                      , foreground=themes.foreground
+)
+
+extension_defaults = widget_defaults.copy()
+
+prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 #+end_src
 
 Paths
-#+begin_src python :tangle config.py
+#+begin_src python
 myScript   = os.path.expanduser("~/.local/bin/")
 myDMScript = os.path.expanduser("~/.local/bin/dm-scripts/")
 #+end_src
 
-* User Preferences
-Bar widgets font
-Values:
-- =powerline=
-- =nerd=
-- =unicode=
-#+begin_src python :tangle preferences.py
-powerline_font = "powerline"
-#+end_src
-
 System Control
-#+begin_src python :tangle preferences.py
+#+begin_src python
 volume_step = 3
 #+end_src
 
 Regional
-#+begin_src python :tangle preferences.py
+#+begin_src python
 languages   = ["us", "ru"]
 # languages = ['us', 'ru', 'jp']
 time_format = "%l:%M %p"
@@ -124,13 +124,13 @@ date_format = "%a, %d %b %Y"
 #+end_src
 
 Paths
-#+begin_src python :tangle preferences.py
+#+begin_src python
 dmscripts = "~/.local/bin/dm-scripts/"
 #+end_src
 
 * Hooks
 Startup
-#+begin_src python :tangle config.py
+#+begin_src python
 @hook.subscribe.startup_once
 def autostart():
     autostart_script = os.path.expanduser("~/.local/bin/auto-start.sh")
@@ -138,11 +138,7 @@ def autostart():
 #+end_src
 
 * Apps
-#+begin_src python :tangle apps.py
-from libqtile.utils import guess_terminal
-#+end_src
-
-#+begin_src python :tangle apps.py
+#+begin_src python
 # cli tools
 myTerminal      = guess_terminal()
 myCliFiles      = myTerminal + " -e vifmrun"
@@ -186,7 +182,7 @@ mySysBluetooth  = "blueman-manager"
 
 * Windows
 Run the utility of =xprop= to see the wm class and name of an X client.
-#+begin_src python :tangle config.py
+#+begin_src python
 floating_layout = layout.Floating(
     float_rules=[
         # default_float_rules include: utility, notification, toolbar, splash, dialog,
@@ -219,15 +215,15 @@ Optional group parameters
 #+begin_example python
 label="",
 layout="columns",
-spawn=apps.myWebBrowser,
+spawn=myWebBrowser,
 #+end_example
 
-#+begin_src python :tangle config.py
+#+begin_src python
 groups = [
 #+end_src
 
 ** Internet
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "internet",
         label="globe",
@@ -249,7 +245,7 @@ groups = [
 #+end_src
 
 ** Gaming
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "gaming",
         label="gamepad",
@@ -277,11 +273,11 @@ groups = [
 #+end_src
 
 ** Coding
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "coding",
         label="keyboard",
-        # spawn=apps.myTerminal,
+        # spawn=myTerminal,
         matches=[
             Match(
                 wm_class=[
@@ -308,7 +304,7 @@ groups = [
 #+end_src
 
 ** Computer
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "computer",
         label="folder",
@@ -330,11 +326,11 @@ groups = [
 #+end_src
 
 ** Music
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "music",
         label="headphones",
-        spawn=apps.myCliMusic,
+        spawn=myCliMusic,
         matches=[
             Match(
                 wm_class=[
@@ -347,7 +343,7 @@ groups = [
 #+end_src
 
 ** Graphics
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "graphics",
         label="camera",
@@ -366,7 +362,7 @@ groups = [
 #+end_src
 
 ** Chat
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "chat",
         label="sms",
@@ -384,7 +380,7 @@ groups = [
 #+end_src
 
 ** Sandbox
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "sandbox",
         label="layer-group",
@@ -406,11 +402,11 @@ groups = [
 #+end_src
 
 ** Monitor
-#+begin_src python :tangle config.py
+#+begin_src python
     Group(
         "monitor",
         label="chart-bar",
-        spawn=apps.myCliSysMonitor,
+        spawn=myCliSysMonitor,
         matches=[
             Match(
                 wm_class=[
@@ -425,7 +421,7 @@ groups = [
 #+end_src
 
 * Scratchpads
-#+begin_src python :tangle config.py
+#+begin_src python
 s_width = 0.8
 s_height = 0.8
 s_left_margin = (1.0 - s_height) / 2
@@ -438,7 +434,7 @@ groups.append(
         [
             DropDown(
                 "terminal",
-                apps.myTerminal,
+                myTerminal,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -448,7 +444,7 @@ groups.append(
             ),
             DropDown(
                 "htop",
-                apps.myCliSysTasks,
+                myCliSysTasks,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -458,7 +454,7 @@ groups.append(
             ),
             DropDown(
                 "files",
-                apps.myCliFiles,
+                myCliFiles,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -468,7 +464,7 @@ groups.append(
             ),
             DropDown(
                 "music",
-                apps.myCliMusic,
+                myCliMusic,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -478,7 +474,7 @@ groups.append(
             ),
             DropDown(
                 "virtmanager",
-                apps.myVirtManager,
+                myVirtManager,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -488,7 +484,7 @@ groups.append(
             ),
             DropDown(
                 "torrent",
-                apps.myTorrent,
+                myTorrent,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -498,7 +494,7 @@ groups.append(
             ),
             DropDown(
                 "calc",
-                apps.myCalculator,
+                myCalculator,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -508,7 +504,7 @@ groups.append(
             ),
             DropDown(
                 "whatsapp",
-                apps.myWhatsApp,
+                myWhatsApp,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -518,7 +514,7 @@ groups.append(
             ),
             DropDown(
                 "discord",
-                apps.myDiscord,
+                myDiscord,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -528,7 +524,7 @@ groups.append(
             ),
             DropDown(
                 "anki",
-                apps.myAnki,
+                myAnki,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -542,7 +538,7 @@ groups.append(
 #+end_src
 
 * Layouts
-#+begin_src python :tangle config.py
+#+begin_src python
 layouts = [ layout.MonadTall(**global_layout)
           , layout.Columns(**global_layout)
           , layout.Tile(**global_layout)
@@ -557,114 +553,9 @@ layouts = [ layout.MonadTall(**global_layout)
           , layout.Max(**global_layout) ]
 #+end_src
 
-* Bar
-** Primary
-#+begin_src python :tangle config.py
-def primary_bar():
-    return [ widgets.general.separator(4)
-           , widgets.general.start_widget()
-           , widgets.general.separator(2)
-           , widgets.general.prompt_widget()
-           , widgets.general.chord()
-           , widgets.general.separator(4)
-           , widgets.general.time()
-           , widgets.general.group_box()
-           , widgets.general.separator(4)
-           , widgets.general.layout_icon()
-           , widgets.general.separator(20)
-           , widgets.general.task_list()
-           , widgets.general.keyboard_layout()
-           , widgets.general.sys_tray()
-           , widgets.general.separator(5)
-           ,,*widget_container(
-                widgets=[ widgets.general.updater
-                        , widgets.sensor.thermals
-                        , widgets.sensor.network_graph
-                        , widgets.general.volume
-                        , widgets.general.date ])
-           , widgets.general.profile()
-    ]
-#+end_src
-
-** Secondary
-#+begin_src python :tangle config.py
-def secondary_bar():
-    return [ widgets.general.separator()
-           , widgets.general.start_widget()
-           , widgets.general.time()
-           , widgets.general.group_box()
-           , widgets.general.separator(4)
-           , widgets.general.layout_icon()
-           , widgets.general.separator(40)
-           , widgets.general.task_list()
-           ,,*widget_container(
-                widgets=[ widgets.sensor.nvidia_sensors
-                        , widgets.sensor.cpu_graph
-                        , widgets.sensor.memory_graph
-                        , widgets.sensor.network_graph
-                        , widgets.general.volume
-                        , widgets.general.date ])
-    ]
-#+end_src
-
-** Screens
-#+begin_src python :tangle config.py
-def init_bar(s="secondary"):
-    if s == "primary": my_bar = primary_bar()
-    elif s == "secondary": my_bar = secondary_bar()
-    else: my_bar = secondary_bar()
-
-    return bar.Bar( my_bar
-                  , themes.bar_size
-                  , background=themes.background
-                  , opacity=themes.bar_opacity
-    )
-#+end_src
-
-#+begin_src python :tangle config.py
-def get_num_monitors():
-    num_monitors = 0
-    try:
-        display = xdisplay.Display()
-        screen = display.screen()
-        resources = screen.root.xrandr_get_screen_resources()
-
-        for output in resources.outputs:
-            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
-            preferred = False
-            if hasattr(monitor, "preferred"):
-                preferred = monitor.preferred
-            elif hasattr(monitor, "num_preferred"):
-                preferred = monitor.num_preferred
-            if preferred:
-                num_monitors += 1
-    except Exception as e:
-        # always setup at least one monitor
-        return 1
-    else:
-        return num_monitors
-
-
-num_monitors = get_num_monitors()
-
-screens = [
-    Screen(
-        top=init_bar("primary"),
-    )
-]
-
-if num_monitors > 1:
-    for m in range(num_monitors - 1):
-        screens.append(
-            Screen(
-                top=init_bar("secondary"),
-            )
-        )
-#+end_src
-
 * Keybindings
 ** Mod Keys
-#+begin_src python :tangle config.py
+#+begin_src python
 mod   = "mod4"
 shift = "shift"
 ctrl  = "control"
@@ -672,18 +563,18 @@ alt   = "mod1"
 #+end_src
 
 ** Keybindings
-#+begin_src python :tangle config.py
+#+begin_src python
 keys = []
 #+end_src
 *** System
 Debugging
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.append(
     EzKey( "M-C-d" , lazy.hide_show_bar("all") , desc="Debugging" )
 )
 #+end_src
 
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-C-S-r" , lazy.restart()       , desc="Restart qTile"       ),
     EzKey( "M-C-r"   , lazy.reload_config() , desc="Reload qTile Config" ),
@@ -703,7 +594,7 @@ keys.extend([
 
 *** Windows
 States
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-q"     , lazy.window.kill()              , desc="Close focused Window" ),
     EzKey( "M-<F11>" , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
@@ -719,7 +610,7 @@ keys.extend([
 #+end_src
 
 Focus
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-<Slash>" , lazy.PLACEHOLDER         , desc="Switch navigation layer (Tiled vs Floating screens)" ),
     EzKey( "A-<Tab>"   , lazy.group.next_window() , desc="Move focus to next Window"                           ),
@@ -732,7 +623,7 @@ keys.extend([
 #+end_src
 
 Swapping
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-S-h" , lazy.layout.shuffle_left()  , desc="Swap focused Window with the one to the left"  ),
     EzKey( "M-S-l" , lazy.layout.shuffle_right() , desc="Swap focused Window with the one to the right" ),
@@ -742,7 +633,7 @@ keys.extend([
 #+end_src
 
 Resizing
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-C-h" , lazy.layout.grow_left()  , desc="Grow focused Window left"  ),
     EzKey( "M-C-l" , lazy.layout.grow_right() , desc="Grow focused Window right" ),
@@ -752,16 +643,16 @@ keys.extend([
 #+end_src
 
 Move Floating Windows
-#+begin_src python :tangle config.py
+#+begin_src python
 #+end_src
 
 Masters
-#+begin_src python :tangle config.py
+#+begin_src python
 #+end_src
 
 *** TODO Monitors
 Focus
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-<Comma>"  , lazy.prev_screen() , desc="Move focus to prev Screen" ),
     EzKey( "M-<Period>" , lazy.next_screen() , desc="Move focus to next Screen" ),
@@ -771,7 +662,7 @@ keys.extend([
 #+end_src
 
 Moving Windows
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-S-<Comma>"  , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(0)) , desc="Move window to Screen" ),
     EzKey( "M-S-<Period>" , lazy.function(lambda qtile: qtile.current_window.cmd_toscreen(1)) , desc="Move window to Screen" ),
@@ -779,11 +670,11 @@ keys.extend([
 #+end_src
 
 Swapping
-#+begin_src python :tangle config.py
+#+begin_src python
 #+end_src
 
 *** Layouts
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-<Space>" , lazy.next_layout()      , desc="Switch Laouts"            ),
     EzKey( "M-S-<Space>" , lazy.prev_layout()      , desc="Switch Laouts"            ),
@@ -798,7 +689,7 @@ keys.extend([
 ])
 #+end_src
 
-#+begin_src python :tangle config.py
+#+begin_src python
 # Only map up to 10 Layouts to number keys
 def getNumberOfKeysForLayouts():
     if len(layouts) > 10:
@@ -823,7 +714,7 @@ keys.append(
 #+end_src
 
 *** Workspaces
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-<Tab>" , lazy.screen.toggle_group()       , desc="Toggle Workspace" ),
     EzKey( "M-<F12>" , lazy.group["coding"].toscreen(1) , desc="meh"              ),
@@ -836,7 +727,7 @@ keys.extend([
 ])
 #+end_src
 
-#+begin_src python :tangle config.py
+#+begin_src python
 # Only map up to 10 Groups to number keys
 def getNumberOfKeysForGroups():
     if len(groups) > 10:
@@ -861,7 +752,7 @@ for i in range(getNumberOfKeysForGroups()):
 #+end_src
 
 *** Scratchpads
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "M-<Quoteleft>" , lazy.group["NSP"].dropdown_toggle("terminal") , desc="Terminal Scratchpad"     ) ,
     EzKey( "M-e"           , lazy.group["NSP"].dropdown_toggle("files"   ) , desc="File Manager Scratchpad" ) ,
@@ -881,7 +772,7 @@ keys.extend([
 #+end_src
 
 *** Media Keys
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "<XF86AudioRaiseVolume>"   , lazy.spawn(myScript + "set-volume.sh + 2") , desc="Increase System Volume" ),
     EzKey( "<XF86AudioLowerVolume>"   , lazy.spawn(myScript + "set-volume.sh - 2") , desc="Decrease System Volume" ),
@@ -897,7 +788,7 @@ keys.extend([
 
 *** dm-scripts
 Global
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     KeyChord( [ mod ] , "d" , [
         EzKey( "M-d"         , lazy.spawn(myDMScript + "dm-master"    ) , desc="DM Master"     ),
@@ -915,7 +806,7 @@ keys.extend([
 #+end_src
 
 Power Control
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "A-<F4>" , lazy.spawn(myDMScript + "dm-power") , desc="Logout Menu"),
 
@@ -931,7 +822,7 @@ keys.extend([
 #+end_src
 
 Screenshot
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     EzKey( "<Print>" , lazy.spawn(myDMScript + "dm-screenshot screen") , desc="Fullscreen Screenshot"     ),
     EzKey( "M-S-<Print>" , lazy.spawn(myDMScript + "dm-screenshot area"  ) , desc="Selection Area Screenshot" ),
@@ -941,7 +832,7 @@ keys.extend([
 #+end_src
 
 Notifications
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
     KeyChord( [ mod ] , "backslash" , [
         EzKey( "<Backslash>"   , lazy.spawn(myDMScript + "dm-notify recent" ) , desc="Show most recent Notifications" ),
@@ -956,36 +847,36 @@ keys.extend([
 #+end_src
 
 *** Launching Apps
-#+begin_src python :tangle config.py
+#+begin_src python
 keys.extend([
-    EzKey( "C-A-t"      , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    EzKey( "M-<Return>" , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    EzKey( "M-c"        , lazy.spawn(apps.myIde         ) , desc="Launch IDE"                           ),
-    EzKey( "M-b"        , lazy.spawn(apps.myWebBrowser  ) , desc="Launch Web Browser"                   ),
-    EzKey( "M-i"        , lazy.spawn(apps.myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
-    EzKey( "M-p"        , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
-    EzKey( "M-r"        , lazy.spawn(apps.myLauncher    ) , desc="Launch Launcher"                      ),
+    EzKey( "C-A-t"      , lazy.spawn(myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-<Return>" , lazy.spawn(myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-c"        , lazy.spawn(myIde         ) , desc="Launch IDE"                           ),
+    EzKey( "M-b"        , lazy.spawn(myWebBrowser  ) , desc="Launch Web Browser"                   ),
+    EzKey( "M-i"        , lazy.spawn(myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
+    EzKey( "M-p"        , lazy.spawn(myPassManager ) , desc="Autofill Passwords"                   ),
+    EzKey( "M-r"        , lazy.spawn(myLauncher    ) , desc="Launch Launcher"                      ),
     EzKey( "M-S-r"      , lazy.spawn("dmenu_run"        ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
-        EzKey( "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        EzKey( "s" , lazy.spawn(apps.mySteam      ) , desc="Launch Steam"        ),
+        EzKey( "t" , lazy.spawn(myTorBrowser ) , desc="Launch Tor Browser"  ),
+        EzKey( "s" , lazy.spawn(mySteam      ) , desc="Launch Steam"        ),
     ], name="Launch"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        EzKey( "t" , lazy.spawn(apps.myCliText      ) , desc="Launch Text Editor"   ),
-        EzKey( "p" , lazy.spawn(apps.myPhotoLibrary ) , desc="Launch Photo Library" ),
-        EzKey( "g" , lazy.spawn(apps.myImgEditor    ) , desc="Launch Image Editor"  ),
-        EzKey( "r" , lazy.spawn(apps.myVctEditor    ) , desc="Launch Vector Editor" ),
-        EzKey( "v" , lazy.spawn(apps.myVidEditor    ) , desc="Launch Video Editor"  ),
+        EzKey( "t" , lazy.spawn(myCliText      ) , desc="Launch Text Editor"   ),
+        EzKey( "p" , lazy.spawn(myPhotoLibrary ) , desc="Launch Photo Library" ),
+        EzKey( "g" , lazy.spawn(myImgEditor    ) , desc="Launch Image Editor"  ),
+        EzKey( "r" , lazy.spawn(myVctEditor    ) , desc="Launch Vector Editor" ),
+        EzKey( "v" , lazy.spawn(myVidEditor    ) , desc="Launch Video Editor"  ),
     ], name="Launch Secondary"),
 ])
 #+end_src
 
 ** Mouse Bindings
-#+begin_src python :tangle config.py
+#+begin_src python
 # Drag floating layouts.
 mouse = [
     EzDrag(
@@ -998,48 +889,33 @@ mouse = [
 ]
 #+end_src
 
-* Utils
-#+begin_src python :tangle utils/__init__.py
-import preferences as user
-#+end_src
-
+* TODO Utils
 #+begin_src python :tangle utils/__init__.py
 def clear_default_groups(qtile):
     for i in range(10):
         qtile.cmd_delgroup(str(i + 1))
 #+end_src
 
-** Volume
-Increase Volume
-#+begin_src python :tangle utils/__init__.py
-def volume_increase(qtile):
-    qtile.cmd_spawn("amixer -q sset Master on " + str(user.volume_step) + "%+")
-#+end_src
-
-Decrease Volume
-#+begin_src python :tangle utils/__init__.py
-def volume_decrease(qtile):
-    qtile.cmd_spawn("amixer -q sset Master on " + str(user.volume_step) + "%-")
-#+end_src
-
-Mute
-#+begin_src python :tangle utils/__init__.py
-def volume_mute(qtile):
-    qtile.cmd_spawn("amixer -q sset Master toggle")
-#+end_src
-
 ** Widget Container
 #+begin_src python :tangle utils/widget_container.py
 from libqtile import widget
 
-import preferences as user
 import themes
+#+end_src
+
+Bar widgets font
+Values:
+- =powerline=
+- =nerd=
+- =unicode=
+#+begin_src python :tangle utils/widget_container.py
+powerline_font = "powerline"
 #+end_src
 
 *** Powerline
 #+begin_src python :tangle utils/widget_container.py
 def powerline(
-    widgets=[], colors=themes.power_line_colors, separator_font=user.powerline_font
+    widgets=[], colors=themes.power_line_colors, separator_font=powerline_font
 ):
     separator = {
         "powerline": "",
@@ -1142,56 +1018,26 @@ def colorized(widgets=[], colors=themes.power_line_colors, separator_gap=8):
 #+end_src
 
 * Widgets
-** Initialization
-#+begin_src python :tangle widgets/__init__.py
-import widgets.general as general
-import widgets.sensors as sensor
-import themes
-
-# Default widget settings
-widget_defaults = dict( font=themes.font_regular
-                      , fontsize=11
-                      , padding=3
-                      , foreground=themes.foreground
-)
-
-extension_defaults = widget_defaults.copy()
-#+end_src
-
 ** General
-#+begin_src python :tangle widgets/general.py
-import os
-import socket
-
-import apps
-import preferences as user
-import themes
-from libqtile import lazy, qtile, widget
-from preferences import dmscripts
-
-myDMScript = os.path.expanduser(dmscripts)
-prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-#+end_src
-
 *** Separator
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def separator(size=6, backround=themes.background):
     return widget.Sep(linewidth=0, padding=size, background=backround)
 #+end_src
 
 *** Start
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def start_widget():
     return widget.Image(
         filename=themes.distributor_logo,
         mouse_callbacks={
-            "Button1": lambda: qtile.cmd_spawn(apps.myLauncher),
+            "Button1": lambda: qtile.cmd_spawn(myLauncher),
         },
     )
 #+end_src
 
 *** User Profile
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def profile():
     return widget.Image(
         filename=themes.user_icon,
@@ -1202,7 +1048,7 @@ def profile():
 #+end_src
 
 *** Run Prompt
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def prompt_widget(bg=themes.prompt, fg=themes.fg_dark):
     return widget.Prompt(
         prompt=prompt,
@@ -1214,15 +1060,15 @@ def prompt_widget(bg=themes.prompt, fg=themes.fg_dark):
 #+end_src
 
 *** Time
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def time(bg=themes.background, fg=themes.foreground):
     return widget.Clock(
-        font=themes.font_bold, foregroung=fg, background=bg, format=user.time_format
+        font=themes.font_bold, foregroung=fg, background=bg, format=time_format
     )
 #+end_src
 
 *** Date
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def date(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1234,13 +1080,13 @@ def date(bg=themes.background, fg=themes.foreground):
             background=bg,
         ),
         widget.Clock(
-            font=themes.font_bold, foreground=fg, background=bg, format=user.date_format
+            font=themes.font_bold, foreground=fg, background=bg, format=date_format
         ),
     ]
 #+end_src
 
 *** Layouts
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def layout_icon(bg=themes.background, fg=themes.foreground):
     return widget.CurrentLayoutIcon(
         # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
@@ -1258,7 +1104,7 @@ def layout_icon(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 *** Workspaces
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def group_box():
     return widget.GroupBox(
         font=themes.font_awesome,
@@ -1287,7 +1133,7 @@ def group_box():
 #+end_src
 
 *** Window Name
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def window_name(bg=themes.background, fg=themes.foreground):
     return widget.WindowName(
         font=themes.font_bold, foreground=fg, background=bg, padding=0
@@ -1295,7 +1141,7 @@ def window_name(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 *** Windows
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def task_list(bg=themes.background, fg=themes.foreground):
     return widget.TaskList(
         font=themes.font_bold,
@@ -1318,7 +1164,7 @@ def task_list(bg=themes.background, fg=themes.foreground):
 *** Notifications
 Do not use if notifications are managed by another notification server such as
 Dunst
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def notify():
     return widget.Notify(
         foreground=themes.selection_accent,
@@ -1328,12 +1174,12 @@ def notify():
 #+end_src
 
 *** Keyboard Layout
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def keyboard_layout(bg=themes.background, fg=themes.foreground):
     return widget.KeyboardLayout(
         foreground=fg,
         background=bg,
-        configured_keyboards=user.languages,
+        configured_keyboards=languages,
         font=themes.font_bold,
         mouse_callbacks={
             # This doesn't work
@@ -1345,7 +1191,7 @@ def keyboard_layout(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 *** System Tray
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def sys_tray(bg=themes.background, fg=themes.foreground):
     return widget.Systray(
         foreground=fg,
@@ -1354,7 +1200,7 @@ def sys_tray(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 *** Updates
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def updater(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1366,7 +1212,7 @@ def updater(bg=themes.background, fg=themes.foreground):
             background=bg,
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
-                    apps.myTerminal + " -e sudo pacman -Syu"
+                    myTerminal + " -e sudo pacman -Syu"
                 ),
             },
         ),
@@ -1405,7 +1251,7 @@ def updater(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 *** Volume
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def volume(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1420,16 +1266,16 @@ def volume(bg=themes.background, fg=themes.foreground):
             font=themes.font_bold,
             foreground=fg,
             background=bg,
-            step=user.volume_step,
+            step=volume_step,
             mouse_callbacks={
-                "Button3": lambda: qtile.cmd_spawn(apps.myCliSysAudio),
+                "Button3": lambda: qtile.cmd_spawn(myCliSysAudio),
             },
         ),
     ]
 #+end_src
 
 *** Chords
-#+begin_src python :tangle widgets/general.py
+#+begin_src python
 def chord(bg=themes.chord, fg=themes.fg_dark):
     return widget.Chord(
         font=themes.font_bold,
@@ -1440,14 +1286,9 @@ def chord(bg=themes.chord, fg=themes.fg_dark):
 #+end_src
 
 ** Sensors
-#+begin_src python :tangle widgets/sensors.py
-import themes
-from libqtile import widget
-#+end_src
-
 *** Graphs
 **** Network
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def network_graph(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1471,7 +1312,7 @@ def network_graph(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 **** CPU
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def cpu_graph(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1509,7 +1350,7 @@ def cpu_graph(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 **** RAM
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def memory_graph(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1533,7 +1374,7 @@ def memory_graph(bg=themes.background, fg=themes.foreground):
 
 *** Metric
 **** Thermal
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def thermals(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1555,7 +1396,7 @@ def thermals(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 **** Network
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def network(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1578,7 +1419,7 @@ def network(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 **** RAM
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def memory(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1599,7 +1440,7 @@ def memory(bg=themes.background, fg=themes.foreground):
 #+end_src
 
 **** Nvidia
-#+begin_src python :tangle widgets/sensors.py
+#+begin_src python
 def nvidia_sensors(bg=themes.background, fg=themes.foreground):
     return [
         widget.TextBox(
@@ -1625,4 +1466,109 @@ def nvidia_sensors(bg=themes.background, fg=themes.foreground):
             background=bg,
         ),
     ]
+#+end_src
+
+* Bar
+** Primary
+#+begin_src python
+def primary_bar():
+    return [ separator(4)
+           , start_widget()
+           , separator(2)
+           , prompt_widget()
+           , chord()
+           , separator(4)
+           , time()
+           , group_box()
+           , separator(4)
+           , layout_icon()
+           , separator(20)
+           , task_list()
+           , keyboard_layout()
+           , sys_tray()
+           , separator(5)
+           ,,*widget_container(
+                widgets=[ updater
+                        , thermals
+                        , network_graph
+                        , volume
+                        , date ])
+           , profile()
+    ]
+#+end_src
+
+** Secondary
+#+begin_src python
+def secondary_bar():
+    return [ separator()
+           , start_widget()
+           , time()
+           , group_box()
+           , separator(4)
+           , layout_icon()
+           , separator(40)
+           , task_list()
+           ,,*widget_container(
+                widgets=[ nvidia_sensors
+                        , cpu_graph
+                        , memory_graph
+                        , network_graph
+                        , volume
+                        , date ])
+    ]
+#+end_src
+
+** Screens
+#+begin_src python
+def init_bar(s="secondary"):
+    if s == "primary": my_bar = primary_bar()
+    elif s == "secondary": my_bar = secondary_bar()
+    else: my_bar = secondary_bar()
+
+    return bar.Bar( my_bar
+                  , themes.bar_size
+                  , background=themes.background
+                  , opacity=themes.bar_opacity
+    )
+#+end_src
+
+#+begin_src python
+def get_num_monitors():
+    num_monitors = 0
+    try:
+        display = xdisplay.Display()
+        screen = display.screen()
+        resources = screen.root.xrandr_get_screen_resources()
+
+        for output in resources.outputs:
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
+            preferred = False
+            if hasattr(monitor, "preferred"):
+                preferred = monitor.preferred
+            elif hasattr(monitor, "num_preferred"):
+                preferred = monitor.num_preferred
+            if preferred:
+                num_monitors += 1
+    except Exception as e:
+        # always setup at least one monitor
+        return 1
+    else:
+        return num_monitors
+
+
+num_monitors = get_num_monitors()
+
+screens = [
+    Screen(
+        top=init_bar("primary"),
+    )
+]
+
+if num_monitors > 1:
+    for m in range(num_monitors - 1):
+        screens.append(
+            Screen(
+                top=init_bar("secondary"),
+            )
+        )
 #+end_src

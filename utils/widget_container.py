@@ -1,10 +1,11 @@
 from libqtile import widget
 
-import preferences as user
 import themes
 
+powerline_font = "powerline"
+
 def powerline(
-    widgets=[], colors=themes.power_line_colors, separator_font=user.powerline_font
+    widgets=[], colors=themes.power_line_colors, separator_font=powerline_font
 ):
     separator = {
         "powerline": "",

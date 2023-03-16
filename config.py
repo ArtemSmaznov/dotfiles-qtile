@@ -1,16 +1,16 @@
 import os
+import socket
 import subprocess
 
-from libqtile import bar, hook, layout
+from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import (DropDown, EzClick, EzDrag, EzKey, Group, KeyChord,
                              Match, ScratchPad, Screen)
 from libqtile.lazy import lazy
+from libqtile.utils import guess_terminal
 from Xlib import display as xdisplay
 
-import apps
 import themes
 import utils
-import widgets
 from themes import float_layout, global_layout
 
 # You can import 'colorized' for alternating fonts or 'powerline' for
@@ -26,13 +26,73 @@ follow_mouse_focus         = False
 reconfigure_screens        = True
 auto_minimize              = True
 
+# Default widget settings
+widget_defaults = dict( font=themes.font_regular
+                      , fontsize=11
+                      , padding=3
+                      , foreground=themes.foreground
+)
+
+extension_defaults = widget_defaults.copy()
+
+prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+
 myScript   = os.path.expanduser("~/.local/bin/")
 myDMScript = os.path.expanduser("~/.local/bin/dm-scripts/")
+
+volume_step = 3
+
+languages   = ["us", "ru"]
+# languages = ['us', 'ru', 'jp']
+time_format = "%l:%M %p"
+date_format = "%a, %d %b %Y"
+
+dmscripts = "~/.local/bin/dm-scripts/"
 
 @hook.subscribe.startup_once
 def autostart():
     autostart_script = os.path.expanduser("~/.local/bin/auto-start.sh")
     subprocess.call([autostart_script])
+
+# cli tools
+myTerminal      = guess_terminal()
+myCliFiles      = myTerminal + " -e vifmrun"
+myCliMusic      = myTerminal + " -e ncmpcpp"
+myCliText       = myTerminal + " -e vim"
+myCliSysAudio   = myTerminal + " -e alsamixer"
+myCliSysMonitor = myTerminal + " -e btop"
+myCliSysTasks   = myTerminal + " -e htop"
+
+# core tools
+myWebBrowser    = "qutebrowser"
+myIncBrowser    = "qutebrowser --target private-window"
+myTorBrowser    = "torbrowser-launcher"
+myIde           = "emacsclient -c -a 'emacs'"
+myFiles         = "pcmanfm"
+mySteam         = "/usr/bin/steam-runtime %U"
+
+# extra tools
+myLauncher      = "rofi -show drun"
+myPassManager   = "rofi-pass"
+myVirtManager   = "virt-manager"
+myTorrent       = "transmission-gtk"
+myCalculator    = "gnome-calculator"
+myAnki          = "anki"
+
+# graphics tools
+myPhotoLibrary  = "digikam"
+myImgEditor     = "gimp"
+myVctEditor     = "inkscape"
+myVidEditor     = "kdenlive"
+
+# chat apps
+myWhatsApp      = "whatsapp-for-linux"
+myDiscord       = "discord"
+
+# system tools
+mySysPower      = "xfce4-power-manager-settings"
+mySysNetwork    = "nm-connection-editor"
+mySysBluetooth  = "blueman-manager"
 
 floating_layout = layout.Floating(
     float_rules=[
@@ -107,7 +167,7 @@ groups = [
     Group(
         "coding",
         label="keyboard",
-        # spawn=apps.myTerminal,
+        # spawn=myTerminal,
         matches=[
             Match(
                 wm_class=[
@@ -154,7 +214,7 @@ groups = [
     Group(
         "music",
         label="headphones",
-        spawn=apps.myCliMusic,
+        spawn=myCliMusic,
         matches=[
             Match(
                 wm_class=[
@@ -218,7 +278,7 @@ groups = [
     Group(
         "monitor",
         label="chart-bar",
-        spawn=apps.myCliSysMonitor,
+        spawn=myCliSysMonitor,
         matches=[
             Match(
                 wm_class=[
@@ -243,7 +303,7 @@ groups.append(
         [
             DropDown(
                 "terminal",
-                apps.myTerminal,
+                myTerminal,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -253,7 +313,7 @@ groups.append(
             ),
             DropDown(
                 "htop",
-                apps.myCliSysTasks,
+                myCliSysTasks,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -263,7 +323,7 @@ groups.append(
             ),
             DropDown(
                 "files",
-                apps.myCliFiles,
+                myCliFiles,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -273,7 +333,7 @@ groups.append(
             ),
             DropDown(
                 "music",
-                apps.myCliMusic,
+                myCliMusic,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -283,7 +343,7 @@ groups.append(
             ),
             DropDown(
                 "virtmanager",
-                apps.myVirtManager,
+                myVirtManager,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -293,7 +353,7 @@ groups.append(
             ),
             DropDown(
                 "torrent",
-                apps.myTorrent,
+                myTorrent,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -303,7 +363,7 @@ groups.append(
             ),
             DropDown(
                 "calc",
-                apps.myCalculator,
+                myCalculator,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -313,7 +373,7 @@ groups.append(
             ),
             DropDown(
                 "whatsapp",
-                apps.myWhatsApp,
+                myWhatsApp,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -323,7 +383,7 @@ groups.append(
             ),
             DropDown(
                 "discord",
-                apps.myDiscord,
+                myDiscord,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -333,7 +393,7 @@ groups.append(
             ),
             DropDown(
                 "anki",
-                apps.myAnki,
+                myAnki,
                 x=s_left_margin,
                 y=s_top_margin,
                 width=s_width,
@@ -357,99 +417,6 @@ layouts = [ layout.MonadTall(**global_layout)
           # , layout.Zoomy()
           , layout.Bsp(**global_layout)
           , layout.Max(**global_layout) ]
-
-def primary_bar():
-    return [ widgets.general.separator(4)
-           , widgets.general.start_widget()
-           , widgets.general.separator(2)
-           , widgets.general.prompt_widget()
-           , widgets.general.chord()
-           , widgets.general.separator(4)
-           , widgets.general.time()
-           , widgets.general.group_box()
-           , widgets.general.separator(4)
-           , widgets.general.layout_icon()
-           , widgets.general.separator(20)
-           , widgets.general.task_list()
-           , widgets.general.keyboard_layout()
-           , widgets.general.sys_tray()
-           , widgets.general.separator(5)
-           ,*widget_container(
-                widgets=[ widgets.general.updater
-                        , widgets.sensor.thermals
-                        , widgets.sensor.network_graph
-                        , widgets.general.volume
-                        , widgets.general.date ])
-           , widgets.general.profile()
-    ]
-
-def secondary_bar():
-    return [ widgets.general.separator()
-           , widgets.general.start_widget()
-           , widgets.general.time()
-           , widgets.general.group_box()
-           , widgets.general.separator(4)
-           , widgets.general.layout_icon()
-           , widgets.general.separator(40)
-           , widgets.general.task_list()
-           ,*widget_container(
-                widgets=[ widgets.sensor.nvidia_sensors
-                        , widgets.sensor.cpu_graph
-                        , widgets.sensor.memory_graph
-                        , widgets.sensor.network_graph
-                        , widgets.general.volume
-                        , widgets.general.date ])
-    ]
-
-def init_bar(s="secondary"):
-    if s == "primary": my_bar = primary_bar()
-    elif s == "secondary": my_bar = secondary_bar()
-    else: my_bar = secondary_bar()
-
-    return bar.Bar( my_bar
-                  , themes.bar_size
-                  , background=themes.background
-                  , opacity=themes.bar_opacity
-    )
-
-def get_num_monitors():
-    num_monitors = 0
-    try:
-        display = xdisplay.Display()
-        screen = display.screen()
-        resources = screen.root.xrandr_get_screen_resources()
-
-        for output in resources.outputs:
-            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
-            preferred = False
-            if hasattr(monitor, "preferred"):
-                preferred = monitor.preferred
-            elif hasattr(monitor, "num_preferred"):
-                preferred = monitor.num_preferred
-            if preferred:
-                num_monitors += 1
-    except Exception as e:
-        # always setup at least one monitor
-        return 1
-    else:
-        return num_monitors
-
-
-num_monitors = get_num_monitors()
-
-screens = [
-    Screen(
-        top=init_bar("primary"),
-    )
-]
-
-if num_monitors > 1:
-    for m in range(num_monitors - 1):
-        screens.append(
-            Screen(
-                top=init_bar("secondary"),
-            )
-        )
 
 mod   = "mod4"
 shift = "shift"
@@ -678,28 +645,28 @@ keys.extend([
 ])
 
 keys.extend([
-    EzKey( "C-A-t"      , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    EzKey( "M-<Return>" , lazy.spawn(apps.myTerminal    ) , desc="Launch Terminal"                      ),
-    EzKey( "M-c"        , lazy.spawn(apps.myIde         ) , desc="Launch IDE"                           ),
-    EzKey( "M-b"        , lazy.spawn(apps.myWebBrowser  ) , desc="Launch Web Browser"                   ),
-    EzKey( "M-i"        , lazy.spawn(apps.myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
-    EzKey( "M-p"        , lazy.spawn(apps.myPassManager ) , desc="Autofill Passwords"                   ),
-    EzKey( "M-r"        , lazy.spawn(apps.myLauncher    ) , desc="Launch Launcher"                      ),
+    EzKey( "C-A-t"      , lazy.spawn(myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-<Return>" , lazy.spawn(myTerminal    ) , desc="Launch Terminal"                      ),
+    EzKey( "M-c"        , lazy.spawn(myIde         ) , desc="Launch IDE"                           ),
+    EzKey( "M-b"        , lazy.spawn(myWebBrowser  ) , desc="Launch Web Browser"                   ),
+    EzKey( "M-i"        , lazy.spawn(myIncBrowser  ) , desc="Launch Web Browser in Incognito Mode" ),
+    EzKey( "M-p"        , lazy.spawn(myPassManager ) , desc="Autofill Passwords"                   ),
+    EzKey( "M-r"        , lazy.spawn(myLauncher    ) , desc="Launch Launcher"                      ),
     EzKey( "M-S-r"      , lazy.spawn("dmenu_run"        ) , desc="Launch dmenu"                         ),
 
     # Primary
     KeyChord( [ mod ] , "o" , [
-        EzKey( "t" , lazy.spawn(apps.myTorBrowser ) , desc="Launch Tor Browser"  ),
-        EzKey( "s" , lazy.spawn(apps.mySteam      ) , desc="Launch Steam"        ),
+        EzKey( "t" , lazy.spawn(myTorBrowser ) , desc="Launch Tor Browser"  ),
+        EzKey( "s" , lazy.spawn(mySteam      ) , desc="Launch Steam"        ),
     ], name="Launch"),
 
     # Secondary
     KeyChord( [ ctrl, alt ] , "o" , [
-        EzKey( "t" , lazy.spawn(apps.myCliText      ) , desc="Launch Text Editor"   ),
-        EzKey( "p" , lazy.spawn(apps.myPhotoLibrary ) , desc="Launch Photo Library" ),
-        EzKey( "g" , lazy.spawn(apps.myImgEditor    ) , desc="Launch Image Editor"  ),
-        EzKey( "r" , lazy.spawn(apps.myVctEditor    ) , desc="Launch Vector Editor" ),
-        EzKey( "v" , lazy.spawn(apps.myVidEditor    ) , desc="Launch Video Editor"  ),
+        EzKey( "t" , lazy.spawn(myCliText      ) , desc="Launch Text Editor"   ),
+        EzKey( "p" , lazy.spawn(myPhotoLibrary ) , desc="Launch Photo Library" ),
+        EzKey( "g" , lazy.spawn(myImgEditor    ) , desc="Launch Image Editor"  ),
+        EzKey( "r" , lazy.spawn(myVctEditor    ) , desc="Launch Vector Editor" ),
+        EzKey( "v" , lazy.spawn(myVidEditor    ) , desc="Launch Video Editor"  ),
     ], name="Launch Secondary"),
 ])
 
@@ -713,3 +680,471 @@ mouse = [
     EzDrag( "M-3" , lazy.window.set_size_floating(), start=lazy.window.get_size()),
     EzClick( "M-2", lazy.window.bring_to_front()),
 ]
+
+def separator(size=6, backround=themes.background):
+    return widget.Sep(linewidth=0, padding=size, background=backround)
+
+def start_widget():
+    return widget.Image(
+        filename=themes.distributor_logo,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(myLauncher),
+        },
+    )
+
+def profile():
+    return widget.Image(
+        filename=themes.user_icon,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(myDMScript + "dm-power"),
+        },
+    )
+
+def prompt_widget(bg=themes.prompt, fg=themes.fg_dark):
+    return widget.Prompt(
+        prompt=prompt,
+        font=themes.font_bold,
+        padding=10,
+        foreground=fg,
+        background=bg,
+    )
+
+def time(bg=themes.background, fg=themes.foreground):
+    return widget.Clock(
+        font=themes.font_bold, foregroung=fg, background=bg, format=time_format
+    )
+
+def date(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Clock(
+            font=themes.font_bold, foreground=fg, background=bg, format=date_format
+        ),
+    ]
+
+def layout_icon(bg=themes.background, fg=themes.foreground):
+    return widget.CurrentLayoutIcon(
+        # custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
+        foreground=fg,
+        background=bg,
+        scale=0.6,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_next_layout(),
+            "Button2": lambda: qtile.cmd_to_layout_index(0),
+            "Button3": lambda: qtile.cmd_prev_layout(),
+            "Button4": lambda: qtile.cmd_next_layout(),
+            "Button5": lambda: qtile.cmd_prev_layout(),
+        },
+    )
+
+def group_box():
+    return widget.GroupBox(
+        font=themes.font_awesome,
+        fontsize=themes.group_icon_size,
+        margin_y=3,
+        margin_x=0,
+        padding_y=5,
+        padding_x=3,
+        borderwidth=3,
+        highlight_method=themes.group_highlight_method,
+        disable_drag=True,
+        hide_unused=False,
+        # Icon colors
+        active=themes.foreground,
+        inactive=themes.inactive,
+        # Background colors
+        highlight_color=themes.selection_bg,
+        # Border colors
+        this_current_screen_border=themes.selection_accent,
+        this_screen_border=themes.unfocused_selection_accent,
+        other_current_screen_border=themes.other_selection_accent,
+        other_screen_border=themes.unfocused_other_selection_accent,
+        # Border colors - alert
+        urgent_border=themes.alert,
+    )
+
+def window_name(bg=themes.background, fg=themes.foreground):
+    return widget.WindowName(
+        font=themes.font_bold, foreground=fg, background=bg, padding=0
+    )
+
+def task_list(bg=themes.background, fg=themes.foreground):
+    return widget.TaskList(
+        font=themes.font_bold,
+        highlight_method=themes.tasklist_highlight_method,
+        border=themes.selection_bg,
+        foreground=fg,
+        background=bg,
+        rounded=themes.rounded_hightlights,
+        txt_floating=" ",
+        txt_maximized=" ",
+        txt_minimized=" ",
+        icon_size=themes.tasklist_icon_size,
+        max_title_width=150,
+        padding_x=5,
+        padding_y=5,
+        margin=0,
+    )
+
+def notify():
+    return widget.Notify(
+        foreground=themes.selection_accent,
+        foreground_urgent=themes.alert,
+        foreground_low=themes.foreground,
+    )
+
+def keyboard_layout(bg=themes.background, fg=themes.foreground):
+    return widget.KeyboardLayout(
+        foreground=fg,
+        background=bg,
+        configured_keyboards=languages,
+        font=themes.font_bold,
+        mouse_callbacks={
+            # This doesn't work
+            # "Button1": lambda: lazy.widget["keyboardlayout"].next_keyboard(),
+            "Button1": lambda: qtile.cmd_spawn("setxkbmap us"),
+            "Button3": lambda: qtile.cmd_spawn("setxkbmap ru"),
+        },
+    )
+
+def sys_tray(bg=themes.background, fg=themes.foreground):
+    return widget.Systray(
+        foreground=fg,
+        background=bg,
+    )
+
+def updater(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size - 3,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn(
+                    myTerminal + " -e sudo pacman -Syu"
+                ),
+            },
+        ),
+        widget.CheckUpdates(
+            distro="Arch_checkupdates",
+            display_format="{updates}",
+            no_update_string="n/a",
+            update_interval="1800",
+            font=themes.font_bold,
+            colour_have_updates=fg,
+            colour_no_updates=fg,
+            background=bg,
+        ),
+        widget.CheckUpdates(
+            distro="Arch",
+            custom_command="pacman -Qu | grep -e nvidia -e linux",
+            update_interval="1800",
+            display_format="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size - 3,
+            colour_have_updates=themes.alert,
+            # colour_no_updates=themes.foreground,
+            background=bg,
+        ),
+        widget.CheckUpdates(
+            distro="Arch",
+            custom_command="pacman -Qu | grep -e nvidia -e linux",
+            update_interval="1800",
+            display_format="{updates}",
+            font=themes.font_bold,
+            colour_have_updates=themes.alert,
+            colour_no_updates=fg,
+            background=bg,
+        ),
+    ]
+
+def volume(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Volume(
+            font=themes.font_bold,
+            foreground=fg,
+            background=bg,
+            step=volume_step,
+            mouse_callbacks={
+                "Button3": lambda: qtile.cmd_spawn(myCliSysAudio),
+            },
+        ),
+    ]
+
+def chord(bg=themes.chord, fg=themes.fg_dark):
+    return widget.Chord(
+        font=themes.font_bold,
+        padding=10,
+        foreground=fg,
+        background=bg,
+    )
+
+def network_graph(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.NetGraph(
+            interface="eno1",
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+
+def cpu_graph(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.ThermalSensor(
+            font=themes.font_bold,
+            foreground_alert=themes.alert,
+            foreground=fg,
+            background=bg,
+            threshold=80,
+        ),
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.CPUGraph(
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+
+def memory_graph(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.MemoryGraph(
+            border_width=0,
+            samples=95,
+            line_width=2,
+            graph_color=fg,
+            fill_color="{}.5".format(fg),
+            background=bg,
+        ),
+    ]
+
+def thermals(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.ThermalSensor(
+            font=themes.font_bold,
+            foreground_alert=themes.alert,
+            foreground=fg,
+            background=bg,
+            threshold=80,
+        ),
+    ]
+
+def network(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Net(
+            font=themes.font_bold,
+            interface="eno1",
+            format="{down} | {up}",
+            foreground=fg,
+            background=bg,
+            padding=5,
+        ),
+    ]
+
+def memory(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.Memory(
+            font=themes.font_bold,
+            foreground=fg,
+            background=bg,
+            measure_mem="G",
+        ),
+    ]
+
+def nvidia_sensors(bg=themes.background, fg=themes.foreground):
+    return [
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.NvidiaSensors(
+            font=themes.font_bold,
+            foreground_alert=themes.alert,
+            foreground=fg,
+            background=bg,
+        ),
+        widget.TextBox(
+            text="",
+            font=themes.font_awesome,
+            fontsize=themes.icon_size,
+            padding_x=2,
+            foreground=fg,
+            background=bg,
+        ),
+    ]
+
+def primary_bar():
+    return [ separator(4)
+           , start_widget()
+           , separator(2)
+           , prompt_widget()
+           , chord()
+           , separator(4)
+           , time()
+           , group_box()
+           , separator(4)
+           , layout_icon()
+           , separator(20)
+           , task_list()
+           , keyboard_layout()
+           , sys_tray()
+           , separator(5)
+           ,*widget_container(
+                widgets=[ updater
+                        , thermals
+                        , network_graph
+                        , volume
+                        , date ])
+           , profile()
+    ]
+
+def secondary_bar():
+    return [ separator()
+           , start_widget()
+           , time()
+           , group_box()
+           , separator(4)
+           , layout_icon()
+           , separator(40)
+           , task_list()
+           ,*widget_container(
+                widgets=[ nvidia_sensors
+                        , cpu_graph
+                        , memory_graph
+                        , network_graph
+                        , volume
+                        , date ])
+    ]
+
+def init_bar(s="secondary"):
+    if s == "primary": my_bar = primary_bar()
+    elif s == "secondary": my_bar = secondary_bar()
+    else: my_bar = secondary_bar()
+
+    return bar.Bar( my_bar
+                  , themes.bar_size
+                  , background=themes.background
+                  , opacity=themes.bar_opacity
+    )
+
+def get_num_monitors():
+    num_monitors = 0
+    try:
+        display = xdisplay.Display()
+        screen = display.screen()
+        resources = screen.root.xrandr_get_screen_resources()
+
+        for output in resources.outputs:
+            monitor = display.xrandr_get_output_info(output, resources.config_timestamp)
+            preferred = False
+            if hasattr(monitor, "preferred"):
+                preferred = monitor.preferred
+            elif hasattr(monitor, "num_preferred"):
+                preferred = monitor.num_preferred
+            if preferred:
+                num_monitors += 1
+    except Exception as e:
+        # always setup at least one monitor
+        return 1
+    else:
+        return num_monitors
+
+
+num_monitors = get_num_monitors()
+
+screens = [
+    Screen(
+        top=init_bar("primary"),
+    )
+]
+
+if num_monitors > 1:
+    for m in range(num_monitors - 1):
+        screens.append(
+            Screen(
+                top=init_bar("secondary"),
+            )
+        )
