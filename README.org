@@ -1,3 +1,6 @@
+:PROPERTIES:
+:ID:       5588e323-3433-44c4-b3cd-c24f30d1c09a
+:END:
 #+title:       qTile
 #+author:      Artem Smaznov
 #+description: A window manager written in Python
@@ -38,6 +41,8 @@
   - [[#primary][Primary]]
   - [[#secondary][Secondary]]
   - [[#screens][Screens]]
+- [[#scripts][Scripts]]
+  - [[#dmscripts][DMScripts]]
 
 * Dependencies
 |-----------------+-------------------------------------------------|
@@ -596,11 +601,12 @@ keys.extend([
 States
 #+begin_src python
 keys.extend([
-    EzKey( "M-q"     , lazy.window.kill()              , desc="Close focused Window" ),
-    EzKey( "M-<F11>" , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    EzKey( "M-S-f"   , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    EzKey( "M-m"     , lazy.window.toggle_maximize()   , desc="Toggle Maximize"      ),
-    EzKey( "M-f"     , lazy.window.toggle_floating()   , desc="Toggle Floating"      ),
+    EzKey( "M-q"     , lazy.window.kill()                     , desc="Close focused Window" ),
+    EzKey( "M-<F11>" , lazy.window.toggle_fullscreen()        , desc="Toggle Fullscreen"    ),
+    EzKey( "M-S-f"   , lazy.window.toggle_fullscreen()        , desc="Toggle Fullscreen"    ),
+    EzKey( "M-m"     , lazy.window.toggle_maximize()          , desc="Toggle Maximize"      ),
+    # EzKey( "M-m"     , lazy.to_layout_index(len(layouts) - 1) , desc="Toggle Maximize"      ),
+    EzKey( "M-f"     , lazy.window.toggle_floating()          , desc="Toggle Floating"      ),
 
     EzKey( "M-A-m" ,
         lazy.window.toggle_minimize(),
@@ -676,16 +682,11 @@ Swapping
 *** Layouts
 #+begin_src python
 keys.extend([
-    EzKey( "M-<Space>" , lazy.next_layout()      , desc="Switch Laouts"            ),
-    EzKey( "M-S-<Space>" , lazy.prev_layout()      , desc="Switch Laouts"            ),
-    EzKey( "M-A-<Space>" , lazy.to_layout_index(0) , desc="Switch to default Layout" ),
-    EzKey( "M-<Equal>" , lazy.layout.normalize() , desc="Reset all window sizes"   ),
-
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    EzKey( "M-S-<Return>" , lazy.layout.toggle_split() , desc="Toggle between split and unsplit sides of stack" ),
+    EzKey( "M-<Space>"    , lazy.next_layout()         , desc="Switch Laouts"                          ),
+    EzKey( "M-S-<Space>"  , lazy.prev_layout()         , desc="Switch Laouts"                          ),
+    EzKey( "M-A-<Space>"  , lazy.to_layout_index(0)    , desc="Switch to default Layout"               ),
+    EzKey( "M-<Equal>"    , lazy.layout.normalize()    , desc="Reset all window sizes"                 ),
+    EzKey( "M-S-<Return>" , lazy.layout.toggle_split() , desc="Toggle between Split and Unsplit stack" ),
 ])
 #+end_src
 
@@ -706,11 +707,6 @@ for i in range(getNumberOfKeysForLayouts()):
     keys.append(
         EzKey( f"M-A-{key}", lazy.to_layout_index(i))
     )
-
-# Switch to last Layout
-keys.append(
-    EzKey( "M-A-<Quoteleft>", lazy.to_layout_index(len(layouts) - 1))
-)
 #+end_src
 
 *** Workspaces
@@ -889,7 +885,7 @@ mouse = [
 ]
 #+end_src
 
-* TODO Utils
+* Utils
 #+begin_src python :tangle utils/__init__.py
 def clear_default_groups(qtile):
     for i in range(10):
@@ -1572,3 +1568,6 @@ if num_monitors > 1:
             )
         )
 #+end_src
+
+* [[id:d4c60fae-8667-4066-902f-692a61572338][Scripts]]
+** [[id:c9d06930-ec33-4afc-b320-3942fa73e592][DMScripts]]

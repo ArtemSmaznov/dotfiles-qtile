@@ -446,11 +446,12 @@ keys.extend([
 ])
 
 keys.extend([
-    EzKey( "M-q"     , lazy.window.kill()              , desc="Close focused Window" ),
-    EzKey( "M-<F11>" , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    EzKey( "M-S-f"   , lazy.window.toggle_fullscreen() , desc="Toggle Fullscreen"    ),
-    EzKey( "M-m"     , lazy.window.toggle_maximize()   , desc="Toggle Maximize"      ),
-    EzKey( "M-f"     , lazy.window.toggle_floating()   , desc="Toggle Floating"      ),
+    EzKey( "M-q"     , lazy.window.kill()                     , desc="Close focused Window" ),
+    EzKey( "M-<F11>" , lazy.window.toggle_fullscreen()        , desc="Toggle Fullscreen"    ),
+    EzKey( "M-S-f"   , lazy.window.toggle_fullscreen()        , desc="Toggle Fullscreen"    ),
+    EzKey( "M-m"     , lazy.window.toggle_maximize()          , desc="Toggle Maximize"      ),
+    # EzKey( "M-m"     , lazy.to_layout_index(len(layouts) - 1) , desc="Toggle Maximize"      ),
+    EzKey( "M-f"     , lazy.window.toggle_floating()          , desc="Toggle Floating"      ),
 
     EzKey( "M-A-m" ,
         lazy.window.toggle_minimize(),
@@ -501,16 +502,11 @@ keys.extend([
 
 
 keys.extend([
-    EzKey( "M-<Space>" , lazy.next_layout()      , desc="Switch Laouts"            ),
-    EzKey( "M-S-<Space>" , lazy.prev_layout()      , desc="Switch Laouts"            ),
-    EzKey( "M-A-<Space>" , lazy.to_layout_index(0) , desc="Switch to default Layout" ),
-    EzKey( "M-<Equal>" , lazy.layout.normalize() , desc="Reset all window sizes"   ),
-
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    EzKey( "M-S-<Return>" , lazy.layout.toggle_split() , desc="Toggle between split and unsplit sides of stack" ),
+    EzKey( "M-<Space>"    , lazy.next_layout()         , desc="Switch Laouts"                          ),
+    EzKey( "M-S-<Space>"  , lazy.prev_layout()         , desc="Switch Laouts"                          ),
+    EzKey( "M-A-<Space>"  , lazy.to_layout_index(0)    , desc="Switch to default Layout"               ),
+    EzKey( "M-<Equal>"    , lazy.layout.normalize()    , desc="Reset all window sizes"                 ),
+    EzKey( "M-S-<Return>" , lazy.layout.toggle_split() , desc="Toggle between Split and Unsplit stack" ),
 ])
 
 # Only map up to 10 Layouts to number keys
@@ -529,11 +525,6 @@ for i in range(getNumberOfKeysForLayouts()):
     keys.append(
         EzKey( f"M-A-{key}", lazy.to_layout_index(i))
     )
-
-# Switch to last Layout
-keys.append(
-    EzKey( "M-A-<Quoteleft>", lazy.to_layout_index(len(layouts) - 1))
-)
 
 keys.extend([
     EzKey( "M-<Tab>" , lazy.screen.toggle_group()       , desc="Toggle Workspace" ),
